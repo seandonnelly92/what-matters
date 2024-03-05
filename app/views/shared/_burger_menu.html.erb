@@ -1,10 +1,10 @@
-  <div id="burger-menu"
-    data-action="click->toggle-menu#toggleMenu"
-    data-controller="menu-drag">
+  <div id="burger-menu" data-burger-menu-target="menuButton">
+    <!-- data-action="click->toggle-menu#toggleMenu"
+    data-controller="menu-drag"> -->
     <i class="fa-solid fa-bars"></i>
   </div>
 
-  <div id="menu" data-toggle-menu-target="menu">
+  <div id="menu" data-burger-menu-target="menuWindow">
     <ul class="menu-options">
       <li>Add habit</li>
       <li>Habits</li>
