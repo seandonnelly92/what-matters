@@ -1,0 +1,27 @@
+#burger-menu {
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  background-color: #045346;
+  box-shadow: 1px 1px 2px 1px grey;
+
+  // Positioning of the icon by default
+  position: fixed;
+  top: 35px;
+  right: 20px;
+  z-index: 10;
+
+  // Burger menu should be flex box with the icon centered in the middle
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Icon styling
+  i {
+    color: white;
+    font-size: 20px;
+  }
+
+  // Other
+  padding-top: 2px; // Icon has slightly more space on bottom, so adjusting accordingly
+}
