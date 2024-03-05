@@ -55,3 +55,11 @@
 #menu.menu-open {
   right: 0px; // Class used to slide menu when selected
 }
+
+#menu.menu-open ~ .main {
+  transform: translateX(-100px);
+}
+
+.main {
+  transition: transform 500ms;
+}

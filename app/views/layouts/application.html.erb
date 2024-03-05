@@ -14,8 +14,12 @@
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 
-    <%= render "shared/burger_menu" %>
+    <div data-controller="toggle-menu">
+      <%= render "shared/burger_menu" %>
+      <div class="main">
+        <%= yield %>
+      </div>
+    </div>
 
-    <%= yield %>
   </body>
 </html>
