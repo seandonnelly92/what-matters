@@ -9,4 +9,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # resources :multistage, only: %i[new create]
+  resources :habit
+  resources :relationship, only: %i[new create delete]
 end
