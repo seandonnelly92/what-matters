@@ -14,9 +14,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
+  <body>
+    <%= render "shared/navbar" %>
+    <%= render "shared/flashes" %>
 
-    <%= yield %>
+    <div data-controller="toggle-menu">
+      <%= render "shared/burger_menu" %>
+      <div class="main">
+        <%= yield %>
+      </div>
+    </div>
+
   </body>
 </html>
