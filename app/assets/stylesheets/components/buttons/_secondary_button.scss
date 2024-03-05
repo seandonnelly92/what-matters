@@ -1,0 +1,17 @@
+// Secondary CTA button styling
+button {
+  all: unset;
+}
+
+.secondary-btn {
+  font-family: "lato", "sans serif";
+  font-weight: 500;
+  justify-self: center;
+  text-align: center;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: $blue;
+  // border: 2px solid $blue;
+  border-radius: 5px;
+}
