@@ -8,7 +8,7 @@
   // Positioning of the icon by default
   position: fixed;
   top: 35px;
-  right: 20px;
+  right: 25px;
   z-index: 10;
 
   // Burger menu should be flex box with the icon centered in the middle
@@ -24,4 +24,33 @@
 
   // Other
   padding-top: 2px; // Icon has slightly more space on bottom, so adjusting accordingly
+}
+
+#menu {
+  width: 275px;
+  height: 100%;
+  background-color: #f0f0f0;
+
+  padding: 90px 30px;
+
+  position: fixed;
+  top: 0px;
+  right: 0px; // Initially hides the menu
+  transition: right 0.3s ease; // Transition of opening the menu
+}
+
+// Formut of the menu options
+#menu .menu-options {
+  padding: 0;
+  text-align: right;
+
+  list-style-type: none; // Removes the markers of the unordered-list
+
+  li {
+    margin-bottom: 15px;
+  }
+}
+
+.menu-open {
+  right: 0; // Class used to slide menu when selected
 }
