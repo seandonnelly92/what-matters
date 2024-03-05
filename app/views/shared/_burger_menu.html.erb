@@ -1,11 +1,13 @@
-<div id="burger-menu">
-  <i class="fa-solid fa-bars"></i>
-</div>
+<div data-controller="toggle-menu">
+  <div id="burger-menu" data-action="click->toggle-menu#toggleMenu">
+    <i class="fa-solid fa-bars"></i>
+  </div>
 
-<div id="menu" class="menu-open">
-  <ul class="menu-options">
-    <li>Add habit</li>
-    <li>Habits</li>
-    <li>Categories</li>
-  </ul>
+  <div id="menu" data-toggle-menu-target="menu">
+    <ul class="menu-options">
+      <li>Add habit</li>
+      <li>Habits</li>
+      <li>Categories</li>
+    </ul>
+  </div>
 </div>

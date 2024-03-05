@@ -29,13 +29,14 @@
 #menu {
   width: 275px;
   height: 100%;
+  z-index: 9;
   background-color: #f0f0f0;
 
   padding: 90px 30px;
 
   position: fixed;
   top: 0px;
-  right: 0px; // Initially hides the menu
+  right: -275px; // Initially hides the menu (should equal menu width)
   transition: right 0.3s ease; // Transition of opening the menu
 }
 
@@ -51,6 +52,6 @@
   }
 }
 
-.menu-open {
-  right: 0; // Class used to slide menu when selected
+#menu.active {
+  right: 0px; // Class used to slide menu when selected
 }
