@@ -10,20 +10,19 @@
 
 require 'date'
 
+puts 'destroying all Habits'
+Habit.destroy_all
 puts 'destroying all Users...'
 User.destroy_all
 
-puts 'seeding Users...'
-User.new
 
+puts 'seeding Users...'
 scare_crow = User.create!(
   email: "scareyC@example.com",
   encrypted_password: "password",
   reset_password_token: "[reset_password_token_1]",
   reset_password_sent_at: "[reset_password_sent_at_1]",
   remember_created_at: "[remember_created_at_1]",
-  created_at: DateTime.new(2024, 03, 5, 16, 30, 00),
-  updated_at: DateTime.new(2024, 03, 5, 16, 30, 00),
   first_name: "Scare",
   last_name: "Crow",
   nickname: "Strawbrains",
@@ -41,8 +40,6 @@ tin_man = User.create!(
     reset_password_token: "[reset_password_token_2]",
     reset_password_sent_at: "[reset_password_sent_at_2]",
     remember_created_at: "[remember_created_at_2]",
-    created_at: DateTime.new(2024, 03, 5, 16, 30, 00),
-    updated_at: DateTime.new(2024, 03, 5, 16, 30, 00),
     first_name: "Tin",
     last_name: "Man",
     nickname: "Heartless",
@@ -53,5 +50,39 @@ tin_man = User.create!(
     terms_agreed: true
   )
 
+puts "Users seeded successfully."
 
-puts "Users seeded successfully"
+puts 'seeding Habits'
+scare_crow_habit = Habit.create!(
+  user_id: scare_crow.id,
+  # relationship_id: null,
+  title: "Learn Times Tables",
+  category: "Learning",
+  identity_goal: "Be a learner",
+  trigger: "Before breakfast",
+  reward: "Give myself a snack",
+  duration_in_minutes: 15,
+  week_recurrence: 3,
+  current_streak: 0,
+  best_streak: 0,
+  days: ["Monday", "Wednesday", "Friday"],
+  start_times: ["06:00", "06:00", "06:00"],
+)
+
+tin_man_habit = Habit.create!(
+  user_id: tin_man.id,
+  # relationship_id: null,
+  title: "Give my best friend a call",
+  category: "Friends",
+  identity_goal: "Be a better friend",
+  trigger: "Before I polish my hat",
+  reward: "Give myself a snack",
+  duration_in_minutes: 20,
+  week_recurrence: 1,
+  current_streak: 0,
+  best_streak: 0,
+  days: ["Saturday"],
+  start_times: ["11:00"],
+)
+
+puts 'Habits seeded successfully.'

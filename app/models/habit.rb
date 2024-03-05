@@ -1,6 +1,6 @@
 class Habit < ApplicationRecord
   belongs_to :user
-  belongs_to :relationship
+  # belongs_to :relationship
   has_many :logs
 
   validates :title, :identity_goal, :trigger, :reward, :duration_in_minutes, :week_recurrence, :current_streak, :best_streak, :days, :start_times, presence: true
