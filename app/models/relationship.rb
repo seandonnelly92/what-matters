@@ -2,8 +2,8 @@ class Relationship < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :nickname, :relation_to, :date_of_birth, :meet_date, :contact_time_per_week, presence: true
-  validates :meet_date_cannot_be_in_future
-  validates :contact_time_per_week, numericality: {less_than_or_equal_to: 10_080, message: "must be greater than 10080" }
+  validate :meet_date_cannot_be_in_future
+  validates :contact_minutes_per_week, numericality: {less_than_or_equal_to: 10_080, message: "must be greater than 10080" }
 end
 
 def meet_date_cannot_be_in_future
