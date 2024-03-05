@@ -1,0 +1,13 @@
+// Tertiary CTA button styling
+button {
+  all: unset;
+}
+
+.tertiary-btn {
+  justify-self: center;
+  text-align: center;
+  text-decoration: underline;
+  font-family: "lato", "sans serif";
+  font-weight: 500;
+  color: $blue;
+}
