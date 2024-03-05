@@ -52,10 +52,23 @@ tin_man = User.create!(
 
 puts "Users seeded successfully."
 
-puts 'seeding Habits'
+# puts 'seeding Relationships...'
+
+# relationship_1 = Relationship.create!(
+#   user_id: scare_crow.id,
+#   nickname: "Big Scaredy Cat",
+#   relation_to: "Friend",
+#   date_of_birth: DateTime.new(2002, 8, 25),
+#   meet_date: DateTime.new(2012, 8, 25),
+# )
+
+# puts "relationship_1 created"
+
+
+puts 'seeding Habits...'
 scare_crow_habit = Habit.create!(
   user_id: scare_crow.id,
-  # relationship_id: null,
+  # relationship_id: relationship_1.id,
   title: "Learn Times Tables",
   category: "Learning",
   identity_goal: "Be a learner",
