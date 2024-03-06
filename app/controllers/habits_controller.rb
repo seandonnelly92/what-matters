@@ -2,8 +2,25 @@ class HabitsController < ApplicationController
   skip_before_action :authenticate_user!
   # Remove this skip later
 
+  def index
+    @habits = Habit.all
+  end
+
   def new
     @habit = Habit.new
+    @categories = [
+      "Parents",
+      "Children",
+      "Relationship",
+      "Family",
+      "Friends",
+      "Giving Back",
+      "Creativity",
+      "Travel",
+      "Learning",
+      "Wellbeing",
+      "Sprituality",
+      "Pets"]
   end
 
   def create
@@ -11,7 +28,7 @@ class HabitsController < ApplicationController
     if @habit.save
       redirect_to habit_path(@habit)
     else
-      render 'lists/show', status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
       # Not sure what to do here. Reload page but keep values?
     end
   end
@@ -19,6 +36,7 @@ class HabitsController < ApplicationController
   private
 
   def habit_params
-    params.require(:habit).permit(:title, :category, :identity_goal, :trigger, :reward, :duration_in_minutes, :week_recurrence, :days, :start_times)
+    params.require(:habit).permit(:title, :category, :identity_goal, :trigger,
+    :reward, :duration_in_minutes, :week_recurrence, :days, :start_times, :photo)
   end
 end
