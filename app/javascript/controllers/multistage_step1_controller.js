@@ -5,11 +5,16 @@ export default class extends Controller {
   static targets = [
     "title",
     "table",
-    "dateOfBirth"
+    "form",
+    "dateOfBirth",
+    "submitBtn",
+    "backBtn"
   ]
 
   connect() {
     console.log("Hello from the multistage step1 controller!");
+
+    let validForm = false;
 
     const total_yrs = 90;
     const total_rows = total_yrs / 10; // Showing 10 years (circles) on each row
@@ -30,15 +35,14 @@ export default class extends Controller {
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
   }
 
-  DoBSubmission(e) {
+  submitForm(e) {
     e.preventDefault();
 
-    const dateOfBirth = new Date(this.dateOfBirthTarget.value);
-    const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
+    if (this.validForm) window.location.href = '/multistages/step2_input';
 
     const data = { user: { date_of_birth: this.dateOfBirthTarget.value } };
 
-    fetch(`/multistage/step1_submit`, {
+    fetch(`/multistages/step1_submit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,11 +52,19 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
+      this.clearErrors();
+
       if (data.errors) {
         this.handleErrors(data.errors);
+        this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
       } else {
+        const dateOfBirth = new Date(data.data);
+        const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
+
         this.titleTarget.innerText = 'Here is how much you’ve used and how much you’ve got left:'
         this.colorCircles(yearsOld);
+        this.backBtnTarget.classList.remove('d-none'); // Shows the back button to reset the form
+        this.validForm = true;
       }
     })
   }
@@ -68,7 +80,7 @@ export default class extends Controller {
   colorCircles(years) {
     const circles = this.tableTarget.querySelectorAll('.year-circle');
     let delay = 0; // Initial delay in milliseconds
-    const delayIncrement = 50; // Delay increment for each circle to create the animation effect
+    const delayIncrement = 30; // Delay increment for each circle to create the animation effect
 
     circles.forEach(circle => {
       const circleYear = parseInt(circle.getAttribute('data-year'), 10);
@@ -77,12 +89,50 @@ export default class extends Controller {
           circle.classList.add('colored');
         }, delay);
         delay += delayIncrement;
+      } else {
+        circle.classList.remove('colored');
       }
     });
   }
 
   handleErrors(errors) {
-    console.log("Handling errors");
-    console.log(errors);
+    for (const [key, messages] of Object.entries(errors)) {
+      console.log(`Current error is: ${key}`);
+      const inputElement = this.element.querySelector(`[name="step1_data[${key}]"]`); // Based on simple form name of input
+      if (inputElement) {
+
+        const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
+        errorsContainer.classList.add('errors-container');
+
+        // Appends each message to the errorsContainer
+        messages.forEach(message => {
+          const errorMessage = document.createElement('span');
+          errorMessage.classList.add('error');
+          errorMessage.innerText = message;
+          errorsContainer.insertAdjacentElement('beforeend', errorMessage);
+        });
+
+        // Insert the errors container right after the input element
+        inputElement.parentNode.insertBefore(errorsContainer, inputElement.nextSibling);
+      }
+    }
+  }
+
+  clearErrors() {
+    const errorContainers = this.element.querySelectorAll('.errors-container'); // Includes multiples containers if present
+
+    errorContainers.forEach(container => {
+      container.remove();
+    });
+  }
+
+  resetForm(e) {
+    console.log(e);
+    this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
+    this.formTarget.reset();
+    this.titleTarget.innerText = 'Here is your whole life in years if you live until 90 years old:'
+    this.colorCircles(0); // Will set all the circles to white
+    this.backBtnTarget.classList.add('d-none');
+    this.validForm = false;
   }
 }
