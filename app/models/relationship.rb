@@ -1,13 +1,14 @@
 class Relationship < ApplicationRecord
   belongs_to :user, optional: true
 
-  validates :nickname, :relation_to, :date_of_birth, :meet_date, :contact_minutes_per_week, presence: true
+  validates :nickname, :relation_to, :date_of_birth, :meet_date, :contact_days, :contact_days_per, presence: true
   validate :meet_date_cannot_be_in_future
-  validates :contact_minutes_per_week, numericality: {less_than_or_equal_to: 10_080, message: "must be less than than 10080" }
+  # validates :contact_minutes_per_week, numericality: {less_than_or_equal_to: 10_080, message: "must be less than than 10080" }
+  # Later: we should implement validations dependent on whether contact_days_per is week/month/year.
 end
 
 def meet_date_cannot_be_in_future
   if meet_date > created_at
-    errors.add(:meet_date, "meet date cannot be in the future")
+    errors.add(:meet_date, "Meet date cannot be in the future")
   end
 end

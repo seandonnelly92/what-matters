@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_06_145603) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_06_161855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_145603) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "days", default: [], array: true
-    t.time "start_times", default: [], array: true
+    t.time "start_time"
     t.index ["relationship_id"], name: "index_habits_on_relationship_id"
     t.index ["user_id"], name: "index_habits_on_user_id"
   end
@@ -77,9 +77,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_145603) do
     t.string "relation_to"
     t.datetime "date_of_birth"
     t.datetime "meet_date"
-    t.integer "contact_minutes_per_week"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "contact_days"
+    t.string "contact_days_per"
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
