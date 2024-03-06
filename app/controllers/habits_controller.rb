@@ -4,6 +4,19 @@ class HabitsController < ApplicationController
 
   def new
     @habit = Habit.new
+    @categories = [
+      "Parents",
+      "Children",
+      "Relationship",
+      "Family",
+      "Friends",
+      "Giving Back",
+      "Creativity",
+      "Travel",
+      "Learning",
+      "Wellbeing",
+      "Sprituality",
+      "Pets"]
   end
 
   def create

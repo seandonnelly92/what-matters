@@ -1,23 +1,21 @@
+<div class="container col-6">
 <h2>Add a habit</h2>
 
 <%= simple_form_for(@habit) do |f| %>
-  <%= f.input :title, :label => 'I will:' %>
+  <%= f.input :title, :label => 'I will:', placeholder: "Call Mum, organise date night" %>
+  <p>I will do this every </p>
+  <%= f.input :week_recurrence, label: false, placeholder: "3" %>
+  <p>weeks</p>
+  <p>on these days: </p>
+  <%= f.input :days, label: false, as: :check_boxes, collection: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "Sunday"], label_method: Proc.new { |letter| letter.first }  %>
+  <%= f.input :start_times, :label => 'at these times:', placeholder: "08:00", as: :integer %>
+  <%# f.input :start_times, :label => 'at these times:', as: :time, default: Time.parse('8:00') %>
+  <button>Add more times</button>
+  <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
+  <%= f.input :category, :label => 'Habit category:', placeholder: "Partner", as: :select, collection: @categories %>
+  <%= f.input :trigger, :label => 'I will this before/during/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
+  <%= f.input :reward, :label => 'My reward for this is:', placeholder: "walking the dog, brushing teeth, dinner..." %>
+  <%= f.input :photo, :label => 'Add a photograph to this habit:', as: :file %>
   <%= f.submit %>
 <% end %>
-
-
-    t.string "title"
-    t.string "category"
-    t.string "identity_goal"
-    t.string "trigger"
-    t.string "reward"
-    t.integer "duration_in_minutes"
-    t.integer "week_recurrence"
-    t.integer "current_streak"
-    t.integer "best_streak"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "days", default: [], array: true
-    t.time "start_times", default: [], array: true
-    t.index ["relationship_id"], name: "index_habits_on_relationship_id"
-    t.index ["user_id"], name: "index_habits_on_user_id"
+</div>
