@@ -31,12 +31,17 @@ class MultistagesController < ApplicationController
   end
 
   def step2_submit
-    @relationship_params = params[:step2_data]
-    @relationship_params[:date_of_birth] = make_date(@relationship_params[:date_of_birth])
-    @relationship_params[:meet_date] = make_date(@relationship_params[:meet_date])
-    Relationship.new(relationship_params)
-    raise
-    redirect_to step2_output_multistages_path
+    custom_params = relationship_params
+    custom_params[:date_of_birth] = make_date(custom_params[:date_of_birth])
+
+    respond_to do |format|
+      format.json { render json: { data: custom_params }, status: :created }
+    end
+
+    # @relationship_params[:date_of_birth] = make_date(@relationship_params[:date_of_birth])
+    # @relationship_params[:meet_date] = make_date(@relationship_params[:meet_date])
+    # Relationship.new(relationship_params)
+    # redirect_to step2_output_multistages_path
   end
 
   def step2_output
@@ -52,7 +57,7 @@ class MultistagesController < ApplicationController
   end
 
   def relationship_params
-    params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :meet_date, :contact_minutes_per_week)
+    params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :contact_days, :contact_days_per, :meet_date)
   end
 
   def user_params

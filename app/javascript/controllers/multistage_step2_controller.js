@@ -22,7 +22,37 @@ export default class extends Controller {
     if (this.validForm) window.location.href = '/multistages/step2_output';
 
     const data = this.formDataJSON();
-    console.log(data);
+
+    fetch(`/multistages/step2_submit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": this.csrfToken // Include CSRF token
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // this.clearErrors();
+
+      if (data.errors) {
+        console.log("ERROR");
+        console.log(data.errors);
+        // this.handleErrors(data.errors);
+        // this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
+      } else {
+        console.log("SUCCESS");
+        console.log(data);
+
+        // const dateOfBirth = new Date(data.data);
+        // const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
+
+        // this.titleTarget.innerText = 'Here is how much you’ve used and how much you’ve got left:'
+        // this.colorCircles(yearsOld);
+        // this.backBtnTarget.classList.remove('d-none'); // Shows the back button to reset the form
+        // this.validForm = true;
+      }
+    })
   }
 
   formDataJSON() {
