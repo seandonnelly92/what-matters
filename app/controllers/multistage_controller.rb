@@ -20,6 +20,7 @@ class MultistageController < ApplicationController
   end
 
   def step2_output
-    @relation_data = session[:user_data][:step2]
+    @relation_data = session[:user_data]["step2"]
+    raise
   end
 end
