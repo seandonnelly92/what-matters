@@ -10,6 +10,8 @@
 
 require 'date'
 
+puts 'destroying all Relationships'
+Relationship.destroy_all
 puts 'destroying all Habits'
 Habit.destroy_all
 puts 'destroying all Users...'
@@ -33,7 +35,6 @@ scare_crow = User.create!(
   terms_agreed: true
 )
 
-
 tin_man = User.create!(
     email: "TinManz@example.com",
     encrypted_password: "password",
@@ -52,28 +53,30 @@ tin_man = User.create!(
 
 puts "Users seeded successfully."
 
-# puts 'seeding Relationships...'
+puts 'seeding Relationships...'
 
-# relationship_1 = Relationship.create!(
-#   user_id: scare_crow.id,
-#   nickname: "Big Scaredy Cat",
-#   relation_to: "Friend",
-#   date_of_birth: DateTime.new(2002, 8, 25),
-#   meet_date: DateTime.new(2012, 8, 25),
-# )
+relat_lion = Relationship.create!(
+  user_id: tin_man.id,
+  nickname: "Lion",
+  relation_to: "Friend",
+  date_of_birth: DateTime.new(2002, 8, 25),
+  meet_date: DateTime.new(2012, 8, 25),
+  contact_minutes_per_week: 30,
+  created_at: Time.current
+)
 
-# puts "relationship_1 created"
+puts 'relationship (Tin Man to Lion) creates successfully.'
 
 
 puts 'seeding Habits...'
 scare_crow_habit = Habit.create!(
   user_id: scare_crow.id,
   # relationship_id: relationship_1.id,
-  title: "Learn Times Tables",
+  title: "learn my times tables",
   category: "Learning",
-  identity_goal: "Be a learner",
-  trigger: "Before breakfast",
-  reward: "Give myself a snack",
+  identity_goal: "a mathematician",
+  trigger: "before breakfast",
+  reward: "a snack",
   duration_in_minutes: 15,
   week_recurrence: 3,
   current_streak: 0,
@@ -85,11 +88,11 @@ scare_crow_habit = Habit.create!(
 tin_man_habit = Habit.create!(
   user_id: tin_man.id,
   # relationship_id: null,
-  title: "Give my best friend a call",
+  title: "give my best friend a call",
   category: "Friends",
-  identity_goal: "Be a better friend",
-  trigger: "Before I polish my hat",
-  reward: "Give myself a snack",
+  identity_goal: "a better friend",
+  trigger: "after I brush my teeth",
+  reward: "watch a film",
   duration_in_minutes: 20,
   week_recurrence: 1,
   current_streak: 0,
@@ -99,3 +102,69 @@ tin_man_habit = Habit.create!(
 )
 
 puts 'Habits seeded successfully.'
+
+puts 'seeding Logs...'
+
+scare_crow_habit_dates = [
+  "2024-01-29 06:00:00",
+  "2024-01-31 06:00:00",
+  "2024-02-02 06:00:00",
+  "2024-02-05 06:00:00",
+  "2024-02-07 06:00:00",
+  "2024-02-09 06:00:00",
+  "2024-02-12 06:00:00",
+  "2024-02-14 06:00:00",
+  "2024-02-16 06:00:00",
+  "2024-02-19 06:00:00",
+  "2024-02-21 06:00:00",
+  "2024-02-23 06:00:00",
+  "2024-02-26 06:00:00",
+  "2024-02-28 06:00:00",
+  "2024-03-01 06:00:00",
+  "2024-03-04 06:00:00",
+  "2024-03-06 06:00:00",
+  "2024-03-08 06:00:00",
+  "2024-03-11 06:00:00",
+  "2024-03-13 06:00:00"
+]
+
+random_number = rand
+
+scare_crow_habit_dates.each do |datetime|
+  Log.create!(
+    habit_id: scare_crow_habit.id,
+    date_time: datetime,
+    ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
+    completed: random_number <= 0.9,
+    created_at: datetime,
+    updated_at: datetime
+  )
+end
+
+
+tin_man_habit_dates = [
+  "2023-12-20 11:00:00",
+  "2024-01-06 11:00:00",
+  "2024-01-13 11:00:00",
+  "2024-01-20 11:00:00",
+  "2024-01-27 11:00:00",
+  "2024-02-03 11:00:00",
+  "2024-02-10 11:00:00",
+  "2024-02-17 11:00:00",
+  "2024-02-24 11:00:00",
+  "2024-03-02 11:00:00"
+]
+
+tin_man_habit_dates.each do |datetime|
+  Log.create!(
+    habit_id: tin_man_habit.id,
+    date_time: datetime,
+    ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
+    completed: random_number <= 0.8,
+    created_at: datetime,
+    updated_at: datetime
+  )
+end
+
+
+puts "Logs seeded successfully."
