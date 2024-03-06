@@ -1,15 +1,12 @@
-<div class="container mt-3">
-  <h3>Here is your whole life in years if you live until 90 years old:</h3>
-  <table >
-    <tr>
-      <td><div class="year-circle"></div></td>
-    </tr>
-  </table>
-  <%= simple_form_for :step1_data, url: step1_submit_multistage_index_path do |f| %>
+<div class="container step1 mt-3" data-controller="multistage-step1">
+  <h3 data-multistage-step1-target="title">Here is your whole life in years if you live until 90 years old:</h3>
+  <table data-multistage-step1-target="table"></table>
+
+  <%= simple_form_for :step1_data, url: step1_submit_multistage_index_path, html: { data: { action: "submit->multistage-step1#DoBSubmission" } } do |f| %>
     <%= f.input :date_of_birth,
       label: "What is your date of birth?", # Reflects custom label
       as: :string,
-      input_html: { data: { controller: "datepicker" } } %>
+      input_html: { data: { controller: "datepicker", "multistage-step1-target": "dateOfBirth" } } %>
     <%= f.button :submit, "Next", class: "primary-btn" %>
   <% end %>
 </div>
