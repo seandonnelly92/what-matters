@@ -1,4 +1,4 @@
-<div class="container col-6">
+<div class="container col-6 my-5">
 <h2>Add a habit</h2>
 
 <%= simple_form_for(@habit) do |f| %>
@@ -8,8 +8,7 @@
   <p>weeks</p>
   <p>on these days: </p>
   <%= f.input :days, label: false, as: :check_boxes, collection: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "Sunday"], label_method: Proc.new { |letter| letter.first }  %>
-  <%= f.input :start_times, :label => 'at these times:', placeholder: "08:00", as: :integer %>
-  <%# f.input :start_times, :label => 'at these times:', as: :time, default: Time.parse('8:00') %>
+  <%= f.time_select :start_times, {ampm: true}, {class: 'form-control'} %>
   <button>Add more times</button>
   <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
   <%= f.input :category, :label => 'Habit category:', placeholder: "Partner", as: :select, collection: @categories %>
