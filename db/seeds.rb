@@ -103,8 +103,6 @@ tin_man_habit = Habit.create!(
 
 puts 'Habits seeded successfully.'
 
-puts Habit.all
-
 puts 'seeding Logs...'
 
 scare_crow_habit_dates = [
@@ -130,19 +128,19 @@ scare_crow_habit_dates = [
   "2024-03-13 06:00:00"
 ]
 
+random_number = rand
 
 scare_crow_habit_dates.each do |datetime|
   Log.create!(
     habit_id: scare_crow_habit.id,
     date_time: datetime,
-    completed: true,
+    ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
+    completed: random_number <= 0.9,
     created_at: datetime,
     updated_at: datetime
   )
 end
 
-
-puts "Scare Crow Habit Logs seeded successfully..."
 
 tin_man_habit_dates = [
   "2023-12-20 11:00:00",
@@ -161,11 +159,12 @@ tin_man_habit_dates.each do |datetime|
   Log.create!(
     habit_id: tin_man_habit.id,
     date_time: datetime,
-    completed: true,
+    ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
+    completed: random_number <= 0.8,
     created_at: datetime,
     updated_at: datetime
   )
 end
 
 
-puts "Tin Man Habit Logs seeded successfully..."
+puts "Logs seeded successfully."
