@@ -11,7 +11,7 @@ class HabitsController < ApplicationController
     if @habit.save
       redirect_to habit_path(@habit)
     else
-      render 'lists/show', status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
       # Not sure what to do here. Reload page but keep values?
     end
   end

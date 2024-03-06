@@ -1,3 +1,23 @@
 <h2>Add a habit</h2>
 
+<%= simple_form_for(@habit) do |f| %>
+  <%= f.input :title, :label => 'I will:' %>
+  <%= f.submit %>
+<% end %>
 
+
+    t.string "title"
+    t.string "category"
+    t.string "identity_goal"
+    t.string "trigger"
+    t.string "reward"
+    t.integer "duration_in_minutes"
+    t.integer "week_recurrence"
+    t.integer "current_streak"
+    t.integer "best_streak"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "days", default: [], array: true
+    t.time "start_times", default: [], array: true
+    t.index ["relationship_id"], name: "index_habits_on_relationship_id"
+    t.index ["user_id"], name: "index_habits_on_user_id"
