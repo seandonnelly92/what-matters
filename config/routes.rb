@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :habit
-  resources :relationship, only: %i[new create delete]
+  resources :habits
+  resources :relationships, only: %i[new create delete]
 
-  resources :multistage, only: %i[new create] do
+  resources :multistages, only: %i[new create] do
     collection do
       get 'step1_input'
       post 'step1_submit'
