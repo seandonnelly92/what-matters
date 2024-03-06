@@ -53,10 +53,10 @@ export default class extends Controller {
     .then(response => response.json())
     .then(data => {
       this.clearErrors();
+      this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
 
       if (data.errors) {
         this.handleErrors(data.errors);
-        this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
       } else {
         const dateOfBirth = new Date(data.data);
         const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
@@ -124,9 +124,7 @@ export default class extends Controller {
     });
   }
 
-  resetForm(e) {
-    console.log(e);
-    this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
+  resetForm() {
     this.formTarget.reset();
     this.titleTarget.innerText = 'Here is your whole life in years if you live until 90 years old:'
     this.colorCircles(0); // Will set all the circles to white

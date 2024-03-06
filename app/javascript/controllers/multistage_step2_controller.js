@@ -3,13 +3,12 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="multistage-step2"
 export default class extends Controller {
   static targets = [
-    "form"
+    "form",
+    "submitBtn"
   ]
 
   connect() {
     console.log("Hello from the multistage step2 controller!");
-
-    let validForm = false;
 
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
@@ -17,9 +16,6 @@ export default class extends Controller {
 
   submitForm(e) {
     e.preventDefault();
-    console.log(e);
-
-    if (this.validForm) window.location.href = '/multistages/step2_output';
 
     const data = this.formDataJSON();
 
@@ -33,24 +29,16 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
-      // this.clearErrors();
+      this.clearErrors();
+      this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
 
       if (data.errors) {
-        console.log("ERROR");
+        // console.log("ERROR");
         console.log(data.errors);
-        // this.handleErrors(data.errors);
-        // this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
+        this.handleErrors(data.errors);
       } else {
-        console.log("SUCCESS");
         console.log(data);
-
-        // const dateOfBirth = new Date(data.data);
-        // const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
-
-        // this.titleTarget.innerText = 'Here is how much you’ve used and how much you’ve got left:'
-        // this.colorCircles(yearsOld);
-        // this.backBtnTarget.classList.remove('d-none'); // Shows the back button to reset the form
-        // this.validForm = true;
+        // window.location.href = '/multistages/step2_output';
       }
     })
   }
@@ -65,5 +53,33 @@ export default class extends Controller {
         meet_date: this.formTarget.querySelector(`[name="step2_data[meet_date]"]`).value
       }
     };
+  }
+
+  handleErrors(errors) {
+    for (const [key, messages] of Object.entries(errors)) {
+      const inputElement = this.element.querySelector(`[name="step2_data[${key}]"]`); // Based on simple form name of input
+      if (inputElement) {
+
+        const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
+        errorsContainer.classList.add('errors-container');
+
+        // Adds the first message to the errorsContainer (we show one error at a time)
+        const errorMessage = document.createElement('span');
+        errorMessage.classList.add('error');
+        errorMessage.innerText = messages[0];
+        errorsContainer.insertAdjacentElement('beforeend', errorMessage);
+
+        // Insert the errors container right after the input element
+        inputElement.parentNode.insertBefore(errorsContainer, inputElement.nextSibling);
+      }
+    }
+  }
+
+  clearErrors() {
+    const errorContainers = this.element.querySelectorAll('.errors-container'); // Includes multiples containers if present
+
+    errorContainers.forEach(container => {
+      container.remove();
+    });
   }
 }
