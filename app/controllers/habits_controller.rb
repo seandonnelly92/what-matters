@@ -16,6 +16,14 @@ class HabitsController < ApplicationController
     end
   end
 
+  def tracker
+    puts "connected to tracker"
+  end
+
+  def show
+    puts "connected"
+  end
+
   private
 
   def habit_params
