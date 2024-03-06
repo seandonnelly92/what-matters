@@ -13,4 +13,8 @@ class User < ApplicationRecord
   validates :work_days_per_week, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 7, message: "must be less than or equal to 7" }
   validates :work_hours_per_day, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 24, message: "must be less than or equal to 24" }
   validates :sleep_hours_per_day, numericality: {greater_than_or_equal_to: 0, message: "must be greater than 0" }
+
+  def date_of_birth_valid?
+    validates :date_of_birth, presence: true
+  end
 end
