@@ -4,6 +4,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [
     "form",
+    "nicknameInput",
+    "meetdateLabel",
     "submitBtn"
   ]
 
@@ -81,5 +83,11 @@ export default class extends Controller {
     errorContainers.forEach(container => {
       container.remove();
     });
+  }
+
+  updateMeetdateLabel(e) {
+    const nickname = this.nicknameInputTarget.value;
+    const labelText = nickname ? `How long has ${nickname} been important to you?` : "How long has ... been important to you?";
+    this.meetdateLabelTarget.innerText = labelText;
   }
 }
