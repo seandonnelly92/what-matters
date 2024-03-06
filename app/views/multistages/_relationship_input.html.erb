@@ -3,7 +3,7 @@
 
   <%= simple_form_for :step2_data, url: step2_submit_multistages_path, html: { data: { action: "submit->multistage-step2#submitForm", "multistage-step2-target": "form" } } do |f| %>
     <%= f.input :nickname, as: :string, label: "What do you call them?" %>
-    <%= f.input :relation_to, as: :select, collection: relationship.relation_to, label: "What is their relationship to you?"%>
+    <%= f.input :relation_to, as: :select, collection: Relationship.relation_to_options, label: "What is their relationship to you?"%>
     <%= f.input :date_of_birth,
         label: "What is their date of birth?", # Reflects custom label
         as: :string,
@@ -13,7 +13,7 @@
     <div class="input-group">
       <%= f.input :contact_days, as: :integer, placeholder: "1", label: false %>
         <p class="form-p">day(s) per</p>
-      <%= f.input :contact_days_per, as: :select, collection: relationship.contact_days_per, label: false %>
+      <%= f.input :contact_days_per, as: :select, collection: Relationship.contact_days_per_options, label: false %>
     </div>
 
 

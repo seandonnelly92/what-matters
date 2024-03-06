@@ -5,17 +5,17 @@ class MultistagesController < ApplicationController
   end
 
   def step1_submit
-    date_of_birth = user_params[:date_of_birth] # Gets the date_of_birth as a string from the params
+    custom_params = user_params
+    unless custom_params[:date_of_birth].empty?
+      date_of_birth = make_date(custom_params[:date_of_birth])
+      custom_params[:date_of_birth] = date_of_birth
+    end
+
     session[:user_data] ||= {}
-    session[:user_data][:step1] = user_params
+    session[:user_data][:step1] = custom_params
 
     @user = User.new
-
-    unless date_of_birth.empty?
-      date_array = date_of_birth.split("-")
-      date_array.map!(&:to_i)
-      @user.date_of_birth = DateTime.new(date_array[0], date_array[1], date_array[2])
-    end
+    @user.date_of_birth = date_of_birth if date_of_birth
 
     respond_to do |format|
       if @user.valid?(:step1_valid)
@@ -27,7 +27,6 @@ class MultistagesController < ApplicationController
   end
 
   def step2_input
-    @relationship = Relationship.new
   end
 
   def step2_submit
@@ -36,10 +35,12 @@ class MultistagesController < ApplicationController
     custom_params[:date_of_birth] = make_date(custom_params[:date_of_birth]) unless custom_params[:date_of_birth].empty?
     custom_params[:meet_date] = years_to_date(custom_params[:meet_date].to_i) unless custom_params[:meet_date].empty?
 
+    session[:user_data][:step2] = custom_params
+
     @relationship = Relationship.new(custom_params)
 
     respond_to do |format|
-      if @relationship.save
+      if @relationship.valid?
         format.json { render json: { data: custom_params }, status: :created }
       else
         format.json { render json: { errors: @relationship.errors }, status: :unprocessable_entity }

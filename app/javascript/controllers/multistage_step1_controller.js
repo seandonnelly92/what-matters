@@ -104,13 +104,11 @@ export default class extends Controller {
         const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
         errorsContainer.classList.add('errors-container');
 
-        // Appends each message to the errorsContainer
-        messages.forEach(message => {
-          const errorMessage = document.createElement('span');
-          errorMessage.classList.add('error');
-          errorMessage.innerText = message;
-          errorsContainer.insertAdjacentElement('beforeend', errorMessage);
-        });
+        // Adds the first message to the errorsContainer (we show one error at a time)
+        const errorMessage = document.createElement('span');
+        errorMessage.classList.add('error');
+        errorMessage.innerText = messages[0];
+        errorsContainer.insertAdjacentElement('beforeend', errorMessage);
 
         // Insert the errors container right after the input element
         inputElement.parentNode.insertBefore(errorsContainer, inputElement.nextSibling);
