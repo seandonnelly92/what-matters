@@ -52,28 +52,40 @@ tin_man = User.create!(
 
 puts "Users seeded successfully."
 
-# puts 'seeding Relationships...'
+puts 'seeding Relationships...'
 
-# relationship_1 = Relationship.create!(
+relat_lion = Relationship.create!(
+  user_id: tin_man.id,
+  nickname: "Lion",
+  relation_to: "Friend",
+  date_of_birth: DateTime.new(2002, 8, 25),
+  meet_date: DateTime.new(2012, 8, 25),
+  contact_minutes_per_week: 30,
+  created_at: Time.current
+)
+
+# relat_dorothy = Relationship.create!(
 #   user_id: scare_crow.id,
-#   nickname: "Big Scaredy Cat",
+#   nickname: "Lion",
 #   relation_to: "Friend",
 #   date_of_birth: DateTime.new(2002, 8, 25),
 #   meet_date: DateTime.new(2012, 8, 25),
+#   contact_minutes_per_week: 30,
+#   created_at: Time.current
 # )
 
-# puts "relationship_1 created"
+puts "relationship_1 created"
 
 
 puts 'seeding Habits...'
 scare_crow_habit = Habit.create!(
   user_id: scare_crow.id,
   # relationship_id: relationship_1.id,
-  title: "Learn Times Tables",
+  title: "learn my times tables",
   category: "Learning",
-  identity_goal: "Be a learner",
-  trigger: "Before breakfast",
-  reward: "Give myself a snack",
+  identity_goal: "a mathematician",
+  trigger: "before breakfast",
+  reward: "a snack",
   duration_in_minutes: 15,
   week_recurrence: 3,
   current_streak: 0,
@@ -85,11 +97,11 @@ scare_crow_habit = Habit.create!(
 tin_man_habit = Habit.create!(
   user_id: tin_man.id,
   # relationship_id: null,
-  title: "Give my best friend a call",
+  title: "give my best friend a call",
   category: "Friends",
-  identity_goal: "Be a better friend",
-  trigger: "Before I polish my hat",
-  reward: "Give myself a snack",
+  identity_goal: "a better friend",
+  trigger: "after I brush my teeth",
+  reward: "watch a film",
   duration_in_minutes: 20,
   week_recurrence: 1,
   current_streak: 0,
