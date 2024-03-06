@@ -6,7 +6,8 @@
     <%= f.input :relation_to, as: :select, collection: relationship.relation_to, label: "What is their relationship to you?"%>
     <%= f.input :date_of_birth,
         label: "What is their date of birth?", # Reflects custom label
-        as: :string %>
+        as: :string,
+        input_html: { data: { controller: "datepicker" } } %>
 
     <%= f.label :contact_days, "How much quality time do you spend together these days?" %>
     <div class="input-group">

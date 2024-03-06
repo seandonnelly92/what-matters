@@ -19,11 +19,10 @@ export default class extends Controller {
     e.preventDefault();
     console.log(e);
 
-    console.log();
-
-    const data = formDataJSON();
-
     if (this.validForm) window.location.href = '/multistages/step2_output';
+
+    const data = this.formDataJSON();
+    console.log(data);
   }
 
   formDataJSON() {
