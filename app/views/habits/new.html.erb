@@ -1,0 +1,8 @@
+<h2>Add a habit</h2>
+
+<%= simple_form_for(habit) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :address %>
+  <%= f.input :rating %>
+  <%= f.submit %>
+<% end %>
