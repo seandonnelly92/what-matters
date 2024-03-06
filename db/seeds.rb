@@ -82,7 +82,7 @@ scare_crow_habit = Habit.create!(
   current_streak: 0,
   best_streak: 0,
   days: ["Monday", "Wednesday", "Friday"],
-  start_times: ["06:00", "06:00", "06:00"],
+  start_time: "2024-03-06 17:15:00.000000000 +0000",
 )
 
 tin_man_habit = Habit.create!(
@@ -98,7 +98,7 @@ tin_man_habit = Habit.create!(
   current_streak: 0,
   best_streak: 0,
   days: ["Saturday"],
-  start_times: ["11:00"],
+  start_time: "2024-03-06 17:15:00.000000000 +0000",
 )
 
 puts 'Habits seeded successfully.'
