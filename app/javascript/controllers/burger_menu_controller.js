@@ -80,8 +80,10 @@ export default class extends Controller {
 
     if (this.menuWindowTarget.classList.contains("menu-open")) {
       document.addEventListener("click", this.closeMenu, true);
+      this.innerBar();
     } else {
       document.removeEventListener("click", this.closeMenu, true);
+      this.innerBurger();
     }
   }
 
@@ -90,6 +92,15 @@ export default class extends Controller {
       !this.menuButtonTarget.contains(e.target)) {
       this.menuWindowTarget.classList.remove("menu-open");
       document.removeEventListener("click", this.closeMenu, true);
+      this.innerBurger();
     }
+  }
+
+  innerBurger() {
+    this.menuButtonTarget.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  }
+
+  innerBar() {
+    this.menuButtonTarget.innerHTML = '<div class="menu-bar"></div>';
   }
 }
