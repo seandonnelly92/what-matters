@@ -15,8 +15,7 @@
   height: 100vh; // Set the container height to 100% of the viewport height
   // display: flex; // Use flexbox to align items vertically
   justify-content: center; // Center the items horizontally
-
-
+  flex-direction: column-reverse;
 }
 
 .logs-container {
@@ -27,9 +26,4 @@
   overflow-y: auto; // Add vertical scrollbar if content overflows
   margin-left: auto; // Push the logs-container to the right
   margin-right: 10%; // Adjust the right margin as needed
-}
-
-#left-column {
-  left: 0;
-  // position: fixed;
 }
