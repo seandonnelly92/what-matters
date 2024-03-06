@@ -1,13 +1,18 @@
-<h1>Connected to tracker</h1>
+
 
 <div class = "container">
-  <div class = "row">
-    <div class = "col-6">Column 1</div>
-    <div class = "col-4">
-    <% @scare_crow_habits.each do |habit| %>
-      <%= render 'habits/habit_card', habit: habit %>
-    <% end %>
-    </div>
-     <div class = "col-2">Column 3</div>
+  <div class = "row" id = "main-row">
+    <div class = "col-2" id = "left-column">Column 1</div>
+    <div class = "col-8">
+        <div class = "row" id = "logs-container">
+          <h2><%= @scare_crow.first_name %> <%= @scare_crow.last_name %>'s Habit Logs:</h2>
+            <% @scare_crow_habits.each do |habit| %>
+              <%= render 'habits/habit_card', habit: habit %>
+            <% end %>
+          </div>
+        <div class = "row" id = "bottom row"></div>
+          Bottom Row
+      </div>
+    <div class = "col-2" id = "right-column">Column 3</div>
   </div>
 </div>
