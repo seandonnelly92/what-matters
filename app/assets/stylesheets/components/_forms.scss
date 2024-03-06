@@ -1,0 +1,86 @@
+.simple_form {
+  width: 340px
+}
+
+// INPUTS
+
+// Inputs - unfocussed/general
+.form-control, .form-select, .form-check-input {
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
+  color: $blue;
+  height: 48px;
+  border: none;
+  border-radius: 5px 5px 1px 1px;
+  border-bottom: solid 1px rgba($color: #747474, $alpha: 0.5);
+}
+
+// Inputs - placeholder text
+.form-control::placeholder, .form-select::placeholder, .form-check-input::placeholder {
+  color: rgba($color: #747474, $alpha: 0.5);
+}
+
+// Inputs - focussed
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+  background-color: rgba($color: #ffffff, $alpha: 0.9);
+  color: $blue;
+  box-shadow: none;
+  border-bottom: solid 2px $blue;
+}
+
+// LABELS
+
+.simple_form, .simple_form > p {
+  color: $font-color
+}
+
+/* DAYS OF WEEK PICKER */
+
+/* Container of checkboxes */
+.days-checkboxes {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+/* Day labels */
+.days-checkboxes label {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5); /* Adjusted background color */
+  text-align: center;
+  line-height: 40px; /* Adjusted line-height */
+  cursor: pointer;
+  color: rgba(116, 116, 116, 0.5); /* Adjusted text color */
+}
+
+/* Hide the checkbox itself */
+.days-checkboxes input[type="checkbox"] {
+  display: none;
+}
+
+// Change the colour of the circle if checked
+.days-checkboxes input[type="checkbox"]:checked + label {
+  background: $blue;
+  color: white;
+}
+
+
+// BUTTON
+
+.simple_form input[type="submit"] {
+  background-color: $blue; // Primary variable
+  color: white;
+  height: 48px;
+  width: 100%;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.simple_form input[type="submit"]:hover {
+  background-color: rgba($blue, 0.9);
+}

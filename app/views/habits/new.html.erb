@@ -1,4 +1,4 @@
-<div class="container col-6 my-5">
+<div class="container my-5 justify-content-center">
 <h2>Add a habit</h2>
 
 <%= simple_form_for(@habit) do |f| %>
@@ -7,7 +7,16 @@
   <%= f.input :week_recurrence, label: false, placeholder: "3" %>
   <p>week/s on these days:</p>
   <% days_of_week = Date::DAYNAMES.rotate(1).map { |day| day[0] } %>
-  <%= f.input :days_of_week, as: :check_boxes, collection: days_of_week, label: false %>
+  <%# Days of the week toggles %>
+    <div class="days-checkboxes">
+      <% days_of_week.each do |day| %>
+        <%= f.check_box :days_of_week, { multiple: true, id: "day_#{day.downcase}", }, day.downcase %>
+        <%= label_tag "day_#{day.downcase}" do %>
+          <span class="day-circle" id="day-circle-<%= day.downcase %>"><%= day %></span>
+        <% end %>
+      <% end %>
+    </div>
+
   <%= f.input :start_time, :label => 'at: ' %>
   <%= f.input :duration_in_minutes, :label => 'It will take around', placeholder: "15" %>
   <p>minutes.</p>
@@ -21,4 +30,4 @@
 </div>
 
 
-  <%# <%= f.input :identity_goal, as: :datetime, html5: true, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %> %>
+  <%# <%= f.input :identity_goal, as: :datetime, html5: true, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
