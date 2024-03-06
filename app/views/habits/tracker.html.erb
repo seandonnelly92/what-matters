@@ -1,1 +1,13 @@
-<h1>COnnected to tracker</h1>
+<h1>Connected to tracker</h1>
+
+<div class = "container">
+  <div class = "row">
+    <div class = "col-6">Column 1</div>
+    <div class = "col-4">
+    <% @scare_crow_habits.each do |habit| %>
+      <%= render 'habits/habit_card', habit: habit %>
+    <% end %>
+    </div>
+     <div class = "col-2">Column 3</div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card-header">
+    <%= habit %>
+    <h2>Logs:</h2>
+    <% habit.logs.each do  |log|%>
+      <p><%= habit.title %></p>
+      <p><%= log.date_time %></p>
+      <p><%= log.completed %></p>
+    <% end %>
+  </div>
+</div>

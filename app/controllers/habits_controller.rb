@@ -18,6 +18,11 @@ class HabitsController < ApplicationController
 
   def tracker
     puts "connected to tracker"
+    @scare_crow = User.find_by(first_name: "Scare")
+    @scare_crow_habits = Habit.where(user_id: 1)
+
+    # @scare_crow_logs = Habit.Log.all
+    # @scare_crow_habit.logs
   end
 
   def show
