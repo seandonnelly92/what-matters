@@ -10,6 +10,8 @@
 
 require 'date'
 
+puts 'destroying all Relationships'
+Relationship.destroy_all
 puts 'destroying all Habits'
 Habit.destroy_all
 puts 'destroying all Users...'
@@ -32,7 +34,6 @@ scare_crow = User.create!(
   sleep_hours_per_day: 10,
   terms_agreed: true
 )
-
 
 tin_man = User.create!(
     email: "TinManz@example.com",
@@ -64,17 +65,7 @@ relat_lion = Relationship.create!(
   created_at: Time.current
 )
 
-# relat_dorothy = Relationship.create!(
-#   user_id: scare_crow.id,
-#   nickname: "Lion",
-#   relation_to: "Friend",
-#   date_of_birth: DateTime.new(2002, 8, 25),
-#   meet_date: DateTime.new(2012, 8, 25),
-#   contact_minutes_per_week: 30,
-#   created_at: Time.current
-# )
-
-puts "relationship_1 created"
+puts 'relationship (Tin Man to Lion) creates successfully.'
 
 
 puts 'seeding Habits...'
@@ -111,3 +102,70 @@ tin_man_habit = Habit.create!(
 )
 
 puts 'Habits seeded successfully.'
+
+puts Habit.all
+
+puts 'seeding Logs...'
+
+scare_crow_habit_dates = [
+  "2024-01-29 06:00:00",
+  "2024-01-31 06:00:00",
+  "2024-02-02 06:00:00",
+  "2024-02-05 06:00:00",
+  "2024-02-07 06:00:00",
+  "2024-02-09 06:00:00",
+  "2024-02-12 06:00:00",
+  "2024-02-14 06:00:00",
+  "2024-02-16 06:00:00",
+  "2024-02-19 06:00:00",
+  "2024-02-21 06:00:00",
+  "2024-02-23 06:00:00",
+  "2024-02-26 06:00:00",
+  "2024-02-28 06:00:00",
+  "2024-03-01 06:00:00",
+  "2024-03-04 06:00:00",
+  "2024-03-06 06:00:00",
+  "2024-03-08 06:00:00",
+  "2024-03-11 06:00:00",
+  "2024-03-13 06:00:00"
+]
+
+
+scare_crow_habit_dates.each do |datetime|
+  Log.create!(
+    habit_id: scare_crow_habit.id,
+    date_time: datetime,
+    completed: true,
+    created_at: datetime,
+    updated_at: datetime
+  )
+end
+
+
+puts "Scare Crow Habit Logs seeded successfully..."
+
+tin_man_habit_dates = [
+  "2023-12-20 11:00:00",
+  "2024-01-06 11:00:00",
+  "2024-01-13 11:00:00",
+  "2024-01-20 11:00:00",
+  "2024-01-27 11:00:00",
+  "2024-02-03 11:00:00",
+  "2024-02-10 11:00:00",
+  "2024-02-17 11:00:00",
+  "2024-02-24 11:00:00",
+  "2024-03-02 11:00:00"
+]
+
+tin_man_habit_dates.each do |datetime|
+  Log.create!(
+    habit_id: tin_man_habit.id,
+    date_time: datetime,
+    completed: true,
+    created_at: datetime,
+    updated_at: datetime
+  )
+end
+
+
+puts "Tin Man Habit Logs seeded successfully..."
