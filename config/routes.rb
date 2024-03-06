@@ -17,7 +17,6 @@ Rails.application.routes.draw do
     collection do
       get 'step1_input'
       post 'step1_submit'
-      get 'step1_output'
       get 'step2_input'
       post 'step2_submit'
       get 'step2_output'

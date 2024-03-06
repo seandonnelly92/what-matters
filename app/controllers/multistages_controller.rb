@@ -26,9 +26,6 @@ class MultistagesController < ApplicationController
     end
   end
 
-  def step1_output
-  end
-
   def step2_input
     @relationship = Relationship.new
   end
@@ -57,7 +54,7 @@ class MultistagesController < ApplicationController
   def relationship_params
     params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :meet_date, :contact_minutes_per_week)
   end
-  
+
   def user_params
     params.require(:user).permit(:date_of_birth)
   end

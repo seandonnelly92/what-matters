@@ -1,0 +1,17 @@
+// input-group is used for the form-items that are on the same row next to each other
+.input-group {
+  display: flex;
+  height: fit-content;
+  align-items: center;
+
+  #form-gap {
+    width: 16px;
+    flex-grow: 0;
+  }
+}
+
+.form-p {
+  height: fit-content;
+  margin: 0 8px !important;
+  line-height: 1.5;
+}

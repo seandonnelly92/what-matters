@@ -1,5 +1,5 @@
 class Relationship < ApplicationRecord
-  attr_reader :relation_to
+  attr_reader :relation_to, :contact_days_per
 
   belongs_to :user, optional: true
 
@@ -10,6 +10,7 @@ class Relationship < ApplicationRecord
   def initialize(attr = {})
     super(attr)
     @relation_to = %w[Parent Partner Child Family Friend]
+    @contact_days_per = %w[Week Month Year]
   end
 
   def meet_date_cannot_be_in_future
