@@ -32,10 +32,18 @@ class MultistagesController < ApplicationController
 
   def step2_submit
     custom_params = relationship_params
-    custom_params[:date_of_birth] = make_date(custom_params[:date_of_birth])
+
+    custom_params[:date_of_birth] = make_date(custom_params[:date_of_birth]) unless custom_params[:date_of_birth].empty?
+    custom_params[:meet_date] = years_to_date(custom_params[:meet_date].to_i) unless custom_params[:meet_date].empty?
+
+    @relationship = Relationship.new(custom_params)
 
     respond_to do |format|
-      format.json { render json: { data: custom_params }, status: :created }
+      if @relationship.save
+        format.json { render json: { data: custom_params }, status: :created }
+      else
+        format.json { render json: { errors: @relationship.errors }, status: :unprocessable_entity }
+      end
     end
 
     # @relationship_params[:date_of_birth] = make_date(@relationship_params[:date_of_birth])
@@ -54,6 +62,12 @@ class MultistagesController < ApplicationController
     date_array = date.split("-")
     date_array.map!(&:to_i)
     DateTime.new(date_array[0], date_array[1], date_array[2])
+  end
+
+  def years_to_date(years)
+    meet_date = DateTime.current
+    meet_date.change(year: (meet_date.year - years))
+    meet_date
   end
 
   def relationship_params
