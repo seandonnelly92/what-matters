@@ -36,8 +36,25 @@ export default class extends Controller {
     const dateOfBirth = new Date(this.dateOfBirthTarget.value);
     const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
 
-    this.titleTarget.innerText = 'Here is how much you’ve used and how much you’ve got left:'
-    this.colorCircles(yearsOld);
+    const data = { user: { date_of_birth: this.dateOfBirthTarget.value } };
+
+    fetch(`/multistage/step1_submit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": this.csrfToken // Include CSRF token
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.errors) {
+        this.handleErrors(data.errors);
+      } else {
+        this.titleTarget.innerText = 'Here is how much you’ve used and how much you’ve got left:'
+        this.colorCircles(yearsOld);
+      }
+    })
   }
 
   differenceInYears(date1, date2) {
@@ -62,5 +79,10 @@ export default class extends Controller {
         delay += delayIncrement;
       }
     });
+  }
+
+  handleErrors(errors) {
+    console.log("Handling errors");
+    console.log(errors);
   }
 }
