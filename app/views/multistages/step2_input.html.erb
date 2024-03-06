@@ -1,6 +1,1 @@
-<h1>Tell us about someone you care about deeply</h1>
-
-<%= simple_form_for :step2_data, url: step2_submit_multistages_path do |f| %>
-  <%= f.input :date_of_birth, as: :date %>
-  <%= f.button :submit, "Next", class: "primary-btn" %>
-<% end %>
+<%= render 'relationship_input', relationship: @relationship %>
