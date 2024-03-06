@@ -4,7 +4,9 @@ class MultistageController < ApplicationController
 
   def step1_submit
     session[:user_data] ||= {}
-    session[:user_data][:step1] = params[:step1_data]
+    @date_of_birth = (session[:user_data][:step1] = params[:step1_data])
+    @user = User.new
+    # @user.date_of_birth = session[:user_data]["step1"]
     redirect_to step1_output_multistage_index_path
   end
 
@@ -21,6 +23,5 @@ class MultistageController < ApplicationController
 
   def step2_output
     @relation_data = session[:user_data]["step2"]
-    raise
   end
 end
