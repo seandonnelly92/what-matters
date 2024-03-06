@@ -1,4 +1,6 @@
 class HabitsController < ApplicationController
+  skip_before_action :authenticate_user!
+  # Remove this skip later
 
   def new
     @habit = Habit.new
