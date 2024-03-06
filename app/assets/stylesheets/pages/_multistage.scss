@@ -17,7 +17,12 @@ table {
   height: 25px;
   width: 25px;
   background-color: white;
+  transition: background-color 0.3s ease-in-out; // This will be used when the .colored class is added
 
   border: 1px solid $blue;
   border-radius: 50%;
+
+  &.colored {
+    background-color: $blue;
+  }
 }
