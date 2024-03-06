@@ -1,5 +1,8 @@
 class RelationshipsController < ApplicationController
+  def new
+    @relationship = Relationship.new
+  end
+
   def create
-    @relationship.new()
   end
 end
