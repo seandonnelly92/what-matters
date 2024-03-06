@@ -19,6 +19,7 @@ class HabitsController < ApplicationController
   private
 
   def habit_params
-    params.require(:habit).permit(:title, :category, :identity_goal, :trigger, :reward, :duration_in_minutes, :week_recurrence, :days, :start_times)
+    params.require(:habit).permit(:title, :category, :identity_goal, :trigger,
+    :reward, :duration_in_minutes, :week_recurrence, :days, :start_times, :photo)
   end
 end
