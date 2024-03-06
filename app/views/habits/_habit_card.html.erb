@@ -1,11 +1,18 @@
-<div class="card">
-  <div class="card-header">
-    <% habit %>
-    <h2>Logs:</h2>
-    <% habit.logs.each do  |log|%>
-      <p><%= habit.title %></p>
-      <p><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
-      <p><%= log.completed %></p>
-    <% end %>
-  </div>
+<div class="card-container">
+  <div class = "row">
+
+        <h2>Logs:</h2>
+      <% habit.logs.each do  |log|%>
+        <div class="card-info row" >
+          <div class = "col-6 card-left">
+              <p><%= habit.title %></p>
+              <p><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
+              <p><%= log.completed %></p>
+          </div>
+          <div class = "col-6 card-right">
+            Circle
+          </div>
+        </div>
+      <% end %>
+</div>
 </div>
