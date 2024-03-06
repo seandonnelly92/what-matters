@@ -10,6 +10,7 @@ class Relationship < ApplicationRecord
   def initialize(attr = {})
     super(attr)
     @relation_to = %w[Parent Partner Child Family Friend]
+    @contact_days_per = %w[Week Month Year]
   end
 
   def meet_date_cannot_be_in_future

@@ -46,6 +46,15 @@ class MultistagesController < ApplicationController
     @relation_data = session[:user_data]["step2"]
   end
 
+  def step3_input
+  end
+
+  def step3_submit
+    session[:user_data] ||= {}
+    session[:user_data][:step3] = step3_user_params
+    raise
+  end
+
   private
 
   def make_date(date)
@@ -57,8 +66,13 @@ class MultistagesController < ApplicationController
   def relationship_params
     params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :meet_date, :contact_minutes_per_week)
   end
-  
+
   def user_params
     params.require(:user).permit(:date_of_birth)
+  end
+
+  # MAY NEED TO ADD BELOW TO USER_PARAMS ABOVE
+  def step3_user_params
+    params.require(:user).permit(:work_days_per_week, :work_hours_per_day, :sleep_hours_per_day)
   end
 end
