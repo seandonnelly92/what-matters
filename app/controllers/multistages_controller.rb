@@ -60,7 +60,7 @@ class MultistagesController < ApplicationController
     @user = User.new(step3_user_params)
 
     respond_to do |format|
-      if @user.valid?
+      if @user.valid?(:step3_valid)
         format.json { render json: { data: step3_user_params }, status: :created }
       else
         format.json { render json: { errors: @user.errors }, status: :unprocessable_entity }
