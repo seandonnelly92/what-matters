@@ -1,10 +1,10 @@
 
 <% habit.logs.each do  |log|%>
-  <div class="habit-card d-flex">
+  <div class="habit-card d-flex" data-controller="logs-container-scroll">
     <div class="row">
       <div class="col-6 left">
         <p><%= habit.title %></p>
-        <p><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
+        <p data-loader-log-date-value= #{log.date}><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
         <p><%= log.completed %></p>
       </div>
       <div class="col-6 right">
