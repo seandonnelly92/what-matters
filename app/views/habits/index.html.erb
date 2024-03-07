@@ -1,0 +1,9 @@
+<h1>I am the Habits Index</h1>
+<p>I live at /habits</p>
+
+<%= @habits.all  %>
+
+
+<% @habits.each do |habit| %>
+  <%= habit.title %>
+<% end %>

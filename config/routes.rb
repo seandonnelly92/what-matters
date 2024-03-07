@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-
+  get 'habits/tracker', to: 'habits#tracker'
   resources :habits
   resources :relationships, only: %i[new create delete]
 
@@ -20,6 +20,9 @@ Rails.application.routes.draw do
       get 'step2_input'
       post 'step2_submit'
       get 'step2_output'
+      get 'step3_input'
+      post 'step3_submit'
+      get 'step3_output'
     end
   end
 end
