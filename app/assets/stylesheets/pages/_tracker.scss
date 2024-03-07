@@ -1,3 +1,10 @@
+.container {
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column-reverse;
+  position: relative;
+}
+
 // .container {
 //   height: 60vh;
 //   position: relative;
@@ -11,19 +18,28 @@
 //   }
 // }
 
-.container {
-  height: 100vh; // Set the container height to 100% of the viewport height
-  // display: flex; // Use flexbox to align items vertically
-  justify-content: center; // Center the items horizontally
-  flex-direction: column-reverse;
-}
 
-.logs-container {
-  position: fixed; // Position the logs-container fixed to the viewport
-  top: 0;
-  width: 80%; // Set the width of the logs-container
-  height: 50vh; // Set the height of the logs-container
-  overflow-y: auto; // Add vertical scrollbar if content overflows
-  margin-left: auto; // Push the logs-container to the right
-  margin-right: 10%; // Adjust the right margin as needed
-}
+// .logs-container {
+//   position: fixed; // Position the logs-container fixed to the viewport
+//   top: 0;
+//   width: 80%; // Set the width of the logs-container
+//   height: 50vh; // Set the height of the logs-container
+//   overflow-y: auto; // Add vertical scrollbar if content overflows
+//   margin-left: auto; // Push the logs-container to the right
+//   margin-right: 10%; // Adjust the right margin as needed
+//   background-color:black;
+// }
+
+// #past-logs {
+// // background-color: black;
+//   position: relative;
+//   z-index: 2;
+
+// }
+
+// #current-log {
+//   position: absolute;
+//   top: 100%; /* Adjust as needed */
+//   left: 0;
+//   z-index: 1;
+// }

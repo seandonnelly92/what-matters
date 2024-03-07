@@ -4,6 +4,7 @@
   align-items: center;
 }
 
+// Default table used for the circles per year
 table {
   border-collapse: separate;
   border-spacing: 8px; // Horizontal and vertical spacing of the cells
@@ -16,6 +17,30 @@ table {
 .year-circle {
   height: 25px;
   width: 25px;
+  background-color: white;
+  transition: background-color 0.2s ease-in-out; // This will be used when the .colored class is added
+
+  border: 1px solid $blue;
+  border-radius: 50%;
+
+  &.colored {
+    background-color: $blue;
+  }
+}
+
+// Table used for the circles per day
+table.days {
+  border-collapse: separate;
+  border-spacing: 2px; // Horizontal and vertical spacing of the cells
+
+  td {
+    padding: 1px 0; // Adding additional vertical spacing through padding
+  }
+}
+
+.year-circle-small {
+  height: 5px;
+  width: 5px;
   background-color: white;
   transition: background-color 0.2s ease-in-out; // This will be used when the .colored class is added
 

@@ -1,25 +1,44 @@
-<h2>Sign up</h2>
+<div class="container" data-controller="signup-form">
+  <h2>Sign up</h2>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+    <div class="form-inputs">
+      <%= f.input :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" }%>
+      <%= f.input :password,
+                  required: true,
+                  hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: true,
+                  input_html: { autocomplete: "new-password" } %>
+      <button class="teriary-btn btn-optional">See previous</button>
+        <%= f.input :date_of_birth,
+                    label: "What is your date of birth?",
+                    as: :string,
+                    input_html: { data: { controller: "datepicker", "signup-form-target": "dateOfBirth" } } %>
+      <%= f.input :work_days_per_week,
+                  collection: 0..7,
+                  label: "How many days on average do you work per week?",
+                  input_html: { data: { "signup-form-target": "workDays" } } %>
+      <%= f.input :work_hours_per_day,
+                  collection: 1..24,
+                  label: "On an average work day, how many hours do you spend working and commuting?",
+                  input_html: { data: { "signup-form-target": "workHrs" } } %>
+      <div class="form-optional">
+      <%= f.input :sleep_hours_per_day,
+                  collection: 1..24,
+                  label: "How much sleep do you ideally get per day?",
+                  input_html: { data: { "signup-form-target": "sleepHrs" } } %>
+    </div>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+    <div class="form-actions">
+      <%= f.button :submit, "Sign up",
+          data: { "signup-form-target": "submitBtn" } %>
+    </div>
+  <% end %>
 
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</div>
