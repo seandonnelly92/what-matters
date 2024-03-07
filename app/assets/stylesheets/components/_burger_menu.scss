@@ -30,10 +30,8 @@
   width: 275px;
   height: 100%;
   z-index: 9;
-  background-color: #f0f0f0;
-
-  padding: 90px 30px;
-
+  background-color: white;
+  padding: 90px 30px 20px 30px;
   position: fixed;
   top: 0px;
   right: -275px; // Initially hides the menu (should equal menu width)
@@ -44,13 +42,19 @@
 #menu .menu-options {
   padding: 0;
   text-align: right;
-
   list-style-type: none; // Removes the markers of the unordered-list
-
-  li {
-    margin-bottom: 15px;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
+
+#menu .menu-options a {
+  font-size: 24px;
+  text-decoration: none;
+  color: $blue;
+  margin-bottom: 30px;
+}
+
 
 #menu.menu-open {
   right: 0px; // Class used to slide menu when selected

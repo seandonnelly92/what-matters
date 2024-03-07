@@ -4,10 +4,23 @@
     <i class="fa-solid fa-bars"></i>
   </div>
 
-  <div id="menu" data-burger-menu-target="menuWindow">
-    <ul class="menu-options">
-      <li>Add habit</li>
-      <li>Habits</li>
-      <li>Categories</li>
-    </ul>
+  <div class="d-flex flex-column justify-content-between" id="menu" data-burger-menu-target="menuWindow">
+    <div id="menu-top">
+      <ul class="menu-options">
+        <li> <%= link_to habits_tracker_path do %></li>Tracker<% end %>
+        <li> <%= link_to habits_path do %></li>My Habits<% end %>
+        <li> <%= link_to new_habit_path do %></li>Add Habit<% end %>
+        <li> <%= link_to root_path do %></li>Insights<% end %>
+      </ul>
+    </div>
+
+    <div id="menu-bottom">
+      <ul class="menu-options">
+        <% if user_signed_in? %>
+          <li> <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %></li>Log Out<% end %>
+        <% else %>
+          <li> <%= link_to new_user_session_path do %></li>Log in<% end %>
+        <% end %>
+      </ul>
+    </div>
   </div>
