@@ -45,7 +45,7 @@ export default class extends Controller {
 
     // Set the title of the page
     const percentage = Math.round((this.pastYrs / this.sharedYrs) * 100);
-    const secondTitle = `You've used up ${this.pastYrs} of those ${this.sharedYrs} years. That's ${percentage}%. You have ${this.futureYrs} left.`;
+    const secondTitle = `You've used up ${this.pastYrs} of those ${this.sharedYrs} years. That's ${percentage}%. You have ${this.futureYrs} years left.`;
     this.setTitle(secondTitle);
 
     // Update the next button to be used for the thirdStepOutput() if the relation_to is a 'parent' or 'child'
@@ -53,7 +53,7 @@ export default class extends Controller {
     if (relation_to === 'parent' || relation_to === 'child') {
       this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#thirdStepOutput');
     } else {
-      window.location.href = '/multistages/step3_input'; // Redirects to next step if relation is not 'parent' or 'child'
+      this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#finalStep');
     }
   }
 
@@ -85,10 +85,6 @@ export default class extends Controller {
     const part4 = `Now, you spend ${this.sessionData.step2.contact_days} days per ${daysPer} with ${this.nickname}. ${daysPer !== 'year' ? `That is around ${this.annualContact} days per year.` : ''}`
     this.divStep3Target.insertAdjacentHTML('beforeend', `<p>${part4}</p>`);
 
-    console.log(`Youth years is: ${this.youthYrs}`);
-    console.log(`Past non-youth years is: ${this.pastYrs - this.youthYrs}`);
-    console.log(`Future years is: ${this.futureYrs}`);
-    console.log(`Annual contact is: ${this.annualContact} days`);
     this.totalDays = (this.youthYrs * 365) + ((this.pastYrs - this.youthYrs) * this.annualContact) + (this.futureYrs * this.annualContact);
     const part5 = `Based on this, the total time you’ll ever spend with ${this.nickname} is ${this.totalDays.toLocaleString()} days.`;
     this.divStep3Target.insertAdjacentHTML('beforeend', `<h3>${part5}</h3>`);
@@ -131,7 +127,6 @@ export default class extends Controller {
 
   relationYears() {
     const relation_to = this.sessionData.step2.relation_to.toLowerCase();
-    console.log(`Relation is a ${relation_to}`);
 
     const userDoB = new Date(this.sessionData.step1.date_of_birth);
     const relationDoB = new Date(this.sessionData.step2.date_of_birth);
@@ -145,9 +140,6 @@ export default class extends Controller {
     this.pastYrs = this.getAge(meetdate);
 
     this.sharedYrs = this.pastYrs + this.futureYrs;
-
-    console.log(`User is ${userAge} and ${relation_to} is ${relationAge}`);
-    console.log(`You have ${this.futureYrs} years left of the total ${this.sharedYrs} years`);
 
     // We also need the time spent together until the child is 18 in the parent/child relationships
     if (relation_to === 'parent' || relation_to === 'child') {
