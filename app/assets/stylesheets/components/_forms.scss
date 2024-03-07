@@ -8,6 +8,7 @@
 // Inputs - unfocussed/general
 .form-control, .form-select, .form-check-input {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
+  font-size: 15px;
   color: $blue;
   height: 48px;
   border: none;
@@ -72,7 +73,9 @@
 
 .simple_form input[type="submit"] {
   background-color: $blue; // Primary variable
+  font-family: "lato", "sans serif";
   color: white;
+  font-size: 15px;
   height: 48px;
   width: 100%;
   padding: 14px 20px;
@@ -82,6 +85,8 @@
   cursor: pointer;
 }
 
-.simple_form input[type="submit"]:hover {
+// Hover state and Active state (hold down on mobile)
+.simple_form input[type="submit"]:hover, .simple_form input[type="submit"]:active  {
   background-color: rgba($blue, 0.9);
+  color: white;
 }

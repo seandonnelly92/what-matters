@@ -1,22 +1,36 @@
 class Relationship < ApplicationRecord
-  attr_reader :relation_to
-
   belongs_to :user, optional: true
 
   validates :nickname, :relation_to, :date_of_birth, :meet_date, :contact_days, :contact_days_per, presence: true
-  validate :meet_date_cannot_be_in_future
-  # commented out validations to make seed work, as Rowan and Jasper have probably changed on their branch
-  # validates :contact_minutes_per_week, numericality: { less_than_or_equal_to: 10_080, message: "must be less than than 10080" }
+  validates :nickname, length: { maximum: 20, message: "maximum %{count} characters" }
+  validates :relation_to, inclusion: { in: ->(_relationship) { relation_to_options(true) }, message: "select option" }
+  # validates :meet_date, numericality: { only_integer: true, in: 1..100 }
+  validates :contact_days, numericality: { only_integer: true, greater_than: 0 }
+  validate :contact_days_range
+  validates :contact_days_per, inclusion: { in: ->(_relationship) { contact_days_per_options }, message: "select option" }
 
-  def initialize(attr = {})
-    super(attr)
-    @relation_to = %w[Parent Partner Child Family Friend]
-    @contact_days_per = %w[Week Month Year]
+  def self.relation_to_options(capitalise = false)
+    options = %w[parent partner child family friend]
+    capitalised_options = options.map(&:capitalize)
+    capitalise ? capitalised_options : options
   end
 
-  def meet_date_cannot_be_in_future
-    errors.add(:meet_date, "meet date cannot be in the future") if meet_date > created_at
-    # validates :contact_minutes_per_week, numericality: {less_than_or_equal_to: 10_080, message: "must be less than than 10080" }
-    # Later: we should implement validations dependent on whether contact_days_per is week/month/year.
+  def self.contact_days_per_options
+    %w[week month year]
+  end
+
+  private
+
+  def contact_days_range
+    return if contact_days_per.blank? || contact_days.blank?
+
+    case contact_days_per
+    when "week"
+      errors.add(:contact_days, "must be 7 or less for week") if contact_days > 7
+    when "month"
+      errors.add(:contact_days, "must be 30 or less for month") if contact_days > 30
+    when "year"
+      errors.add(:contact_days, "must be 365 or less for year") if contact_days > 365
+    end
   end
 end

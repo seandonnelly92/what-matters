@@ -24,11 +24,8 @@ class HabitsController < ApplicationController
   end
 
   def create
-    # Merging the standard habit params with the params that hold the correct start time.
-    # habit_params_with_start_time = habit_params.merge(combine_start_time_params)
-
     @habit = Habit.new(habit_params)
-    @habit.user_id = 1  # For testing purposes, remove later
+    @habit.user = current_user
     if @habit.save
       redirect_to habits_path, notice: "Habit was successfully created!"
     else
@@ -60,6 +57,7 @@ class HabitsController < ApplicationController
       :duration_in_minutes,
       :week_recurrence,
       :start_time,
+      :photo,
       :days_of_week => [])
   end
 end

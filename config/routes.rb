@@ -17,13 +17,13 @@ Rails.application.routes.draw do
     collection do
       get 'step1_input'
       post 'step1_submit'
-      get 'step1_output'
       get 'step2_input'
       post 'step2_submit'
       get 'step2_output'
       get 'step3_input'
       post 'step3_submit'
       get 'step3_output'
+      get 'fetch_session_data', as: :fetch_session_data
     end
   end
 end

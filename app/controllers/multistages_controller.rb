@@ -5,17 +5,17 @@ class MultistagesController < ApplicationController
   end
 
   def step1_submit
-    date_of_birth = user_params[:date_of_birth] # Gets the date_of_birth as a string from the params
+    custom_params = user_params
+    unless custom_params[:date_of_birth].empty?
+      date_of_birth = make_date(custom_params[:date_of_birth])
+      custom_params[:date_of_birth] = date_of_birth
+    end
+
     session[:user_data] ||= {}
-    session[:user_data][:step1] = user_params
+    session[:user_data][:step1] = custom_params
 
     @user = User.new
-
-    unless date_of_birth.empty?
-      date_array = date_of_birth.split("-")
-      date_array.map!(&:to_i)
-      @user.date_of_birth = DateTime.new(date_array[0], date_array[1], date_array[2])
-    end
+    @user.date_of_birth = date_of_birth if date_of_birth
 
     respond_to do |format|
       if @user.valid?(:step1_valid)
@@ -26,24 +26,30 @@ class MultistagesController < ApplicationController
     end
   end
 
-  def step1_output
-  end
-
   def step2_input
-    @relationship = Relationship.new
   end
 
   def step2_submit
-    @relationship_params = params[:step2_data]
-    @relationship_params[:date_of_birth] = make_date(@relationship_params[:date_of_birth])
-    @relationship_params[:meet_date] = make_date(@relationship_params[:meet_date])
-    Relationship.new(relationship_params)
-    raise
-    redirect_to step2_output_multistages_path
+    custom_params = relationship_params
+
+    custom_params[:date_of_birth] = make_date(custom_params[:date_of_birth]) unless custom_params[:date_of_birth].empty?
+    custom_params[:meet_date] = years_to_date(custom_params[:meet_date].to_i) unless custom_params[:meet_date].empty?
+
+    session[:user_data][:step2] = custom_params
+
+    @relationship = Relationship.new(custom_params)
+
+    respond_to do |format|
+      if @relationship.valid?
+        format.json { render json: { data: custom_params }, status: :created }
+      else
+        format.json { render json: { errors: @relationship.errors }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def step2_output
-    @relation_data = session[:user_data]["step2"]
+    # @relation_data = session[:user_data]["step2"]
   end
 
   def step3_input
@@ -55,6 +61,14 @@ class MultistagesController < ApplicationController
     raise
   end
 
+  def fetch_session_data
+    session_data = session[:user_data] || {}
+
+    respond_to do |format|
+      format.json { render json: session_data }
+    end
+  end
+
   private
 
   def make_date(date)
@@ -63,8 +77,14 @@ class MultistagesController < ApplicationController
     DateTime.new(date_array[0], date_array[1], date_array[2])
   end
 
+  def years_to_date(years)
+    meet_date = DateTime.current
+    meet_date.change(year: (meet_date.year - years))
+    meet_date
+  end
+
   def relationship_params
-    params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :meet_date, :contact_minutes_per_week)
+    params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :contact_days, :contact_days_per, :meet_date)
   end
 
   def user_params
