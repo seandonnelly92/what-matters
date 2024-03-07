@@ -79,8 +79,7 @@ class MultistagesController < ApplicationController
 
   def years_to_date(years)
     meet_date = DateTime.current
-    meet_date.change(year: (meet_date.year - years))
-    meet_date
+    meet_date.change(year: (meet_date.year - years)) # Returns the upated meet_date with changed year as new DateTime object
   end
 
   def relationship_params
