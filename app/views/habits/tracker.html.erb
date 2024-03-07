@@ -1,0 +1,17 @@
+
+
+<div class = "container" data-controller="logs-container-scroll">->
+  <div class = "row" id = "main-row">
+    <div class = "col-2" id = "left-column">Column 1</div>
+    <div class = "col-8">
+        <div class = "row" id = "logs-container" data-logs-container-scroll-target = "scroller" data-action="scroll-to-bottom#connect">
+            <% @scare_crow_habits.each do |habit| %>
+              <%= render 'habits/habit_card', habit: habit %>
+            <% end %>
+          </div>
+        <div class = "row" id = "bottom row"></div>
+          Bottom Row
+      </div>
+    <div class = "col-2" id = "right-column">Column 3</div>
+  </div>
+</div>
