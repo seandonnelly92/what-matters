@@ -61,6 +61,14 @@ class MultistagesController < ApplicationController
     raise
   end
 
+  def fetch_session_data
+    session_data = session[:user_data] || {}
+
+    respond_to do |format|
+      format.json { render json: session_data }
+    end
+  end
+
   private
 
   def make_date(date)
