@@ -26,7 +26,7 @@ export default class extends Controller {
         this.firstStepOutput();
       })
       .catch(error => console.error("Error fetching session data:", error));
-    }
+  }
 
   firstStepOutput() {
     this.nickname = this.sessionData.step2.nickname;
@@ -149,7 +149,7 @@ export default class extends Controller {
 
   sharedYouthYears(childAge) {
     const delta = childAge - this.pastYrs; // Based on the difference between the age of the child vs the years since meetdate
-    this.youthYrs = 18 - delta; // Accounts for the days prior to the parent 'meeting' the child, if any
+    this.youthYrs = Math.max(18 - delta, 0); // Accounts for the days prior to the parent 'meeting' the child, if any
   }
 
   getAge(birthDate) {
