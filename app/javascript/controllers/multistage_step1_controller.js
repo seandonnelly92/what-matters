@@ -53,10 +53,10 @@ export default class extends Controller {
     .then(response => response.json())
     .then(data => {
       this.clearErrors();
+      this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
 
       if (data.errors) {
         this.handleErrors(data.errors);
-        this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
       } else {
         const dateOfBirth = new Date(data.data);
         const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
@@ -104,13 +104,11 @@ export default class extends Controller {
         const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
         errorsContainer.classList.add('errors-container');
 
-        // Appends each message to the errorsContainer
-        messages.forEach(message => {
-          const errorMessage = document.createElement('span');
-          errorMessage.classList.add('error');
-          errorMessage.innerText = message;
-          errorsContainer.insertAdjacentElement('beforeend', errorMessage);
-        });
+        // Adds the first message to the errorsContainer (we show one error at a time)
+        const errorMessage = document.createElement('span');
+        errorMessage.classList.add('error');
+        errorMessage.innerText = messages[0];
+        errorsContainer.insertAdjacentElement('beforeend', errorMessage);
 
         // Insert the errors container right after the input element
         inputElement.parentNode.insertBefore(errorsContainer, inputElement.nextSibling);
@@ -126,9 +124,7 @@ export default class extends Controller {
     });
   }
 
-  resetForm(e) {
-    console.log(e);
-    this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
+  resetForm() {
     this.formTarget.reset();
     this.titleTarget.innerText = 'Here is your whole life in years if you live until 90 years old:'
     this.colorCircles(0); // Will set all the circles to white
