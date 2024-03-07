@@ -1,32 +1,37 @@
-<div class="container my-5 justify-content-center">
-<h2>Add a habit</h2>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-10 col-md-6 col-lg-4 col-xl-4">
+      <div id="add-habit-form" class="">
+        <h2>Add a habit</h2>
+        <%= simple_form_for(@habit) do |f| %>
+          <%= f.input :title, :label => 'I will:', placeholder: "Call Mum, organise date night" %>
+          <p>I will do this every </p>
+          <%= f.input :week_recurrence, label: false, placeholder: "3" %>
+          <p>week/s on these days:</p>
+          <% days_of_week = Date::DAYNAMES.rotate(1).map { |day| day[0] } %>
+          <%# Days of the week toggles %>
+            <div class="days-checkboxes">
+              <% days_of_week.each do |day| %>
+                <%= f.check_box :days_of_week, { multiple: true, id: "day_#{day.downcase}", }, day.downcase %>
+                <%= label_tag "day_#{day.downcase}" do %>
+                  <span class="day-circle" id="day-circle-<%= day.downcase %>"><%= day %></span>
+                <% end %>
+              <% end %>
+            </div>
 
-<%= simple_form_for(@habit) do |f| %>
-  <%= f.input :title, :label => 'I will:', placeholder: "Call Mum, organise date night" %>
-  <p>I will do this every </p>
-  <%= f.input :week_recurrence, label: false, placeholder: "3" %>
-  <p>week/s on these days:</p>
-  <% days_of_week = Date::DAYNAMES.rotate(1).map { |day| day[0] } %>
-  <%# Days of the week toggles %>
-    <div class="days-checkboxes">
-      <% days_of_week.each do |day| %>
-        <%= f.check_box :days_of_week, { multiple: true, id: "day_#{day.downcase}", }, day.downcase %>
-        <%= label_tag "day_#{day.downcase}" do %>
-          <span class="day-circle" id="day-circle-<%= day.downcase %>"><%= day %></span>
+          <%= f.input :start_time, :label => 'at: ' %>
+          <%= f.input :duration_in_minutes, :label => 'It will take around', placeholder: "15" %>
+          <p>minutes.</p>
+          <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
+          <%= f.input :category, :label => 'Habit category:', placeholder: "Partner", as: :select, collection: Habit::CATEGORIES %>
+          <%= f.input :trigger, :label => 'I will this before/while/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
+          <%= f.input :reward, :label => 'My reward for this is:', placeholder: "a coffee, cake, an episode of Breaking Bad..." %>
+          <%= f.input :photo, :label => 'Attached a photograph to this habit:', as: :file %>
+          <%= f.submit %>
         <% end %>
-      <% end %>
+      </div>
     </div>
-
-  <%= f.input :start_time, :label => 'at: ' %>
-  <%= f.input :duration_in_minutes, :label => 'It will take around', placeholder: "15" %>
-  <p>minutes.</p>
-  <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
-  <%= f.input :category, :label => 'Habit category:', placeholder: "Partner", as: :select, collection: Habit::CATEGORIES %>
-  <%= f.input :trigger, :label => 'I will this before/while/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
-  <%= f.input :reward, :label => 'My reward for this is:', placeholder: "a coffee, cake, an episode of Breaking Bad..." %>
-  <%= f.input :photo, :label => 'Attached a photograph to this habit:', as: :file %>
-  <%= f.submit %>
-<% end %>
+  </div>
 </div>
 
 
