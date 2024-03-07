@@ -82,7 +82,8 @@ scare_crow_habit = Habit.create!(
   week_recurrence: 3,
   current_streak: 0,
   best_streak: 0,
-  days: ["Monday", "Wednesday", "Friday"],
+  ##changed to days_of_week to match changes to schema
+  days_of_week: ["Monday", "Wednesday", "Friday"],
   start_time: "2024-03-06 17:15:00.000000000 +0000",
 )
 
@@ -98,7 +99,8 @@ tin_man_habit = Habit.create!(
   week_recurrence: 1,
   current_streak: 0,
   best_streak: 0,
-  days: ["Saturday"],
+  ##changed to days_of_week to match changes to schema
+  days_of_week: ["Saturday"],
   start_time: "2024-03-06 17:15:00.000000000 +0000",
 )
 
@@ -136,7 +138,8 @@ scare_crow_habit_dates.each do |datetime|
     habit_id: scare_crow_habit.id,
     date_time: datetime,
     ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
-    completed: random_number <= 0.9,
+    # completed: random_number <= 0.9, temporarily set to "true, will change later"
+    completed: true,
     created_at: datetime,
     updated_at: datetime
   )

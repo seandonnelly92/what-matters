@@ -1,19 +1,16 @@
-<div class="card-container">
-  <div class = "row">
 
-        <h2>Logs:</h2>
-      <% habit.logs.each do  |log|%>
-        <div class="card-info row" >
-          <div class = "col-6 card-left">
-              <p><%= habit.title %></p>
-              <p><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
-              <p><%= log.completed %></p>
-          </div>
-          <div class = "col-6 card-right">
-            <span class="dot"></span>
-            <div class="line"></div>
-          </div>
-        </div>
-      <% end %>
-</div>
-</div>
+<% habit.logs.each do  |log|%>
+  <div class="habit-card d-flex">
+    <div class="row">
+      <div class="col-6 left">
+        <p><%= habit.title %></p>
+        <p><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
+        <p><%= log.completed %></p>
+      </div>
+      <div class="col-6 right">
+        <span class="dot"></span>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+<% end %>

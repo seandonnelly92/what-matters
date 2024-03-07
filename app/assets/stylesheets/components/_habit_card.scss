@@ -1,26 +1,29 @@
-// .card-container {
-//   background-color: rgb(149, 152, 181)
-
-// }
-
-// .card-info {
-//   border: solid black;
-// }
-
-.card-right {
-  position: relative;
+.habit-card {
+  .row {
+    width: 100%;
+    min-height: 100px;
+    margin: 0;
+  }
+  .right {
+    position: relative;
+  }
+  &.last {
+    .line {
+      height: 50%;
+    }
+  }
 }
 
+
 .dot {
+  position: absolute;
   height: 80px;
   width: 80px;
   background-color: #bbb;
   border-radius: 50%;
-  display: inline-block;
-  position: absolute;
-  bottom: 5px; /* Adjust the distance from the bottom */
-  left: 50%; /* Center the circle horizontally */
-  transform: translateX(-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .line {
