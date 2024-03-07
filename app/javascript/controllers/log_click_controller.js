@@ -4,22 +4,30 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   static values = {
-    date: String
+    date: String,
+    completed: String,
+    token: String,
   }
 
   static targets = ["circle"]
 
   connect() {
-    console.log("Hello from logs container scroller")
-    console.log(this.dateValue)
+    // console.log("Hello from logs container scroller")
+    // console.log(this.dateValue)
+    // console.log(this.completedValue)
   }
 
   handleDotClick(event) {
+    const logId = event.target.dataset.id;
+    console.log(logId);
     // Your logic to handle the click event goes here
-    console.log("Dot clicked!");
-    // console.dir(this.circleTarget)
-    console.dir(this.circleTarget.style)
-    this.circleTarget.style.backgroundColor = "#003E02"
+    fetch(`/logs/${logId}`, {
+      method: 'PATCH',
+      "headers": {
+        "X-CSRF-Token": this.tokenValue
+      }
+    }).then((resp) => console.log(resp))
+    this.circleTarget.classList.toggle("completed")
     // console.log(this.circleTarget.classlist.back)
   }
 }
