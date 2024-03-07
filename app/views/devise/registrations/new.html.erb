@@ -3,6 +3,22 @@
   <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= f.error_notification %>
     <div class="form-inputs">
+      <div class="d-flex">
+        <div class="row justify-content-between">
+          <div class="col-6">
+            <%= f.input :first_name,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "first-name" }%>
+          </div>
+          <div class="col-6">
+            <%= f.input :last_name,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "first-name" }%>
+          </div>
+        </div>
+      </div>
       <%= f.input :email,
                   required: true,
                   autofocus: true,
@@ -14,7 +30,11 @@
       <%= f.input :password_confirmation,
                   required: true,
                   input_html: { autocomplete: "new-password" } %>
-      <button class="teriary-btn btn-optional">See previous</button>
+      <button class="tertiary-btn form-optional"
+              data-signup-form-target="showAllButton"
+              data-action="toggle->signup-form#showAll">
+              See previous answers
+      </button>
       <%= f.input :date_of_birth,
                     label: "What is your date of birth?",
                     as: :string,
@@ -27,13 +47,11 @@
                   collection: 1..24,
                   label: "On an average work day, how many hours do you spend working and commuting?",
                   input_html: { data: { "signup-form-target": "workHrs" } } %>
-      <div class="form-optional">
       <%= f.input :sleep_hours_per_day,
                   collection: 1..24,
                   label: "How much sleep do you ideally get per day?",
                   input_html: { data: { "signup-form-target": "sleepHrs" } } %>
     </div>
-
     <div class="form-actions">
       <%= f.button :submit, "Sign up",
           data: { "signup-form-target": "submitBtn" } %>
