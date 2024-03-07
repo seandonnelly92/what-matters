@@ -14,13 +14,13 @@ export default class extends Controller {
   connect() {
     console.log("Hello from the multistage step1 controller!");
 
-    let validForm = false;
+    this.validForm = false;
 
-    const total_yrs = 90;
-    const total_rows = total_yrs / 10; // Showing 10 years (circles) on each row
+    const totalYrs = 90;
+    const totalRows = totalYrs / 10; // Showing 10 years (circles) on each row
 
     let currentYear = 1;
-    for (let row = 0; row < total_rows; row++) {
+    for (let row = 0; row < totalRows; row++) {
       let rowHTML = "<tr>";
       for (let year = 0; year < 10; year++) {
         // The data-year in the div will add the respective year which will be used to color the circles
