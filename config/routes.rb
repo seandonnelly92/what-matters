@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # root "posts#index"
   get 'habits/tracker', to: 'habits#tracker'
   resources :habits
+
+  resources :logs, only: [:update]
+
   resources :relationships, only: %i[new create delete]
 
   resources :multistages, only: %i[new create] do

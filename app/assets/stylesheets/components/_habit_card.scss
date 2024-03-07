@@ -14,25 +14,7 @@
   }
 }
 
-.p {
-  font-family: $body-font;
-}
-
-.dot-green {
-  position: absolute;
-  height: 80px;
-  width: 80px;
-  background-color: #003E02;
-  border-style: solid;
-  border-color: #E67E22;
-  border-width: thick;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.dot-blank {
+.dot {
   position: absolute;
   height: 80px;
   width: 80px;
@@ -44,6 +26,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  &.completed {
+    background-color: green;
+  }
 }
 
 .line {

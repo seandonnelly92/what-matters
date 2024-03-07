@@ -1,16 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="multistage-step2"
+// Connects to data-controller="multistage-step3"
 export default class extends Controller {
   static targets = [
+    "title",
     "form",
-    "nicknameInput",
-    "meetdateLabel",
+    "workDaysInput",
+    "workHoursInput",
     "submitBtn"
   ]
 
   connect() {
-    console.log("Hello from the multistage step2 controller!");
+    console.log("Hello from the multistage-step3 controller!");
 
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
@@ -21,7 +22,7 @@ export default class extends Controller {
 
     const data = this.formDataJSON();
 
-    fetch(`/multistages/step2_submit`, {
+    fetch(`/multistages/step3_submit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,34 +33,31 @@ export default class extends Controller {
     .then(response => response.json())
     .then(data => {
       this.clearErrors();
-      this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
 
       if (data.errors) {
-        // console.log("ERROR");
+        console.log("ERRORS");
         console.log(data.errors);
         this.handleErrors(data.errors);
       } else {
+        console.log("SUCCESS");
         console.log(data);
-        window.location.href = '/multistages/step2_output';
+        window.location.href = '/multistages/step3_output';
       }
     })
   }
 
   formDataJSON() {
-    return { relationship:
-      { nickname: this.formTarget.querySelector(`[name="step2_data[nickname]"]`).value,
-        relation_to: this.formTarget.querySelector(`[name="step2_data[relation_to]"]`).value,
-        date_of_birth: this.formTarget.querySelector(`[name="step2_data[date_of_birth]"]`).value,
-        contact_days: this.formTarget.querySelector(`[name="step2_data[contact_days]"]`).value,
-        contact_days_per: this.formTarget.querySelector(`[name="step2_data[contact_days_per]"]`).value,
-        meet_date: this.formTarget.querySelector(`[name="step2_data[meet_date]"]`).value
+    return { user:
+      { work_days_per_week: this.formTarget.querySelector(`[name="step3_data[work_days_per_week]"]`).value,
+        work_hours_per_day: this.formTarget.querySelector(`[name="step3_data[work_hours_per_day]"]`).value,
+        sleep_hours_per_day: this.formTarget.querySelector(`[name="step3_data[sleep_hours_per_day]"]`).value
       }
     };
   }
 
   handleErrors(errors) {
     for (const [key, messages] of Object.entries(errors)) {
-      const inputElement = this.element.querySelector(`[name="step2_data[${key}]"]`); // Based on simple form name of input
+      const inputElement = this.element.querySelector(`[name="step3_data[${key}]"]`); // Based on simple form name of input
       if (inputElement) {
 
         const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
@@ -85,9 +83,15 @@ export default class extends Controller {
     });
   }
 
-  updateMeetdateLabel() {
-    const nickname = this.nicknameInputTarget.value;
-    const labelText = nickname ? `How long has ${nickname} been important to you?` : "How long has ... been important to you?";
-    this.meetdateLabelTarget.innerText = labelText;
+  workHoursUpdate(e) {
+    const workHoursField = this.element.querySelector('.step3_data_work_hours_per_day');
+    if (this.workDaysInputTarget.value === '0') {
+      console.log("YOU CAN REMOVE IT AND SET TO 0");
+      this.workHoursInputTarget.value = '0';
+      console.log(this.workHoursInputTarget);
+      workHoursField.classList.add('d-none');
+    } else {
+      workHoursField.classList.remove('d-none');
+    }
   }
 }

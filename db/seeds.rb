@@ -59,16 +59,16 @@ puts "Users seeded successfully."
 
 puts 'seeding Relationships...'
 
-relat_lion = Relationship.create!(
-  user_id: tin_man.id,
-  nickname: "Lion",
-  relation_to: "friend",
-  date_of_birth: DateTime.new(2002, 8, 25),
-  meet_date: DateTime.new(2012, 8, 25),
-  contact_days: 2,
-  contact_days_per: "week",
-  created_at: Time.current
-)
+# relat_lion = Relationship.create!(
+#   user_id: tin_man.id,
+#   nickname: "Lion",
+#   relation_to: "friend",
+#   date_of_birth: DateTime.new(2002, 8, 25),
+#   meet_date: DateTime.new(2012, 8, 25),
+#   contact_days: 2,
+#   contact_days_per: "week",
+#   created_at: Time.current
+# )
 
 puts 'relationship (Tin Man to Lion) creates successfully.'
 

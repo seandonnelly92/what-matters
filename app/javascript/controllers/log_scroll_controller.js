@@ -6,8 +6,8 @@ export default class extends Controller {
   static targets = ["log"]
 
   connect() {
-    console.log("hello from log scroll")
-    console.log(this.logTargets)
+    // console.log("hello from log scroll")
+    // console.log(this.logTargets)
 
     this.today = new Date(Date.now()).setHours(0,0,0,0)
 
@@ -15,7 +15,7 @@ export default class extends Controller {
 
       let logDate = new Date(Date.parse(log.dataset.logClickDateValue)).setHours(0,0,0,0)
 
-      console.log(logDate)
+      // console.log(logDate)
       if (logDate < this.today) {
 
         log.scrollIntoView()
