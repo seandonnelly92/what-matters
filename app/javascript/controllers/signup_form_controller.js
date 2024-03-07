@@ -7,7 +7,8 @@ export default class extends Controller {
     "submitBtn",
     "sleepHrs",
     "workHrs",
-    "workDays"
+    "workDays",
+    "showAllButton"
   ]
 
   connect() {
@@ -18,6 +19,8 @@ export default class extends Controller {
     // console.log(this.workHrsTarget);
     console.log(this.workDaysTarget);
     console.log(this.fetchSessionData());
+    console.log(this.showAllButtonTarget);
+    console.log(this.targets.forEach())
   }
 
   fetchSessionData() {
@@ -33,6 +36,7 @@ export default class extends Controller {
   autofillForm(data) {
     // console.log(data.step1.date_of_birth)
     if(typeof data.step1.date_of_birth != "undefined") {
+      this.showAllButtonTarget.classList.remove("form-optional")
       const dateOfBirth = new Date(data.step1.date_of_birth);
       this.dateOfBirthTarget.value = `${dateOfBirth.getFullYear()}-${dateOfBirth.getMonth()+1}-${dateOfBirth.getDate()}`;
       this.ElementDisplay(this.dateOfBirthTarget);
@@ -57,6 +61,16 @@ export default class extends Controller {
       this.ElementDisplay(this.sleepHrsTarget);
     }
   }
+
+  // showAll(event) {
+  //   this.showAllButtonTarget.innerText = "Hide previous answers";
+  //   this.targets.forEach((target {
+  //     if(this.targets.classList.contains("form-optional")) {
+  //       this.targets.classList.toggle("form-optional")
+  //       this.targets.previousElementSibling.style.display = "none"
+  //     }
+  //   }
+  // }
 
   ElementDisplay(element) {
     if(element.value != '') {
