@@ -1,19 +1,2 @@
 <h3>Habits Index</h3>
-
-<% @habits.each do |habit| %>
-  <h5 class="mt-5"><%= habit.title %></h5>
-  <p><strong>User ID: </strong><%= habit.user_id %></p>
-  <p><strong>Relationship ID: </strong><%= habit.relationship_id %></p>
-  <p><strong>Category: </strong><%= habit.category %></p>
-  <p><strong>Identity Goal: </strong><%= habit.identity_goal %></p>
-  <p><strong>Week Recurrence: </strong><%= habit.week_recurrence %></p>
-  <p><strong>Trigger: </strong><%= habit.trigger %></p>
-  <p><strong>Reward: </strong><%= habit.reward %></p>
-  <p><strong>Duration in Minutes: </strong><%= habit.duration_in_minutes %></p>
-  <p><strong>Days of Week: </strong><%= habit.days_of_week %></p>
-  <p><strong>Start time/at: </strong><%= habit.relationship_id %></p>
-  <p><strong>Current Streak: </strong><%= habit.current_streak %></p>
-  <p><strong>Best Streak: </strong><%= habit.best_streak %></p>
-  <p><strong>Create at: </strong><%= habit.created_at %></p>
-  <p class="mb-5"><strong>Updated at: </strong><%= habit.updated_at %></p>
-<% end %>
+<%= render "shared/habit_show_card" %>
