@@ -1,15 +1,21 @@
 
 <% habit.logs.each do  |log|%>
-  <div class="habit-card d-flex" data-controller="logs-container-scroll">
+  <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log">
     <div class="row">
       <div class="col-6 left">
-        <p><%= habit.title %></p>
-        <p data-loader-log-date-value= #{log.date}><%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
-        <p><%= log.completed %></p>
+        <p>Habit is to <%= habit.title %></p>
+        <%# <p data-loader-log-date-value= #{log.date}></p> %>
+        <%if log.completed  %>
+        <p>Well done! You completed on <%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
+        <%else  %>
+        <p>Not completed </p>
+        <%end  %>
+
       </div>
       <div class="col-6 right">
-        <span class="dot"></span>
         <div class="line"></div>
+        <span class="dot" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
+
       </div>
     </div>
   </div>

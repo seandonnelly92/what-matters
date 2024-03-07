@@ -1,7 +1,7 @@
-<div class="container" data-controller="logs-container-scroll">
+<div class="container" data-controller="log-scroll">
   <div>
     <% @scare_crow_habits.each do |habit| %>
-      <div data-logs-container-scroll-target = "date-scroll" data-action="click->logs-container-scroll#scroll">
+      <div>
         <%= render 'habits/habit_card', habit: habit %>
       </div>
     <% end %>
