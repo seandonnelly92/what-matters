@@ -21,30 +21,12 @@ export default class extends Controller {
       .then(data => {
         console.log(data);
         this.sessionData = data;
-        this.handleSessionData();
+        this.firstStepOutput();
       })
       .catch(error => console.error("Error fetching session data:", error));
     }
 
-
-
-  handleSessionData() {
-    this.handleRelation();
-
-
-    // switch(relation_to.toLowerCase()) {
-    //   case 'parent':
-    //     this.handleParent();
-    //     break;
-    //   case 'child':
-    //     this.handleChild();
-    //     break;
-    //   default:
-    //     this.handleOther();
-    // }
-  }
-
-  handleRelation() {
+  firstStepOutput() {
     const relation_to = this.sessionData.step2.relation_to;
     console.log(`Relation is a ${relation_to}`);
 
