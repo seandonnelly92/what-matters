@@ -1,6 +1,29 @@
-<h1>Tell us about someone you care about deeply</h1>
+<h2>Tell us of someone you care about deeply</h2>
 
-<%= simple_form_for :step2_data, url: step2_submit_multistages_path do |f| %>
-  <%= f.input :date_of_birth, as: :date %>
-  <%= f.button :submit, "Next", class: "primary-btn" %>
-<% end %>
+<div class="container">
+  <%= simple_form_for :step2_data, url: step2_submit_multistages_path do |f| %>
+    <%= f.input :nickname, as: :string, label: "What do you call them?" %>
+    <%= f.input :relation_to, as: :select, collection: relationship.relation_to, label: "What is their relationship to you?"%>
+    <%= f.input :contact_minutes_per_week, as: :integer, placeholder: "..minutes per week", label: "How much quality time do you spend with them these days? [minutes per week]" %>
+    <%= f.input :date_of_birth,
+        label: "What is their date of birth?", # Reflects custom label
+        as: :string,
+        input_html: { data: { controller: "datepicker", "multistage-step2-target": "dateOfBirth" } } %>
+    <%= f.input :meet_date,
+        label: "When did you meet them?", # Reflects custom label
+        as: :string,
+        input_html: { data: { controller: "datepicker", "multistage-step2-target": "meetDate" } } %>
+    <%= f.button :submit, "Next", class: "primary-btn" %>
+  <% end %>
+</div>
+
+<%# TABLE IN THE SCHEMA %>
+<%# t.bigint "user_id", null: false
+    t.string "nickname"
+    t.string "relation_to"
+    t.datetime "date_of_birth"
+    t.datetime "meet_date"
+    t.integer "contact_minutes_per_week"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_relationships_on_user_id" %>
