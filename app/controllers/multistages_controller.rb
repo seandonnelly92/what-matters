@@ -5,7 +5,7 @@ class MultistagesController < ApplicationController
   end
 
   def step1_submit
-    custom_params = user_params
+    custom_params = step1_user_params
     unless custom_params[:date_of_birth].empty?
       date_of_birth = make_date(custom_params[:date_of_birth])
       custom_params[:date_of_birth] = date_of_birth
@@ -49,15 +49,26 @@ class MultistagesController < ApplicationController
   end
 
   def step2_output
-    # @relation_data = session[:user_data]["step2"]
   end
 
   def step3_input
   end
 
   def step3_submit
-    session[:user_data] ||= {}
     session[:user_data][:step3] = step3_user_params
+
+    @user = User.new(step3_user_params)
+
+    respond_to do |format|
+      if @user.valid?(:step3_valid)
+        format.json { render json: { data: step3_user_params }, status: :created }
+      else
+        format.json { render json: { errors: @user.errors }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def step3_output
     raise
   end
 
@@ -86,11 +97,10 @@ class MultistagesController < ApplicationController
     params.require(:relationship).permit(:nickname, :relation_to, :date_of_birth, :contact_days, :contact_days_per, :meet_date)
   end
 
-  def user_params
+  def step1_user_params
     params.require(:user).permit(:date_of_birth)
   end
 
-  # MAY NEED TO ADD BELOW TO USER_PARAMS ABOVE
   def step3_user_params
     params.require(:user).permit(:work_days_per_week, :work_hours_per_day, :sleep_hours_per_day)
   end
