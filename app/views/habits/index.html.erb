@@ -1,9 +1,6 @@
-<h1>I am the Habits Index</h1>
-<p>I live at /habits</p>
-
-<%= @habits.all  %>
-
+<h3>Habits Index</h3>
 
 <% @habits.each do |habit| %>
-  <%= habit.title %>
+  <p><%= habit.title %></p>
+  <p><%= habit %></p>
 <% end %>
