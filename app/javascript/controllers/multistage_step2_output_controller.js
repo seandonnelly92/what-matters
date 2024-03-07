@@ -27,6 +27,25 @@ export default class extends Controller {
     }
 
   firstStepOutput() {
+    this.relationYears(); // Get the relevant instances variables for the relation
+
+    this.buildYearsTable(this.sharedYrs); // Build empty years table based on the total shared years
+
+    // Set the title of the page
+    const firstTitle = `Assuming you and ${this.sessionData.step2.nickname} both live to 90, you’ll share ${this.sharedYrs} years of co-existence on planet Earth.`;
+    this.setTitle(firstTitle);
+  }
+
+  secondStepOutput() {
+    
+
+    // Set the title of the page
+    const percentage = Math.round((this.pastYrs / this.sharedYrs) * 100);
+    const secondTitle = `You've used up ${this.pastYrs} of those ${this.sharedYrs} years. That's ${percentage}%. You have ${this.futureYrs} left.`;
+    this.setTitle(secondTitle);
+  }
+
+  relationYears() {
     const relation_to = this.sessionData.step2.relation_to;
     console.log(`Relation is a ${relation_to}`);
 
@@ -36,17 +55,15 @@ export default class extends Controller {
     const userAge = this.getAge(userDoB);
     const relationAge = this.getAge(relationDoB);
 
-    const futureYrs = this.totalYrs - Math.max(userAge, relationAge); // Bases it on the older person
+    this.futureYrs = this.totalYrs - Math.max(userAge, relationAge); // Bases it on the older person
 
     const meetdate = new Date(this.sessionData.step2.meet_date);
-    const pastYrs = this.getAge(meetdate);
+    this.pastYrs = this.getAge(meetdate);
 
-    const sharedYrs = pastYrs + futureYrs;
+    this.sharedYrs = this.pastYrs + this.futureYrs;
 
     console.log(`User is ${userAge} and ${relation_to} is ${relationAge}`);
-    console.log(`You have ${futureYrs} years left of the total ${sharedYrs} years`);
-
-    this.firstScreen(sharedYrs);
+    console.log(`You have ${this.futureYrs} years left of the total ${this.sharedYrs} years`);
   }
 
   getAge(birthDate) {
@@ -57,14 +74,6 @@ export default class extends Controller {
         age--;
     }
     return age;
-  }
-
-  firstScreen(sharedYrs) {
-    this.buildYearsTable(sharedYrs);
-
-    const nickname = this.sessionData.step2.nickname;
-    const firstTitle = `Assuming you and ${nickname} both live to 90, you’ll share ${sharedYrs} years of co-existence on planet Earth.`;
-    this.setTitle(firstTitle)
   }
 
   buildYearsTable(years) {
@@ -86,7 +95,6 @@ export default class extends Controller {
   }
 
   setTitle(newTitle) {
-    console.log(`New title is: ${newTitle}`);
     this.titleTarget.innerText = newTitle;
   }
 }
