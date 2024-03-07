@@ -10,13 +10,17 @@
 
 require 'date'
 
+puts 'destroying all logs'
+Log.destroy_all
+
 puts 'destroying all Relationships'
 Relationship.destroy_all
+
 puts 'destroying all Habits'
 Habit.destroy_all
+
 puts 'destroying all Users...'
 User.destroy_all
-
 
 puts 'seeding Users...'
 scare_crow = User.create!(
@@ -82,7 +86,8 @@ scare_crow_habit = Habit.create!(
   week_recurrence: 3,
   current_streak: 0,
   best_streak: 0,
-  days: ["Monday", "Wednesday", "Friday"],
+  ##changed to days_of_week to match changes to schema
+  days_of_week: ["Monday", "Wednesday", "Friday"],
   start_time: "2024-03-06 17:15:00.000000000 +0000",
 )
 
@@ -98,7 +103,8 @@ tin_man_habit = Habit.create!(
   week_recurrence: 1,
   current_streak: 0,
   best_streak: 0,
-  days: ["Saturday"],
+  ##changed to days_of_week to match changes to schema
+  days_of_week: ["Saturday"],
   start_time: "2024-03-06 17:15:00.000000000 +0000",
 )
 
@@ -106,7 +112,7 @@ puts 'Habits seeded successfully.'
 
 puts 'seeding Logs...'
 
-scare_crow_habit_dates = [
+scare_crow_habit_past_dates = [
   "2024-01-29 06:00:00",
   "2024-01-31 06:00:00",
   "2024-02-02 06:00:00",
@@ -125,18 +131,44 @@ scare_crow_habit_dates = [
   "2024-03-04 06:00:00",
   "2024-03-06 06:00:00",
   "2024-03-08 06:00:00",
-  "2024-03-11 06:00:00",
-  "2024-03-13 06:00:00"
 ]
 
-random_number = rand
+scare_crow_habit_future_dates = [
 
-scare_crow_habit_dates.each do |datetime|
+"2024-03-11 06:00:00",
+  "2024-03-13 06:00:00",
+  "2024-03-15 06:00:00",
+  "2024-03-18 06:00:00",
+  "2024-03-20 06:00:00",
+  "2024-03-22 06:00:00",
+  "2024-03-25 06:00:00",
+  "2024-03-27 06:00:00",
+  "2024-03-29 06:00:00",
+  "2024-04-01 06:00:00",
+  "2024-04-03 06:00:00",
+  "2024-04-05 06:00:00",
+]
+
+
+scare_crow_habit_past_dates.each do |datetime|
   Log.create!(
     habit_id: scare_crow_habit.id,
     date_time: datetime,
     ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
-    completed: random_number <= 0.9,
+    completed: rand <= 0.8,
+    # completed: true,
+    created_at: datetime,
+    updated_at: datetime
+  )
+end
+
+scare_crow_habit_future_dates.each do |datetime|
+  Log.create!(
+    habit_id: scare_crow_habit.id,
+    date_time: datetime,
+    ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
+    # completed: random_number <= 0.9, temporarily set to "true, will change later"
+    completed: false,
     created_at: datetime,
     updated_at: datetime
   )
@@ -161,7 +193,7 @@ tin_man_habit_dates.each do |datetime|
     habit_id: tin_man_habit.id,
     date_time: datetime,
     ## change the value below if we want to create more "falses" to show is a user hasn'e managed to complete a habit
-    completed: random_number <= 0.8,
+    completed: rand <= 0.8,
     created_at: datetime,
     updated_at: datetime
   )

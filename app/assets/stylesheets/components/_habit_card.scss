@@ -1,26 +1,49 @@
-// .card-container {
-//   background-color: rgb(149, 152, 181)
-
-// }
-
-// .card-info {
-//   border: solid black;
-// }
-
-.card-right {
-  position: relative;
+.habit-card {
+  .row {
+    width: 100%;
+    min-height: 100px;
+    margin: 0;
+  }
+  .right {
+    position: relative;
+  }
+  &.last {
+    .line {
+      height: 50%;
+    }
+  }
 }
 
-.dot {
+.p {
+  font-family: $body-font;
+}
+
+.dot-green {
+  position: absolute;
   height: 80px;
   width: 80px;
-  background-color: #bbb;
+  background-color: #003E02;
+  border-style: solid;
+  border-color: #E67E22;
+  border-width: thick;
   border-radius: 50%;
-  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dot-blank {
   position: absolute;
-  bottom: 5px; /* Adjust the distance from the bottom */
-  left: 50%; /* Center the circle horizontally */
-  transform: translateX(-50%);
+  height: 80px;
+  width: 80px;
+  background-color: white;
+  border-style: solid;
+  border-color: #E67E22;
+  border-width: thick;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .line {
@@ -30,5 +53,6 @@
   transform: translateX(-50%);
   height: 100%; /* Full height of the card */
   width: 2px; /* Width of the line */
-  background-color: #bbb /* Color of the line */
+  background-color: #E67E22 /* Color of the line */
+
 }
