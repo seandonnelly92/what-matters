@@ -46,15 +46,11 @@ class MultistagesController < ApplicationController
         format.json { render json: { errors: @relationship.errors }, status: :unprocessable_entity }
       end
     end
-
-    # @relationship_params[:date_of_birth] = make_date(@relationship_params[:date_of_birth])
-    # @relationship_params[:meet_date] = make_date(@relationship_params[:meet_date])
-    # Relationship.new(relationship_params)
-    # redirect_to step2_output_multistages_path
   end
 
   def step2_output
-    @relation_data = session[:user_data]["step2"]
+    raise
+    # @relation_data = session[:user_data]["step2"]
   end
 
   private

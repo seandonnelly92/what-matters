@@ -40,7 +40,7 @@ export default class extends Controller {
         this.handleErrors(data.errors);
       } else {
         console.log(data);
-        // window.location.href = '/multistages/step2_output';
+        window.location.href = '/multistages/step2_output';
       }
     })
   }
