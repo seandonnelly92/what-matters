@@ -85,7 +85,7 @@ export default class extends Controller {
     });
   }
 
-  updateMeetdateLabel(e) {
+  updateMeetdateLabel() {
     const nickname = this.nicknameInputTarget.value;
     const labelText = nickname ? `How long has ${nickname} been important to you?` : "How long has ... been important to you?";
     this.meetdateLabelTarget.innerText = labelText;

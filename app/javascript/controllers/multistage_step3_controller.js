@@ -5,6 +5,8 @@ export default class extends Controller {
   static targets = [
     "title",
     "form",
+    "workDaysInput",
+    "workHoursInput",
     "submitBtn"
   ]
 
@@ -30,13 +32,12 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
-      // this.clearErrors();
-      // this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
+      this.clearErrors();
 
       if (data.errors) {
         console.log("ERRORS");
         console.log(data.errors);
-        // this.handleErrors(data.errors);
+        this.handleErrors(data.errors);
       } else {
         console.log("SUCCESS");
         console.log(data);
@@ -52,5 +53,45 @@ export default class extends Controller {
         sleep_hours_per_day: this.formTarget.querySelector(`[name="step3_data[sleep_hours_per_day]"]`).value
       }
     };
+  }
+
+  handleErrors(errors) {
+    for (const [key, messages] of Object.entries(errors)) {
+      const inputElement = this.element.querySelector(`[name="step3_data[${key}]"]`); // Based on simple form name of input
+      if (inputElement) {
+
+        const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
+        errorsContainer.classList.add('errors-container');
+
+        // Adds the first message to the errorsContainer (we show one error at a time)
+        const errorMessage = document.createElement('span');
+        errorMessage.classList.add('error');
+        errorMessage.innerText = messages[0];
+        errorsContainer.insertAdjacentElement('beforeend', errorMessage);
+
+        // Insert the errors container right after the input element
+        inputElement.parentNode.insertBefore(errorsContainer, inputElement.nextSibling);
+      }
+    }
+  }
+
+  clearErrors() {
+    const errorContainers = this.element.querySelectorAll('.errors-container'); // Includes multiples containers if present
+
+    errorContainers.forEach(container => {
+      container.remove();
+    });
+  }
+
+  workHoursUpdate(e) {
+    const workHoursField = this.element.querySelector('.step3_data_work_hours_per_day');
+    if (this.workDaysInputTarget.value === '0') {
+      console.log("YOU CAN REMOVE IT AND SET TO 0");
+      this.workHoursInputTarget.value = '0';
+      console.log(this.workHoursInputTarget);
+      workHoursField.classList.add('d-none');
+    } else {
+      workHoursField.classList.remove('d-none');
+    }
   }
 }
