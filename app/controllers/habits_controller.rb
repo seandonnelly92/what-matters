@@ -24,11 +24,15 @@ class HabitsController < ApplicationController
   end
 
   def create
+    # Merging the standard habit params with the params that hold the correct start time.
+    # habit_params_with_start_time = habit_params.merge(combine_start_time_params)
+
     @habit = Habit.new(habit_params)
+    @habit.user_id = 1  # For testing purposes, remove later
     if @habit.save
-      redirect_to habit_path(@habit)
+      redirect_to habits_path, notice: "Habit was successfully created!"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
     end
   end
@@ -48,7 +52,23 @@ class HabitsController < ApplicationController
   private
 
   def habit_params
-    params.require(:habit).permit(:title, :category, :identity_goal, :trigger,
-    :reward, :duration_in_minutes, :week_recurrence, :days, :start_times, :photo)
+    params.require(:habit).permit(:title,
+      :category,
+      :identity_goal,
+      :trigger,
+      :reward,
+      :duration_in_minutes,
+      :week_recurrence,
+      :start_time,
+      :days_of_week => [])
   end
 end
+#   def combine_start_time_params
+#     # :habit is a hash. .Slice takes only the :start_time attribute from the hash.
+#     # 1i, 2i etc are generated in Ruby for the different parts of the TIME value.
+#     start_time_params = params[:habit].slice(:start_time)
+#     # Create a variable called start_time which is TIME formatted as HH:MM
+#     start_time = "#{start_time_params["start_time(4i)"]}:#{start_time_params["start_time(5i)"]}"
+#     # Make the value of the start_time key as above
+#     { start_time: start_time }
+#   end
