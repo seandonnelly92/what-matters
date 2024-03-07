@@ -58,8 +58,7 @@ class MultistagesController < ApplicationController
     session[:user_data][:step3] = step3_user_params
 
     @user = User.new(step3_user_params)
-    
-    raise
+
     respond_to do |format|
       if @user.valid?
         format.json { render json: { data: step3_user_params }, status: :created }
@@ -67,6 +66,10 @@ class MultistagesController < ApplicationController
         format.json { render json: { errors: @user.errors }, status: :unprocessable_entity }
       end
     end
+  end
+
+  def step3_output
+    raise
   end
 
   def fetch_session_data

@@ -30,7 +30,7 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
-      this.clearErrors();
+      // this.clearErrors();
       // this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
 
       if (data.errors) {
@@ -40,6 +40,7 @@ export default class extends Controller {
       } else {
         console.log("SUCCESS");
         console.log(data);
+        window.location.href = '/multistages/step3_output';
       }
     })
   }
