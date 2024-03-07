@@ -4,15 +4,24 @@ button {
 }
 
 .primary-btn {
-  justify-self: center;
   font-family: "lato", "sans serif";
   font-weight: 500;
-  text-align: center;
-  width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  font-size: 15px;
+  background-color: $blue; // Primary variable
   color: white;
-  background-color: $blue;
-  border: 2px solid $blue;
+  height: 48px;
+  width: 100%;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+// Hover state and Active state (hold down on mobile)
+
+// This doesn't seem to be imp
+.primary-btn:hover .primary-btn:active {
+  background-color: red !important;
+  color: white;
 }
