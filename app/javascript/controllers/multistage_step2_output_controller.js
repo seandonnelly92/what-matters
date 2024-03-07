@@ -120,6 +120,13 @@ export default class extends Controller {
     // Set the title of the page
     const fifthTitle = `You used up ${(this.youthYrs * 365).toLocaleString()} days by the time you were 18. You have ${(this.futureYrs * this.annualContact).toLocaleString()} days left:`;
     this.setTitle(fifthTitle);
+
+    // Update the next button to be used for the finalStep()
+    this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#finalStep');
+  }
+
+  finalStep () {
+    window.location.href = '/multistages/step3_input';
   }
 
   relationYears() {
