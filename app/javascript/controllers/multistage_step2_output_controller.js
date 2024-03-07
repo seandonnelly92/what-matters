@@ -83,20 +83,20 @@ export default class extends Controller {
     const contactDays = this.sessionData.step2.contact_days;
     const annualContact = this.annualContactDays(daysPer, contactDays)
 
-
-    const part4 = `Now, you spend ${this.sessionData.step2.contact_days} days per ${daysPer} with ${nickname}. ${annualContact}`
+    const part4 = `Now, you spend ${this.sessionData.step2.contact_days} days per ${daysPer} with ${nickname}. ${daysPer !== 'year' ? `That is around ${annualContact} days per year.` : ''}`
     this.divStep3Target.insertAdjacentHTML('beforeend', `<p>${part4}</p>`);
 
     console.log(`Youth years is: ${this.youthYrs}`);
+    console.log(`Past non-youth years is: ${this.pastYrs - this.youthYrs}`);
     console.log(`Future years is: ${this.futureYrs}`);
     console.log(`Annual contact is: ${annualContact} days`);
-    const totalDays = (this.youthYrs * 365) + (this.futureYrs * annualContact); // Calculates total based on youth years and customised annual contact in future years
+    const totalDays = (this.youthYrs * 365) + ((this.pastYrs - this.youthYrs) * annualContact) + (this.futureYrs * annualContact);
     const part5 = `Based on this, the total time you’ll ever spend with ${nickname} is ${totalDays} days.`;
     this.divStep3Target.insertAdjacentHTML('beforeend', `<h3>${part5}</h3>`);
   }
 
   relationYears() {
-    const relation_to = this.sessionData.step2.relation_to;
+    const relation_to = this.sessionData.step2.relation_to.toLowerCase();
     console.log(`Relation is a ${relation_to}`);
 
     const userDoB = new Date(this.sessionData.step1.date_of_birth);
@@ -122,7 +122,7 @@ export default class extends Controller {
   }
 
   sharedYouthYears(childAge) {
-    const delta = childAge - (childAge - this.partYrs); // Based on the different between the age of the child vs the years since meetdate
+    const delta = childAge - this.pastYrs; // Based on the difference between the age of the child vs the years since meetdate
     this.youthYrs = 18 - delta; // Accounts for the days prior to the parent 'meeting' the child, if any
   }
 
@@ -190,7 +190,7 @@ export default class extends Controller {
         annualContact = Math.round(contactDays * 12);
         break;
       default:
-        annualContact = '';
+        annualContact = contactDays;
     }
     return annualContact;
   }
