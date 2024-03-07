@@ -18,7 +18,7 @@ export default class extends Controller {
   submitForm(e) {
     e.preventDefault();
 
-    // const data = { user: { date_of_birth: this.dateOfBirthTarget.value } };
+    const data = this.formDataJSON();
 
     fetch(`/multistages/step3_submit`, {
       method: "POST",
@@ -42,5 +42,14 @@ export default class extends Controller {
         console.log(data);
       }
     })
+  }
+
+  formDataJSON() {
+    return { user:
+      { work_days_per_week: this.formTarget.querySelector(`[name="step3_data[work_days_per_week]"]`).value,
+        work_hours_per_day: this.formTarget.querySelector(`[name="step3_data[work_hours_per_day]"]`).value,
+        sleep_hours_per_day: this.formTarget.querySelector(`[name="step3_data[sleep_hours_per_day]"]`).value
+      }
+    };
   }
 }
