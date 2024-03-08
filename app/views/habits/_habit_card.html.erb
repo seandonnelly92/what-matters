@@ -3,9 +3,11 @@
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-token-value="<%= form_authenticity_token %>" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
-        <h5>I will <%= habit.title %></h3>
+
         <%# <p data-loader-log-date-value= #{log.date}></p> %>
-        <h6 data-log-click-target='message'><%= log.format_message %></h6>
+        <h3 id = "today-message"><%= log.today_message %></h5>
+        <h6 class = "text" data-log-click-target='message'><%= log.format_message %></h6>
+        <p data-log-scroll-target="today"></p>
       </div>
       <div class="col-6 right">
         <div class="line"></div>
