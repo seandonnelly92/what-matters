@@ -1,7 +1,6 @@
 class HabitsController < ApplicationController
   def index
-    @habits = Habit.all
-
+    @habits = Habit.order(created_at: :desc)
   end
 
   def new
