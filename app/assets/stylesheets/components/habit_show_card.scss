@@ -10,6 +10,7 @@
   position: relative;
   filter: grayscale(100%) sepia(30%);
   background-size: cover;
+  z-index: 0;
 }
 
 .habit-content {
