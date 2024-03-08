@@ -27,7 +27,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   &.completed {
-    background-color: green;
+    background-color: $primary;
   }
 }
 
