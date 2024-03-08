@@ -18,16 +18,16 @@
   position: absolute;
   height: 80px;
   width: 80px;
-  background-color: white;
+  background-color: $light-gray;
   border-style: solid;
-  border-color: #E67E22;
+  border-color: $primary;
   border-width: thick;
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   &.completed {
-    background-color: green;
+    background-color: $primary;
   }
 }
 
@@ -38,6 +38,9 @@
   transform: translateX(-50%);
   height: 100%; /* Full height of the card */
   width: 2px; /* Width of the line */
-  background-color: #E67E22 /* Color of the line */
+  background-color: $primary; /* Color of the line */
+    &.completed {
+      border-top: 2px dotted #f00;
+    }
 
 }
