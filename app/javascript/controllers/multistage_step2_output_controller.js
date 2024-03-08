@@ -113,6 +113,8 @@ export default class extends Controller {
   }
 
   fifthStepOutput(e) {
+    this.resetScrollPosition()
+    
     // Colors the circles of the table based on the days
     this.colorCircles((this.youthYrs * 365) + (this.pastYrs - this.youthYrs) * this.annualContact, true); // True added for small circles class
 
@@ -230,6 +232,10 @@ export default class extends Controller {
 
   setTitle(newTitle) {
     this.titleTarget.innerText = newTitle;
+  }
+
+  resetScrollPosition() {
+    window.scrollTo(0, 0);
   }
 
   annualContactDays(daysPer, contactDays) {

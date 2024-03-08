@@ -58,6 +58,8 @@ export default class extends Controller {
       if (data.errors) {
         this.handleErrors(data.errors);
       } else {
+        this.resetScrollPosition();
+
         const dateOfBirth = new Date(data.data);
         const yearsOld = this.differenceInYears(dateOfBirth, new Date()) // new Date() will reflects today's date
 
@@ -130,5 +132,9 @@ export default class extends Controller {
     this.colorCircles(0); // Will set all the circles to white
     this.backBtnTarget.classList.add('d-none');
     this.validForm = false;
+  }
+
+  resetScrollPosition() {
+    window.scrollTo(0, 0);
   }
 }
