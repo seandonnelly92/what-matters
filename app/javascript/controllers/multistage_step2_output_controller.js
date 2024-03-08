@@ -142,10 +142,8 @@ export default class extends Controller {
     .then(data => {
         console.log("SUCCESS");
         console.log(`Data is: ${data}`);
+        window.location.href = '/multistages/step3_input';
     })
-
-    // Redirect to next step
-    window.location.href = '/multistages/step3_input';
   }
 
   relationYears() {
