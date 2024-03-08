@@ -1,9 +1,12 @@
-<div class="container mt-3" data-controller="multistage-step2-output">
+<div data-controller="multistage-step2-output">
   <h3 data-multistage-step2-output-target="title"></h3>
-  <table data-multistage-step2-output-target="table"></table>
-
-  <button type="button"
-    class="primary-btn"
-    data-action="click->multistage-step2-output#secondStepOutput"
-    data-multistage-step2-output-target="nextBtn">Next</button>
+  <div class="d-flex justify-content-center">
+    <table data-multistage-step2-output-target="table"></table>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button type="button"
+      class="primary-btn"
+      data-action="click->multistage-step2-output#secondStepOutput"
+      data-multistage-step2-output-target="nextBtn">Next</button>
+  </div>
 </div>

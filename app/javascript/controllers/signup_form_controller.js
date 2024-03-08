@@ -40,10 +40,6 @@ export default class extends Controller {
       const dateOfBirth = new Date(data.step1.date_of_birth);
       this.dateOfBirthTarget.value = `${dateOfBirth.getFullYear()}-${dateOfBirth.getMonth()+1}-${dateOfBirth.getDate()}`;
       this.elementDisplay(this.dateOfBirthTarget);
-      // if(this.dateOfBirthTarget.value != '') {
-      //   this.dateOfBirthTarget.classList.add("form-optional")
-      //   this.dateOfBirthTarget.previousElementSibling.style.display = "none"
-      // }
     }
 
     if(typeof data.step3.work_days_per_week != "undefined") {
