@@ -2,9 +2,6 @@
   background-color: white;
   border-radius: 20px;
   overflow: hidden;
-  // display: flex;
-  // flex-direction: column;
-  // align-content: flex-end
   }
 
 .habit-image {
@@ -12,6 +9,8 @@
   height: 337px;
   position: relative;
   filter: grayscale(100%) sepia(30%);
+  background-size: cover;
+  z-index: 0;
 }
 
 .habit-content {

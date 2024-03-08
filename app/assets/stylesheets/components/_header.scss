@@ -5,11 +5,12 @@
   width: 100%;
   top: 0;
   margin-bottom: 39px;
+  z-index: 8;
 }
 
 #header-logo {
   height: 60px;
-  position: relative;
+  position: absolute;
   top: 25px;
   left: 25px;
 }

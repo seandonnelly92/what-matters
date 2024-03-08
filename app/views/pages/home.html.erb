@@ -1,8 +1,33 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% custom_column_class = "col-12 !important" %>
+<%# This line should override the global container div's column settings in application.html.erb  %>
 
-<%= button_to(
-        "Log Out",
-        destroy_user_session_path,
-        method: :delete
-      ) %>
+<div class="header-banner">
+    <div class="filter d-flex flex-columns justify-content-center">
+      <div class="header-content col-10 col-md-9 col-lg-8 align-self-center">
+      <h2>Life is short.<br>Prioritise What Matters.</h2>
+      <p>We humans are bad at making time for the things that really matter. This app helps you identify those things and build sustainable habits to prioritise them.</p>
+      <%= link_to 'Take the Quiz', step1_input_multistages_path, class: 'btn btn-primary me-1 border-none' %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-light' %>
+      </div>
+    </div>
+</div>
+
+<%# HOW IT WORKS %>
+<div class="how-it-works mt-5">
+  <h3 class="text-center">How It Works</h3>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="pb-5 col-10 col-md-6">
+      <p><strong>Step 1</strong></p>
+      <p>Take our interactive quiz to get some perspective on the length of your life. It’s later than you think!</p>
+      <%= link_to 'Take the Quiz', step1_input_multistages_path, class: 'btn btn-primary' %>
+    </div>
+    <div class="pb-5 col-10 col-md-6">
+      <p><strong>Step 2</strong></p>
+      <p>Use our habit builder to create routines that you’ll stick to. Our habit builder is rooted in the scientific research made famous in Atomic Habits.</p>
+    </div>
+    <div class="pb-5 col-10 col-md-6">
+      <p><strong>Step 3</strong></p>
+      <p>Use our habit builder to create routines that you’ll stick to. Our habit builder is rooted in the scientific research made famous in Atomic Habits. </p>
+    </div>
+  </div>
+</div>

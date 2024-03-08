@@ -1,7 +1,6 @@
 class HabitsController < ApplicationController
   def index
-    @habits = Habit.all
-    
+    @habits = Habit.order(created_at: :desc)
   end
 
   def new
@@ -56,7 +55,7 @@ class HabitsController < ApplicationController
       :week_recurrence,
       :start_time,
       :photo,
-      :days_of_week => [])
+      days_of_week: [])
   end
 end
 #   def combine_start_time_params

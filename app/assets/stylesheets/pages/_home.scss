@@ -1,1 +1,31 @@
 // Specific CSS for your home-page
+.header-banner {
+  // position: absolute;
+  // position absolute allows us to escape the application columns settings.
+  // left:0;
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 60vh;
+  background-image: url("https://media.istockphoto.com/id/155287967/photo/cars-in-rush-hour-with-traffic-at-dawn.jpg?s=612x612&w=0&k=20&c=tDAaJQMHIh6nFDr0rJlD44tEtmj2srdpoSTKL7C5SGE=");
+  background-repeat: no-repeat;
+  background-size: cover;
+  // filter: grayscale(100%) sepia(30%) brightness(30%);
+}
+
+
+.filter {
+  height: 60vh;
+  width: 100%;
+  backdrop-filter: grayscale(100%) sepia(30%) brightness(30%);
+  // position: relative;
+
+}
+
+.header-content h2, .header-banner p {
+  position: relative;
+  top: 0;
+  color: white;
+  ;
+}

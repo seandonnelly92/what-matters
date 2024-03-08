@@ -1,24 +1,15 @@
 
-<% habit.logs.each do  |log|%>
-  <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" >
+<% habit.logs.order(date_time: :asc).each do  |log|%>
+  <div class="habit-card d-flex" data-controller="log-click" data-log-click-token-value="<%= form_authenticity_token %>" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
-        <h6>Habit is to <%= habit.title %></h3>
+        <h5>I will <%= habit.title %></h3>
         <%# <p data-loader-log-date-value= #{log.date}></p> %>
-        <%if log.completed  %>
-        <p>Well done! You completed on <%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
-        <%else  %>
-        <p>Not completed </p>
-        <%end  %>
-
+        <h6 data-log-click-target='message'><%= log.format_message %></h6>
       </div>
       <div class="col-6 right">
         <div class="line"></div>
-        <%if log.completed  %>
-          <span class="dot-green" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
-        <%else  %>
-          <span class="dot-blank" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
-        <%end  %>
+        <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle" data-action="click->log-click#handleDotClick"></span>
       </div>
     </div>
   </div>
