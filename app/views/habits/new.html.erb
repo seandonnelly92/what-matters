@@ -25,7 +25,7 @@
           </div>
           <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
           <%= f.input :category, :label => 'Habit category:', placeholder: "Partner", as: :select, collection: Habit::CATEGORIES %>
-          <%= f.input :trigger, :label => 'I will this before/while/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
+          <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
           <%= f.input :reward, :label => 'My reward for this is:', placeholder: "a coffee, cake, an episode of Breaking Bad..." %>
           <%= f.input :photo, :label => 'Attached a photograph to this habit:', as: :file %>
           <%= f.submit %>
