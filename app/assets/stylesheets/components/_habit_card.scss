@@ -1,7 +1,9 @@
 .habit-card {
+  min-height: 100px;
+
   .row {
     width: 100%;
-    min-height: 100px;
+    min-height: 130px;
     margin: 0;
   }
   .right {
@@ -19,15 +21,17 @@
   height: 80px;
   width: 80px;
   background-color: $light-gray;
-  border-style: solid;
+  border-style: dotted;
   border-color: $primary;
   border-width: thick;
+  border-width: 0.25em;
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   &.completed {
     background-color: #045436;
+    // border-style: dotted;
   }
 }
 
@@ -43,4 +47,18 @@
       border: none;
       border-top: 1px dotted black;
     }
+}
+
+.text {
+  margin-bottom: 20px;
+  margin-top: 5px;
+    &.completed {
+      color: #045436;
+  }
+}
+
+
+#today-message {
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
