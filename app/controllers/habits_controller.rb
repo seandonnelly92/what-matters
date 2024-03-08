@@ -1,6 +1,9 @@
 class HabitsController < ApplicationController
   def index
-    @habits = Habit.all
+    @habits = Habit.where(user: current_user).order(created_at: :desc)
+    if @habits.blank?
+      redirect_to new_habit_path
+    end
   end
 
   def new
