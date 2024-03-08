@@ -69,7 +69,6 @@ class MultistagesController < ApplicationController
   end
 
   def step3_output
-    redirect_to new_user_registration_path
   end
 
   def fetch_session_data
@@ -77,6 +76,14 @@ class MultistagesController < ApplicationController
 
     respond_to do |format|
       format.json { render json: session_data }
+    end
+  end
+
+  def add_session_data
+    session[:user_data][:various] = additional_session_params
+
+    respond_to do |format|
+      format.json { render json: { data: additional_session_params }, status: :created }
     end
   end
 
@@ -103,5 +110,9 @@ class MultistagesController < ApplicationController
 
   def step3_user_params
     params.require(:user).permit(:work_days_per_week, :work_hours_per_day, :sleep_hours_per_day)
+  end
+
+  def additional_session_params
+    params.require(:various).permit(:annual_contact_days)
   end
 end

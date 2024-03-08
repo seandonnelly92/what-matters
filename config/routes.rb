@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       post 'step3_submit'
       get 'step3_output'
       get 'fetch_session_data', as: :fetch_session_data
+      post 'add_session_data', as: :add_session_data
     end
   end
 end
