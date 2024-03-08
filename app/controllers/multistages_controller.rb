@@ -69,7 +69,6 @@ class MultistagesController < ApplicationController
   end
 
   def step3_output
-    raise
   end
 
   def fetch_session_data
