@@ -44,11 +44,11 @@
                   label: "How many days on average do you work per week?",
                   input_html: { data: { "signup-form-target": "workDays" } } %>
       <%= f.input :work_hours_per_day,
-                  collection: 1..24,
+                  collection: 0..24,
                   label: "On an average work day, how many hours do you spend working and commuting?",
                   input_html: { data: { "signup-form-target": "workHrs" } } %>
       <%= f.input :sleep_hours_per_day,
-                  collection: 1..24,
+                  collection: 0..24,
                   label: "How much sleep do you ideally get per day?",
                   input_html: { data: { "signup-form-target": "sleepHrs" } } %>
     </div>
