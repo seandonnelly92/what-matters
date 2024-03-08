@@ -31,10 +31,16 @@ end
             "th"
           end
         end
-      end
+    end
 
     formatted_date = "#{day}#{ordinal_suffix(day)} #{date_time.strftime("%B")}"
-    completed ? "Well done! '#{habit.title.capitalize}' completed on  #{formatted_date}": "'#{habit.title.capitalize}' not completed for #{formatted_date}. Remember your trigger for this habit is '#{habit.trigger}!'"
-  end
 
+    if date_time.to_date < Time.now.to_date
+      completed ? "Well done! '#{habit.title.capitalize}' completed on  #{formatted_date}": "'#{habit.title.capitalize}' not completed for #{formatted_date}. Remember your trigger for this habit is '#{habit.trigger}!'"
+    elsif date_time.to_date == Time.now.to_date
+      completed ? "Well done for '#{habit.title.capitalize}' today!": " Remember to '#{habit.title.capitalize}' today!' You set your trigger to be '#{habit.trigger}'"
+    else date_time.to_date > Time.now.to_date
+      "#{habit.title.capitalize} on #{formatted_date}"
+    end
+  end
 end
