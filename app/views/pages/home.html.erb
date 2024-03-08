@@ -1,9 +1,14 @@
 <% custom_column_class = "col-12 !important" %>
 <%# This line should override the global container div's column settings in application.html.erb  %>
 
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-
+<div class="header-banner align-middle d-flex flex-columns align-items-center">
+  <div class="col-10 col-md-9 col-lg-8 mx-auto">
+    <h1>Life is short</h1>
+    <h1>Prioritise What What Matters.</h1>
+    <p>We humans are bad at making time for the things that really matter. This app helps you identify those things and build sustainable habits to prioritise them.</p>
+    <%= button_to "See What Matters", habits_path %>
+  </div>
+</div>
 <%= button_to(
         "Log Out",
         destroy_user_session_path,
