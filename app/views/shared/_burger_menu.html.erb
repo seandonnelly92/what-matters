@@ -7,6 +7,7 @@
   <div class="d-flex flex-column justify-content-between" id="menu" data-burger-menu-target="menuWindow">
     <div id="menu-top">
       <ul class="menu-options">
+        <li> <%= link_to step1_input_multistages_path do %></li>What Matters Quiz<% end %>
         <li> <%= link_to habits_tracker_path do %></li>Tracker<% end %>
         <li> <%= link_to habits_path do %></li>My Habits<% end %>
         <li> <%= link_to new_habit_path do %></li>Add Habit<% end %>
@@ -19,7 +20,8 @@
         <% if user_signed_in? %>
           <li> <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %></li>Log Out<% end %>
         <% else %>
-          <li> <%= link_to new_user_session_path do %></li>Log in<% end %>
+          <li> <%= link_to new_user_registration_path do %></li>Sign Up<% end %>
+          <li> <%= link_to new_user_session_path do %></li>Log In<% end %>
         <% end %>
       </ul>
     </div>

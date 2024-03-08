@@ -69,7 +69,7 @@ class MultistagesController < ApplicationController
   end
 
   def step3_output
-    raise
+    redirect_to new_user_registration_path
   end
 
   def fetch_session_data
