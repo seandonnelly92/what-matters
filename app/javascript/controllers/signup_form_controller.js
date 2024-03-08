@@ -19,8 +19,8 @@ export default class extends Controller {
     // console.log(this.workHrsTarget);
     console.log(this.workDaysTarget);
     console.log(this.fetchSessionData());
-    console.log(this.showAllButtonTarget);
-    console.log(this.targets.forEach())
+    this.showButtonActive = true;
+    this.formTargets = [this.dateOfBirthTarget, this.sleepHrsTarget, this.workHrsTarget, this.workDaysTarget]
   }
 
   fetchSessionData() {
@@ -39,7 +39,7 @@ export default class extends Controller {
       this.showAllButtonTarget.classList.remove("form-optional")
       const dateOfBirth = new Date(data.step1.date_of_birth);
       this.dateOfBirthTarget.value = `${dateOfBirth.getFullYear()}-${dateOfBirth.getMonth()+1}-${dateOfBirth.getDate()}`;
-      this.ElementDisplay(this.dateOfBirthTarget);
+      this.elementDisplay(this.dateOfBirthTarget);
       // if(this.dateOfBirthTarget.value != '') {
       //   this.dateOfBirthTarget.classList.add("form-optional")
       //   this.dateOfBirthTarget.previousElementSibling.style.display = "none"
@@ -48,34 +48,55 @@ export default class extends Controller {
 
     if(typeof data.step3.work_days_per_week != "undefined") {
       this.workHrsTarget.value = data.step3.work_days_per_week
-      this.ElementDisplay(this.workHrsTarget);
+      this.elementDisplay(this.workHrsTarget);
     }
 
     if(typeof data.step3.work_hours_per_day != "undefined") {
       this.workDaysTarget.value = data.step3.work_hours_per_day
-      this.ElementDisplay(this.workDaysTarget);
+      this.elementDisplay(this.workDaysTarget);
     }
 
     if(typeof data.step3.sleep_hours_per_day != "undefined") {
       this.sleepHrsTarget.value = data.step3.sleep_hours_per_day
-      this.ElementDisplay(this.sleepHrsTarget);
+      this.elementDisplay(this.sleepHrsTarget);
     }
   }
 
-  // showAll(event) {
-  //   this.showAllButtonTarget.innerText = "Hide previous answers";
-  //   this.targets.forEach((target {
-  //     if(this.targets.classList.contains("form-optional")) {
-  //       this.targets.classList.toggle("form-optional")
-  //       this.targets.previousElementSibling.style.display = "none"
-  //     }
-  //   }
-  // }
-
-  ElementDisplay(element) {
+  elementDisplay(element) {
     if(element.value != '') {
       element.classList.add("form-optional")
       element.previousElementSibling.style.display = "none"
     }
+  }
+
+  showHide(event) {
+    event.preventDefault();
+    if (this.showButtonActive) {
+      this.showAll();
+    } else {
+      this.hideCompleted();
+    }
+  }
+
+  showAll() {
+    this.showAllButtonTarget.innerText = "Hide previous answers";
+    this.formTargets.forEach((target) => {
+      if (target.classList.contains("form-optional")) {
+        target.classList.remove("form-optional");
+        target.previousElementSibling.style.display = "";
+      }
+    })
+    this.showButtonActive = false;
+  }
+
+  hideCompleted() {
+    this.showAllButtonTarget.innerText = "Show previous answers";
+    this.formTargets.forEach((target) => {
+      if (target.value != "") {
+        target.classList.add("form-optional")
+        target.previousElementSibling.style.display = "none"
+      }
+    });
+    this.showButtonActive = true;
   }
 }
