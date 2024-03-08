@@ -79,6 +79,14 @@ class MultistagesController < ApplicationController
     end
   end
 
+  def add_session_data
+    session[:user_data][:various] = additional_session_params
+
+    respond_to do |format|
+      format.json { render json: { data: additional_session_params }, status: :created }
+    end
+  end
+
   private
 
   def make_date(date)
@@ -102,5 +110,9 @@ class MultistagesController < ApplicationController
 
   def step3_user_params
     params.require(:user).permit(:work_days_per_week, :work_hours_per_day, :sleep_hours_per_day)
+  end
+
+  def additional_session_params
+    params.require(:various).permit(:annual_contact_days)
   end
 end

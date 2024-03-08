@@ -15,6 +15,9 @@ export default class extends Controller {
     this.fetchSessionData();
 
     this.totalYrs = 90;
+
+    // Retrieves the required CRSF token from the HTML header (used to send requests)
+    this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
   }
 
   fetchSessionData() {
@@ -122,6 +125,24 @@ export default class extends Controller {
   }
 
   finalStep () {
+    // Add annualContact to session data
+    const data = { various: { annual_contact_days: this.annualContact } };
+
+    fetch(`add_session_data`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": this.csrfToken // Include CSRF token
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("SUCCESS");
+        console.log(`Data is: ${data}`);
+    })
+
+    // Redirect to next step
     window.location.href = '/multistages/step3_input';
   }
 

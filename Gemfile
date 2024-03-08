@@ -4,7 +4,6 @@ ruby "3.1.2"
 
 # Additional gems added for project
 gem "psych", "4.0"
-gem "chartkick"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
