@@ -3,7 +3,11 @@ class LogsController < ApplicationController
     log = Log.find(params[:id])
     log.completed = !log.completed
     log.save
-    head 200
+    respond_to do |format|
+      format.json do
+        render json: { message: log.format_message }
+      end
+    end
   end
 
   private
