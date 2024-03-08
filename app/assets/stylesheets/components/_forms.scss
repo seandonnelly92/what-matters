@@ -35,6 +35,64 @@
   color: $font-color
 }
 
+
+// SPECIFIC FIELDS
+
+// Habit title
+.habit_title {
+  display: flex;
+  vertical-align: baseline;
+}
+
+.habit_title .form-label {
+  padding-right: 6px;
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 49px;
+}
+
+.habit_title .form-control {
+  background-color: lightblue;
+}
+
+// Week recurrence
+
+.week-recurrence {
+  display: flex;
+}
+
+.week-recurrence p {
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 49px;
+}
+
+.week-recurrence .form-control {
+  margin-left: 6px;
+  margin-right: 6px;
+  text-align: center;
+  width: 70px;
+}
+
+// Time and Duration
+
+.time-duration {
+  background-color: lightgreen;
+  display: flex;
+  white-space: nowrap;
+}
+
+.habit_duration_in_minutes .form-control {
+  width: 70px;
+  text-align: center;
+}
+
+#habit_start_time_4i {
+  width: 80px
+}
+
+
+
 /* DAYS OF WEEK PICKER */
 
 /* Container of checkboxes */
