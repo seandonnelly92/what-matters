@@ -1,5 +1,5 @@
 
-<% habit.logs.each do  |log|%>
+<% habit.logs.order(date_time: :asc).each do  |log|%>
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-token-value="<%= form_authenticity_token %>" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" ata-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">

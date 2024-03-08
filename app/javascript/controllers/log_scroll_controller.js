@@ -17,7 +17,6 @@ export default class extends Controller {
 
       // console.log(logDate)
       if (logDate < this.today) {
-
         log.scrollIntoView()
       }
     }
@@ -25,10 +24,7 @@ export default class extends Controller {
   }
 
   scroll() {
-
-    console.log("I have selected a card")
     const thisDate = this.element.dataset.log_date
-    console.log(thisDate)
   }
 
 }
