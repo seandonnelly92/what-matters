@@ -9,7 +9,7 @@ export default class extends Controller {
     token: String,
   }
 
-  static targets = ["circle"]
+  static targets = ["circle", "message"]
 
   connect() {
     // console.log("Hello from logs container scroller")
@@ -24,10 +24,13 @@ export default class extends Controller {
     fetch(`/logs/${logId}`, {
       method: 'PATCH',
       "headers": {
-        "X-CSRF-Token": this.tokenValue
+        "X-CSRF-Token": this.tokenValue,
+        "Accept": "application/json"
       }
-    }).then((resp) => console.log(resp))
+    }).then((resp) => resp.json()).then((data) => {
+      this.messageTarget.innerText = data.message;
+    })
     this.circleTarget.classList.toggle("completed")
-    // console.log(this.circleTarget.classlist.back)
+    console.log(this.messageTarget)
   }
 }

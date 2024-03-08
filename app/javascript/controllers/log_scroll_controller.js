@@ -18,7 +18,9 @@ export default class extends Controller {
       // console.log(logDate)
       if (logDate < this.today) {
         log.scrollIntoView()
+
       }
+
     }
     )
   }
