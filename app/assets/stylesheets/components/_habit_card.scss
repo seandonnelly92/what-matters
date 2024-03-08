@@ -27,7 +27,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   &.completed {
-    background-color: $primary;
+    background-color: #045436;
   }
 }
 
@@ -40,7 +40,7 @@
   width: 2px; /* Width of the line */
   background-color: $primary; /* Color of the line */
     &.completed {
-      border-top: 2px dotted #f00;
+      border: none;
+      border-top: 1px dotted black;
     }
-
 }
