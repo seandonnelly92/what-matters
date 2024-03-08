@@ -43,13 +43,13 @@ export default class extends Controller {
     }
 
     if(typeof data.step3.work_days_per_week != "undefined") {
-      this.workHrsTarget.value = data.step3.work_days_per_week
-      this.elementDisplay(this.workHrsTarget);
+      this.workDaysTarget.value = data.step3.work_days_per_week
+      this.elementDisplay(this.workDaysTarget);
     }
 
     if(typeof data.step3.work_hours_per_day != "undefined") {
-      this.workDaysTarget.value = data.step3.work_hours_per_day
-      this.elementDisplay(this.workDaysTarget);
+      this.workHrsTarget.value = data.step3.work_hours_per_day
+      this.elementDisplay(this.workHrsTarget);
     }
 
     if(typeof data.step3.sleep_hours_per_day != "undefined") {
