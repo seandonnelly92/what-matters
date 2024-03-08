@@ -1,12 +1,10 @@
 <div class="container mt-3" data-controller="multistage-step3-output">
-  <h3 data-multistage-step3-output-target="title">Here’s a breakdown of your time:</h3>
-  <canvas data-multistage-step3-output-target="timeBreakdown"></canvas>
-  <p>Unavoidable vs free time</p>
-  <canvas data-multistage-step3-output-target="timeBreakdownDetail"></canvas>
-  <p>Unavoidable vs free time vs key relationship</p>
+  <h3 data-multistage-step3-output-target="title">Here’s a breakdown of your unavoidables vs free time in a typical week:</h3>
+  <canvas id="timeBreakdownChart" data-multistage-step3-output-target="timeBreakdown"></canvas>
+  <p class="legend-label" data-multistage-step3-output-target="legend"><span class="second">Free time</span> vs <span class="first">unavoidables</span></p>
 
   <button type="button"
     class="primary-btn"
-    data-action="click->multistage-step3-output#secondStepOutput"
+    data-action="click->multistage-step3-output#breakdownChartDetailed"
     data-multistage-step3-output-target="nextBtn">Next</button>
 </div>
