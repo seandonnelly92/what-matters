@@ -75,7 +75,7 @@
   opacity: 0;
   transform: scale(0);
   transform-origin: center;
-  transition: transform var(--transform-duration, 3s) linear, opacity var(--opacity-duration, 3s) linear;
+  transition: transform var(--transition-duration, 3s) linear, opacity var(--transition-duration, 3s) linear;
 
   &.completing {
     transform: scale(1);

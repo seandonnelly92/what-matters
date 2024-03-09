@@ -11,7 +11,8 @@ export default class extends Controller {
 
   initialize() {
     this.timer = null;
-    this.pressTime = 3000; // Time user needs to press the habit circle for completion in milliseconds
+    this.pressTime = 2500; // Time user needs to press the habit circle for completion in milliseconds
+    this.circleTarget.style.setProperty('--transition-duration', `${this.pressTime / 1000}s`);
   }
 
   connect() {
@@ -66,7 +67,6 @@ export default class extends Controller {
       clearTimeout(this.timer);
       this.timer = null;
       console.log("Released too early, action cancelled.");
-
 
       habitCircle.classList.toggle("completing");
     }
