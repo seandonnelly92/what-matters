@@ -47,11 +47,12 @@ export default class extends Controller {
 
     habitCircle.classList.toggle("completing");
 
-    // Start a timer for 3 seconds
+    // Start a timer for X seconds
     this.timer = setTimeout(() => {
       console.log(`Held for ${this.pressTime / 1000} seconds!`);
       this.timer = null; // Reset timer
 
+      this.completeMessage();
       // this.completeHabit();
     }, this.pressTime);
   }
@@ -90,7 +91,13 @@ export default class extends Controller {
       console.log(this.messageTarget);
       this.circleTarget.classList.toggle("completed");
     })
-
   }
 
+  completeMessage() {
+    const completionMessage = document.getElementById('completion-message');
+    console.log(completionMessage);
+
+    completionMessage.innerHTML = '<h3>Well done!</h3>';
+    completionMessage.classList.add('display-message');
+  }
 }
