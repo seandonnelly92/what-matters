@@ -95,9 +95,20 @@ export default class extends Controller {
 
   completeMessage() {
     const completionMessage = document.getElementById('completion-message');
+
     console.log(completionMessage);
 
-    completionMessage.innerHTML = '<h3>Well done!</h3>';
+    completionMessage.insertAdjacentHTML('beforeend', '<h3>Well done!</h3>');
     completionMessage.classList.add('display-message');
+
+    const topLine = completionMessage.querySelector('.logo-line.top');
+    const logoCircle = completionMessage.querySelector('#logo-circle');
+    const bottomLine = completionMessage.querySelector('.logo-line.bottom');
+
+    logoCircle.classList.add('show');
+    setTimeout(() => {
+      topLine.classList.add('show');
+      bottomLine.classList.add('show');
+    }, 1000);
   }
 }

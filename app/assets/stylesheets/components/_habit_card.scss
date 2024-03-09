@@ -84,7 +84,7 @@
 }
 
 #completion-message {
-  visibility: hidden;
+  visibility: visible;
   opacity: 0;
 
   display: flex;
@@ -99,9 +99,9 @@
   width: 100%;
   height: 30%;
   z-index: 100;
-  background-color: rgba(160, 160, 160, 0.9);
+  background-color: rgba($gray, 0.93);
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for better visibility */
+  box-shadow: 0 0 16px 8px rgba(0,0,0,0.2); /* Optional: Adds a subtle shadow for better visibility */
 
   transform-origin: center;
   transition: transform 0.3s linear;
