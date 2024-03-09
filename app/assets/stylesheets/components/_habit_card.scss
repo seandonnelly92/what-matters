@@ -71,12 +71,14 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #add8e6;
+  background-color: $blue;
+  opacity: 0;
   transform: scale(0);
   transform-origin: center;
-  transition: transform 3s linear;
+  transition: transform var(--transform-duration, 3s) linear, opacity var(--opacity-duration, 3s) linear;
 
   &.completing {
     transform: scale(1);
+    opacity: 1;
   }
 }

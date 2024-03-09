@@ -51,18 +51,22 @@ export default class extends Controller {
       console.log(`Held for ${this.pressTime / 1000} seconds!`);
       this.timer = null; // Reset timer
 
-      this.completeHabit();
+      // this.completeHabit();
     }, this.pressTime);
   }
 
   handleDotRelease(e) {
-    e.preventDefault(); // Avoid any browser menu opening when pressing down
+    // Avoid any browser menu opening when pressing down
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     const habitCircle = this.circleTarget;
 
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
       console.log("Released too early, action cancelled.");
+
 
       habitCircle.classList.toggle("completing");
     }
