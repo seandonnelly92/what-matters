@@ -9,6 +9,11 @@ export default class extends Controller {
 
   static targets = ["circle", "message"]
 
+  initialize() {
+    this.timer = null;
+    this.pressTime = 3000; // Time user needs to press the habit circle for completion in milliseconds
+  }
+
   connect() {
     console.log("Hello from logs container scroller")
 
@@ -31,28 +36,43 @@ export default class extends Controller {
     const logId = habitCircle.dataset.id;
     console.log(`Log ID is: ${logId}`);
 
-    // this.circleTarget.style.transform = 'scale(1)';
-    habitCircle.classList.toggle("completing");
-
-    // Determine if the event is touch or mouse and set corresponding move and end events
+    // Add event listener for releasing the habitCircle
     if (e.type === 'mousedown') {
       this.stopEvent = 'mouseup';
     } else if (e.type === 'touchstart') {
       this.stopEvent = 'touchend';
     }
-
     habitCircle.addEventListener(this.stopEvent, this.handleDotRelease);
+
+    habitCircle.classList.toggle("completing");
+
+    // Start a timer for 3 seconds
+    this.timer = setTimeout(() => {
+      console.log(`Held for ${this.pressTime / 1000} seconds!`);
+      this.timer = null; // Reset timer
+
+      this.completeHabit();
+    }, this.pressTime);
   }
 
   handleDotRelease(e) {
-    e.preventDefault();
-
+    e.preventDefault(); // Avoid any browser menu opening when pressing down
     const habitCircle = this.circleTarget;
-    habitCircle.classList.toggle("completing");
+
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+      console.log("Released too early, action cancelled.");
+
+      habitCircle.classList.toggle("completing");
+    }
+
+    habitCircle.removeEventListener(this.stopEvent, this.handleDotRelease);
   }
 
-  handleHabitComplete() {
+  completeHabit() {
     // Your logic to handle the click event goes here
+    const logId = this.circleTarget.dataset.id;
     fetch(`/logs/${logId}`, {
       method: 'PATCH',
       "headers": {
