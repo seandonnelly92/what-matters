@@ -23,6 +23,7 @@ export default class extends Controller {
     // Below ensures accessibility of the controller instance when adding additional event listeners
     this.handleDotPress = this.handleDotPress.bind(this);
     this.handleDotRelease = this.handleDotRelease.bind(this);
+    this.handleDotReset = this.handleDotReset.bind(this);
 
     // Listen for both mouse and touch start events (i.e. start clicking or start touching)
     this.circleTarget.addEventListener('mousedown', this.handleDotPress);
@@ -47,7 +48,7 @@ export default class extends Controller {
     }
     habitCircle.addEventListener(this.stopEvent, this.handleDotRelease);
 
-    habitCircle.classList.toggle("completing");
+    habitCircle.classList.add("completing");
 
     // Start a timer for X seconds
     this.timer = setTimeout(() => {
@@ -69,10 +70,15 @@ export default class extends Controller {
       this.timer = null;
       console.log("Released too early, action cancelled.");
 
-      habitCircle.classList.toggle('completing');
+      habitCircle.classList.remove('completing');
     }
 
     habitCircle.removeEventListener(this.stopEvent, this.handleDotRelease);
+  }
+
+  handleDotReset() {
+    
+
   }
 
   completeHabit() {
@@ -88,10 +94,11 @@ export default class extends Controller {
     .then((resp) => resp.json())
     .then((data) => {
       this.habitTitle = data.habit;
-      // this.messageTarget.innerText = data.message;
-      // this.circleTarget.classList.toggle("completed");
+      this.messageTarget.innerText = data.message;
+      this.circleTarget.classList.add("completed");
 
       this.completeMessage();
+      this.circleTarget.addEventListener('click', this.handleDotReset);
     })
   }
 
@@ -165,4 +172,6 @@ export default class extends Controller {
       component.style.setProperty('--logo-animation-duration', duration);
     });
   }
+
+
 }
