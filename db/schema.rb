@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_07_202159) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_10_124301) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_202159) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "encouragements", force: :cascade do |t|
+    t.string "encouragement", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["encouragement"], name: "index_encouragements_on_encouragement", unique: true
   end
 
   create_table "habits", force: :cascade do |t|
@@ -82,6 +89,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_202159) do
     t.integer "contact_days"
     t.string "contact_days_per"
     t.index ["user_id"], name: "index_relationships_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "content", null: false
+    t.integer "rating", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
