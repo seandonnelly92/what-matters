@@ -157,13 +157,21 @@ export default class extends Controller {
         const userFirstName = data.user_name;
 
         text.insertAdjacentHTML('beforeend', `<h3 class="completion-title">Well done, ${userFirstName}!</h3>`);
-        text.insertAdjacentHTML('beforeend', `<p class="completion-cheer">Excellence is not an act, but a habit. You're proving it!</p>`);
+        this.setEncouragement(text);
 
         setTimeout(() => {
           this.resetMessage();
         }, this.displayTime);
       })
       .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  setEncouragement(container) {
+    fetch('/encouragements/sample_encouragement')
+      .then(response => response.json())
+      .then(data => {
+        container.insertAdjacentHTML('beforeend', `<p class="completion-cheer">${data.encouragement}</p>`);
+      })
   }
 
   resetMessage() {
