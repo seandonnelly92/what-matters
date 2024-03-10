@@ -11,10 +11,19 @@
       <% else %>
       <h2><%= habit.title.titleize %></h2>
       <% end %>
-      <%# category chip %>
-      <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-heart me-1"></i><%= habit.category %></p>
-      <p class="chip"><i class="fa-solid fa-bolt-lightning me-1"></i> </i><%= habit.trigger.capitalize %></p>
-      <p class="chip"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
+      <%# Category Chip %>
+      <% if habit.category.present? %>
+        <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-heart me-1"></i><%= habit.category %></p>
+      <% end %>
+      <%# Trigger Chip %>
+      <% if habit.trigger.present? %>
+        <p class="chip"><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
+      <% end %>
+      <%# Reward Chip %>
+      <% if habit.reward.present? %>
+        <p class="chip"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
+       <% end %>
+
       <p><i class="fa-solid fa-quote-left"></i> I will <%= habit.title.downcase %> every
       <% if habit.week_recurrence == 1 %>
       <%= habit.week_recurrence %> week
