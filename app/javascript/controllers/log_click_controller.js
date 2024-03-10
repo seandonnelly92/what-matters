@@ -52,13 +52,11 @@ export default class extends Controller {
       console.log(`Held for ${this.pressTime / 1000} seconds!`);
       this.timer = null; // Reset timer
 
-      this.completeMessage();
-      // this.completeHabit();
+      this.completeHabit();
     }, this.pressTime);
   }
 
   handleDotRelease(e) {
-    // Avoid any browser menu opening when pressing down
     if (e.cancelable) {
       e.preventDefault();
     }
@@ -87,28 +85,39 @@ export default class extends Controller {
     })
     .then((resp) => resp.json())
     .then((data) => {
-      this.messageTarget.innerText = data.message;
-      console.log(this.messageTarget);
-      this.circleTarget.classList.toggle("completed");
+      this.habitTitle = data.habit;
+      // this.messageTarget.innerText = data.message;
+      // this.circleTarget.classList.toggle("completed");
+
+      this.completeMessage();
     })
   }
 
   completeMessage() {
     const completionMessage = document.getElementById('completion-message');
-
-    console.log(completionMessage);
-
-    completionMessage.insertAdjacentHTML('beforeend', '<h3>Well done!</h3>');
     completionMessage.classList.add('display-message');
 
-    const topLine = completionMessage.querySelector('.logo-line.top');
-    const logoCircle = completionMessage.querySelector('#logo-circle');
-    const bottomLine = completionMessage.querySelector('.logo-line.bottom');
+    this.displayLogo();
+    this.displayText();
+  }
+
+  displayLogo () {
+    const logo = document.getElementById('logo-container')
+    const topLine = logo.querySelector('.logo-line.top');
+    const logoCircle = logo.querySelector('#logo-circle');
+    const bottomLine = logo.querySelector('.logo-line.bottom');
 
     logoCircle.classList.add('show');
     setTimeout(() => {
       topLine.classList.add('show');
       bottomLine.classList.add('show');
     }, 1000);
+  }
+
+  displayText() {
+    const text = document.getElementById('text-container');
+    // text.insertAdjacentHTML('beforeend', `<span class="completion-header"><em>${this.habitTitle}</em></span>`);
+    text.insertAdjacentHTML('beforeend', `<h3 class="completion-title">Well done!</h3>`);
+    text.insertAdjacentHTML('beforeend', `<p class="completion-cheer">Excellence is not an act, but a habit. You're proving it!</p>`);
   }
 }
