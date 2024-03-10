@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/reviews/add_review', to: 'reviews#add_review'
   resources :reviews, only: %i[index] do
     collection do
       get 'sort_recent', to: 'reviews#sort_recent'

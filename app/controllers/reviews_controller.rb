@@ -1,6 +1,20 @@
 class ReviewsController < ApplicationController
   def index
     @reviews = Review.order(created_at: :desc)
+    @review = Review.new
+  end
+
+  def add_review
+    @review = Review.new(review_params)
+    @review.user = current_user
+
+    respond_to do |format|
+      if @review.save
+        format.json { render json: { review: review_params }, status: :created }
+      else
+        format.json { render json: { errors: @review.errors }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def sort_recent
@@ -19,6 +33,10 @@ class ReviewsController < ApplicationController
   end
 
   private
+
+  def review_params
+    params.require(:review).permit(:content, :rating)
+  end
 
   def render_review_html
     rendered_reviews = @reviews.map do |review|

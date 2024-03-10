@@ -15,6 +15,12 @@
   font-size: 16px;
 }
 
+#reviews-form {
+  // display: none;
+  border-top: 1px solid $green;
+  padding: 8px 4px;
+}
+
 .reviews-title {
   display: flex;
   justify-content: space-between;
@@ -107,4 +113,47 @@
   padding: 0 8px;
   font-size: 14px;
   color: rgb(71, 71, 71);
+}
+
+// New review form ('reviews/review_form')
+.review-input {
+  padding: 0 8px;
+}
+
+.radio-star-container {
+  display: flex;
+  margin: 3px 0;
+  padding: 0 8px;
+}
+
+.radio-star {
+  position: relative;
+}
+
+.radio-btn-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  cursor: pointer;
+  opacity: 0;
+}
+
+.radio-label-star {
+  cursor: pointer;
+  color: lightgrey;
+  font-size: 18px;
+  margin: 0 2px;
+
+  &.selected {
+    color: $blue;
+  }
+}
+
+#new-review-button {
+  width: fit-content;
+  padding: 8px 12px;
+  font-size: 16px;
+  margin: 0;
 }
