@@ -1,15 +1,15 @@
 <div data-controller="reviews">
   <h3>Find out what other <em>habiteers</em> think about What Matters</h3>
   <div id="reviews-add" class="primary-btn">Leave a review</div>
-  <div class="reviews-container">
+  <div class="reviews-container" data-reviews-target="container">
     <div class="reviews-title">
-      <p>Reviews - Recent</p>
+      <p data-reviews-target="label">Reviews - Recent</p>
       <div id="sortby-container">
         <button id="sortby-button" class="primary-btn" data-action="click->reviews#sortbyMenu">Sort by <i class="fa-solid fa-caret-down"></i></button>
         <div id="sortby-menu" data-reviews-target="menu">
-          <a href="#">Recent</a>
-          <a href="#">Rating - High to low</a>
-          <a href="#">Rating - Low to high</a>
+          <a href="#" data-action="click->reviews#recentSort">Recent</a>
+          <a href="#" data-action="click->reviews#ratingHighSort">Rating - High to low</a>
+          <a href="#" data-action="click->reviews#ratingLowSort">Rating - Low to high</a>
         </div>
       </div>
     </div>
