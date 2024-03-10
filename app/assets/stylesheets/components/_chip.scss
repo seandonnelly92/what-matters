@@ -10,62 +10,61 @@
 
 // INSIDE A HABIT CARD
 #parents {
-  background-color: rgba($color: #a9ccf1, $alpha: 0.15);
-  i {color: rgba($color: #a9ccf1, $alpha: 0.5)}
+  background-color: rgba($color: $parents, $alpha: 0.15);
+  i {color: rgba($color: $parents, $alpha: 0.5)}
 }
 
 #children {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $children, $alpha: 0.15);
+  i {color: rgba($color: $children, $alpha: 0.5)}
 }
 
 #relationship {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $relationship, $alpha: 0.15);
+  i {color: rgba($color: $relationship, $alpha: 0.5)}
 }
 
 #family {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $family, $alpha: 0.15);
+  i {color: rgba($color: $family, $alpha: 0.5)}
 }
 
 #friends {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $friends, $alpha: 0.15);
+  i {color: rgba($color: $friends, $alpha: 0.5)}
 }
 
 #giving_back {
-  background-color: rgba($color: #96ffc3, $alpha: 0.15);
-  i {color: rgba($color: #96ffc3, $alpha: 0.5)}
+  background-color: rgba($color: $giving_back, $alpha: 0.15);
+  i {color: rgba($color: $giving_back, $alpha: 0.5)}
 }
 
 #creativity {
-  background-color: rgba($color: #9b96ff, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $creativity, $alpha: 0.15);
+  i {color: rgba($color: $creativity, $alpha: 0.5)}
 }
 
 #travel {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $travel, $alpha: 0.15);
+  i {color: rgba($color: $travel, $alpha: 0.5)}
 }
 
 #learning {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $learning, $alpha: 0.15);
+  i {color: rgba($color: $learning, $alpha: 0.5)}
 }
 
 #wellbeing {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $wellbeing, $alpha: 0.15);
+  i {color: rgba($color: $wellbeing, $alpha: 0.5)}
 }
 
 #spirituality {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $spirituality, $alpha: 0.15);
+  i {color: rgba($color: $spirituality, $alpha: 0.5)}
 }
 
-
 #pets {
-  background-color: rgba($color: #FF9696, $alpha: 0.15);
-  i {color: rgba($color: #FF9696, $alpha: 0.5)}
+  background-color: rgba($color: $pets, $alpha: 0.15);
+  i {color: rgba($color: $pets, $alpha: 0.5)}
 }

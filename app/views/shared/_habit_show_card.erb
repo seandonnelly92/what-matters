@@ -9,12 +9,10 @@
     <div class="habit-content">
       <% if habit.photo.present? %>
       <% else %>
-      <h2><%= habit.title.titleize %></h2>
+      <h2 class="habit-title"><%= habit.title.titleize %></h2>
       <% end %>
-      <%# Category Chip %>
-      <% if habit.category.present? %>
-        <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-heart me-1"></i><%= habit.category %></p>
-      <% end %>
+      <%# Category Chip (Render) %>
+      <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
       <%# Trigger Chip %>
       <% if habit.trigger.present? %>
         <p class="chip"><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
@@ -22,8 +20,7 @@
       <%# Reward Chip %>
       <% if habit.reward.present? %>
         <p class="chip"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
-       <% end %>
-
+      <% end %>
       <p><i class="fa-solid fa-quote-left"></i> I will <%= habit.title.downcase %> every
       <% if habit.week_recurrence == 1 %>
       <%= habit.week_recurrence %> week
