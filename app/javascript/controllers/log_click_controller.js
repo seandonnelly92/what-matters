@@ -11,8 +11,10 @@ export default class extends Controller {
 
   initialize() {
     this.timer = null;
-    this.pressTime = 2500; // Time user needs to press the habit circle for completion in milliseconds
+    this.pressTime = 2000; // Time user needs to press the habit circle for completion (in milliseconds)
     this.circleTarget.style.setProperty('--transition-duration', `${this.pressTime / 1000}s`);
+
+    this.displayTime = 3000; // Time to display the completion message (in milliseconds)
   }
 
   connect() {
@@ -67,7 +69,7 @@ export default class extends Controller {
       this.timer = null;
       console.log("Released too early, action cancelled.");
 
-      habitCircle.classList.toggle("completing");
+      habitCircle.classList.toggle('completing');
     }
 
     habitCircle.removeEventListener(this.stopEvent, this.handleDotRelease);
@@ -107,6 +109,8 @@ export default class extends Controller {
     const logoCircle = logo.querySelector('#logo-circle');
     const bottomLine = logo.querySelector('.logo-line.bottom');
 
+    this.setLogoAnimationDuration([topLine, logoCircle, bottomLine], '1s');
+
     logoCircle.classList.add('show');
     setTimeout(() => {
       topLine.classList.add('show');
@@ -121,10 +125,44 @@ export default class extends Controller {
       .then(response => response.json())
       .then(data => {
         const userFirstName = data.user_name;
-        // text.insertAdjacentHTML('beforeend', `<span class="completion-header"><em>${this.habitTitle}</em></span>`);
+
         text.insertAdjacentHTML('beforeend', `<h3 class="completion-title">Well done, ${userFirstName}!</h3>`);
         text.insertAdjacentHTML('beforeend', `<p class="completion-cheer">Excellence is not an act, but a habit. You're proving it!</p>`);
+
+        setTimeout(() => {
+          this.resetMessage();
+        }, this.displayTime);
       })
       .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  resetMessage() {
+    const logo = document.getElementById('logo-container')
+    const topLine = logo.querySelector('.logo-line.top');
+    const logoCircle = logo.querySelector('#logo-circle');
+    const bottomLine = logo.querySelector('.logo-line.bottom');
+
+    this.setLogoAnimationDuration([topLine, logoCircle, bottomLine], '0.5s');
+
+    topLine.classList.remove('show');
+    logoCircle.classList.remove('show');
+    bottomLine.classList.remove('show');
+
+    setTimeout(() => {
+      const completionMessage = document.getElementById('completion-message');
+      completionMessage.classList.remove('display-message');
+
+      const text = document.getElementById('text-container');
+      text.innerHTML = '';
+
+      const habitCircle = this.circleTarget;
+      // habitCircle.remove('completing');
+    }, 1000);
+  }
+
+  setLogoAnimationDuration(components, duration) {
+    components.forEach((component) => {
+      component.style.setProperty('--logo-animation-duration', duration);
+    });
   }
 }
