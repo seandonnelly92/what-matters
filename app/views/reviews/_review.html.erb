@@ -1,7 +1,7 @@
 <div class="card-review">
   <div class="review-header">
     <div class="review-author">
-      <p>By <em><%= review.user.first_name %></em></p>
+      <p><em><%= review.user.first_name %> on <%= review.created_at.strftime("%-d %B %Y") %></em></p>
     </div>
     <div class="review-stars">
       <% review.rating.times do %>

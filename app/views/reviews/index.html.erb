@@ -1,5 +1,10 @@
 <h3>Find out what other <em>habiteers</em> think about What Matters</h3>
+<div id="reviews-add" class="primary-btn">Leave a review</div>
 <div class="reviews-container">
+  <div class="reviews-title">
+    <p>Reviews - Recent</p>
+    <div id="reviews-sortby" class="primary-btn">Sort by <i class="fa-solid fa-caret-down"></i></div>
+  </div>
   <% @reviews.each do |review| %>
     <%= render 'review', review: review %>
   <% end %>
