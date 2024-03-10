@@ -116,8 +116,15 @@ export default class extends Controller {
 
   displayText() {
     const text = document.getElementById('text-container');
-    // text.insertAdjacentHTML('beforeend', `<span class="completion-header"><em>${this.habitTitle}</em></span>`);
-    text.insertAdjacentHTML('beforeend', `<h3 class="completion-title">Well done!</h3>`);
-    text.insertAdjacentHTML('beforeend', `<p class="completion-cheer">Excellence is not an act, but a habit. You're proving it!</p>`);
+
+    fetch('/application/fetch_user_name')
+      .then(response => response.json())
+      .then(data => {
+        const userFirstName = data.user_name;
+        // text.insertAdjacentHTML('beforeend', `<span class="completion-header"><em>${this.habitTitle}</em></span>`);
+        text.insertAdjacentHTML('beforeend', `<h3 class="completion-title">Well done, ${userFirstName}!</h3>`);
+        text.insertAdjacentHTML('beforeend', `<p class="completion-cheer">Excellence is not an act, but a habit. You're proving it!</p>`);
+      })
+      .catch(error => console.error("Error fetching session data:", error));
   }
 }
