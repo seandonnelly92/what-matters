@@ -3,7 +3,14 @@
 <div class="reviews-container">
   <div class="reviews-title">
     <p>Reviews - Recent</p>
-    <div id="reviews-sortby" class="primary-btn">Sort by <i class="fa-solid fa-caret-down"></i></div>
+    <div id="sortby-container">
+      <button id="sortby-button" class="primary-btn">Sort by <i class="fa-solid fa-caret-down"></i></button>
+      <div id="sortby-menu">
+        <a href="#">Recent</a>
+        <a href="#">Rating - High to low</a>
+        <a href="#">Rating - Low to high</a>
+      </div>
+    </div>
   </div>
   <% @reviews.each do |review| %>
     <%= render 'review', review: review %>
