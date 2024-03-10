@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
 
-  border-top: 1px solid $green;
+  // border-top: 1px solid $green;
 }
 
 #reviews-add {
@@ -19,6 +19,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  padding: 8px 0;
+  border-top: 1px solid $green;
+  border-bottom: 1px solid $green;
 
   p {
     color: $blue;
@@ -42,13 +46,17 @@
 }
 
 #sortby-menu {
-  // display: none;
   position: absolute;
   top: 100%;
   right: 0;
   z-index: 4; // To be placed below the sortby button when it pops out
 
-  white-space: nowrap; // Avoids wrapping the lins
+  visibility: hidden;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: transform 0.3s ease-out;
+
+  white-space: nowrap; // Avoids wrapping the text of the links
   padding: 8px 12px;
 
   background-color: $gray;
@@ -60,6 +68,14 @@
     text-decoration: none;
     color: $blue;
     font-weight: 500;
+  }
+
+  &.visible {
+    visibility: visible;
+  }
+
+  &.show {
+    transform: scale(1);
   }
 }
 
@@ -73,6 +89,7 @@
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   p{
     margin: 0;
@@ -81,7 +98,7 @@
 
 .review-stars {
   color: $blue;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .review-content {
