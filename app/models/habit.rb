@@ -16,7 +16,7 @@ class Habit < ApplicationRecord
     "Travel",
     "Learning",
     "Wellbeing",
-    "Sprituality",
+    "Spirituality",
     "Pets"], message: "%{value} is not a valid category" }
 
   CATEGORIES = [
@@ -30,6 +30,6 @@ class Habit < ApplicationRecord
     "Travel",
     "Learning",
     "Wellbeing",
-    "Sprituality",
+    "Spirituality",
     "Pets"]
 end
