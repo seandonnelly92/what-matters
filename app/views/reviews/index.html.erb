@@ -1,1 +1,6 @@
 <h3>Reviews!</h3>
+<div class="reviews-container">
+  <% @reviews.each do |review| %>
+    <%= render 'review', review: review %>
+  <% end %>
+</div>

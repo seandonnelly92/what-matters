@@ -1,0 +1,29 @@
+.reviews-container {
+  width: 60%;
+  margin: 20px auto;
+  padding: 16px 0;
+  border-top: 1px solid rgb(206, 206, 206);
+  display: flex;
+}
+
+.card-review {
+  margin: 0 3px;
+}
+
+.review-stars {
+  padding-top: 8px;
+
+  .star {
+    color: gold;
+    font-size: 16px;
+  }
+}
+
+.review-content {
+  padding-left: 3px;
+  font-size: 14px;
+  color: rgb(71, 71, 71);
+
+  border-bottom: 1px solid rgba(206, 206, 206, 0.7);
+  padding-bottom: 8px;
+}
