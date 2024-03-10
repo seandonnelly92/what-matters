@@ -1,7 +1,7 @@
 <div data-controller="reviews">
   <h3>Find out what other <em>habiteers</em> think about What Matters</h3>
-  <div id="reviews-add" class="primary-btn">Leave a review</div>
-  <div id="reviews-form">
+  <div id="reviews-add" class="primary-btn" data-action="click->reviews#showForm">Leave a review</div>
+  <div id="reviews-form" data-reviews-target="formDisplay">
     <%= render 'review_form', review: @review %>
   </div>
   <div class="reviews-container" data-reviews-target="container">

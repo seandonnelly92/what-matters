@@ -16,9 +16,21 @@
 }
 
 #reviews-form {
-  // display: none;
   border-top: 1px solid $green;
   padding: 8px 4px;
+
+  visibility: hidden;
+  transform: scale(0);
+  transform-origin: top;
+  transition: transform 0.3s ease-out;
+
+  &.visible {
+    visibility: visible;
+  }
+
+  &.show {
+    transform: scale(1);
+  }
 }
 
 .reviews-title {

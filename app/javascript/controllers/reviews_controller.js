@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="reviews"
 export default class extends Controller {
   static targets = [
+    "formDisplay",
     "star",
     "form",
     "menu",
@@ -13,8 +14,32 @@ export default class extends Controller {
   connect() {
     console.log("Hello from the reviews controller!");
 
+    this.showForm() = this.showForm().bind(this);
+    this.hideForm() = this.hideForm().bind(this);
+
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  }
+
+  showForm() {
+    this.formDisplayTarget.classList.add('show')
+    this.formDisplayTarget.classList.add('visible')
+
+    this.target.innerText = 'Close';
+    this.target.removeEventListener('click', this.showForm());
+    this.target.addEventListener('click', this.resetForm());
+  }
+
+  hideForm() {
+    this.formDisplayTarget.classList.remove('show')
+    setTimeout(() => {
+      this.formDisplayTarget.classList.remove('visible');
+
+      this.target.innerText = 'Leave a review';
+      this.target.addEventListener('click', this.showForm());
+      this.target.removeEventListener('click', this.resetForm());
+    }, 300);
+
   }
 
   setRating(e) {
@@ -24,7 +49,7 @@ export default class extends Controller {
     } else {
       this.rating = clickedStar.value;
     }
-    
+
     this.starTargets.forEach((star, index) => {
       if (index < this.rating) {
         star.classList.add('selected');
