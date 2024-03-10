@@ -22,6 +22,9 @@ Habit.destroy_all
 puts 'destroying all Users...'
 User.destroy_all
 
+puts 'destroying all Encouragements...'
+Encouragement.destroy_all
+
 puts 'seeding Users...'
 scare_crow = User.create!(
   email: "scareyC@example.com",
@@ -201,3 +204,99 @@ end
 
 
 puts "Logs seeded successfully."
+
+puts 'seeding Encouragements...'
+
+encouragements = [
+  "Well done! You're on the right track.",
+  "Impressive! Keep at it and stay focused on What Matters.",
+  "Fantastic progress! Every step counts.",
+  "Keep going! Your dedication is inspiring.",
+  "Great job today! Remember, consistency is key.",
+  "You're making waves! What Matters is becoming a habit.",
+  "Another step closer to your goals. Well done!",
+  "Bravo! Your efforts are paying off.",
+  "Excellence is not an act, but a habit. You're proving it!",
+  "Yes! You're showing What Matters, matters to you.",
+  "Amazing work! Let's keep the momentum going.",
+  "You've got this! Every effort brings you closer to success.",
+  "Outstanding commitment! You're an inspiration.",
+  "Progress is progress, no matter how small. Great job!",
+  "Celebrate every victory, big or small. You're doing great!",
+  "Your focus on What Matters is truly commendable.",
+  "Remarkable! Your dedication shines through.",
+  "Keep pushing the boundaries. You're achieving greatness.",
+  "You're not just dreaming, you're doing. That's powerful.",
+  "Seeing your progress is a joy. Stay focused on What Matters.",
+  "Your resilience is inspiring. Keep moving forward!",
+  "Every day is a new chance to excel. You're doing wonderfully!",
+  "Spectacular effort! You're making real progress.",
+  "Your focus and dedication are making a difference.",
+  "Making waves! Your progress is impressive.",
+  "Remember, small steps lead to big changes. Great work!",
+  "Your journey is uniquely yours, and you're navigating it beautifully.",
+  "A+ effort! You're crushing your goals.",
+  "You're a force to be reckoned with! Keep it up.",
+  "Your commitment to What Matters is admirable.",
+  "You're doing more than just trying; you're succeeding!",
+  "What Matters to you, matters to us. Excellent progress!",
+  "Shine on! Your dedication lights up your path to success.",
+  "Each day, you're one step closer to your dreams. Amazing job!",
+  "Your actions today are shaping a brighter tomorrow. Well done!",
+  "You've got the power to change your life. And you're doing it!",
+  "The path to success is made by walking. You're on your way!",
+  "Incredible work! You're turning goals into achievements.",
+  "You're not just following the path, you're creating it.",
+  "Champion effort! You're leading by example.",
+  "You're a beacon of motivation. Your progress is remarkable!",
+  "Persistence pays off, and you're living proof. Keep going!",
+  "Every achievement starts with the decision to try. Kudos to you!",
+  "You're making history, one day at a time. Proud of you!",
+  "You're a powerhouse of potential. Unleash it!",
+  "Dedication is your superpower. You're unstoppable!",
+  "Your passion and perseverance are paying off. Amazing!",
+  "Every effort you put in brings you closer to your goal. Superb!",
+  "Consistently impressive! What Matters is lucky to have you.",
+  "You're making valuable strides. Excellent work!",
+  "Your drive and ambition are second to none. Keep soaring!",
+  "Making progress every day. You're a true inspiration!",
+  "You're not just dreaming big—you're making big happen!",
+  "Success is a journey, and you're traveling it like a star.",
+  "Turning challenges into opportunities. You're amazing!",
+  "Your hard work is writing a story of success. Keep the chapters coming!",
+  "Believe in yourself as much as we believe in you. Outstanding!",
+  "Each day's effort adds up to big achievements. Marvelous!",
+  "Your dedication to What Matters shines bright.",
+  "Creating a masterpiece, one day at a time. You're an artist!",
+  "Leadership is action, not position. You're leading beautifully.",
+  "Your progress is a beacon of hope and inspiration.",
+  "Transformation isn't easy, but you're making it look that way!",
+  "Your path to success is being paved by your daily efforts.",
+  "Excellence is within you, and you're showing it every day.",
+  "Your daily commitment to What Matters is nothing short of heroic.",
+  "Keep breaking barriers. Your potential is limitless!",
+  "Your journey is a powerful story of perseverance and dedication.",
+  "You're not only chasing dreams—you're catching them!",
+  "Every step forward is a victory. Celebrate them all!",
+  "Your efforts today are the seeds for tomorrow's success.",
+  "Rising to the challenge with grace and strength. Admirable!",
+  "You're crafting a legacy of determination and success.",
+  "Embrace your journey with pride. You're doing great!",
+  "You're the architect of your future. Design it beautifully.",
+  "Your dedication is the engine of your success. Full steam ahead!",
+  "Progress, not perfection, is the goal. And you're achieving it!",
+  "Your strength lies in your resolve. Keep pushing forward.",
+  "Turning goals into achievements one step at a time. Keep it up!",
+  "Your journey inspires everyone lucky enough to witness it.",
+  "You're not just working hard; you're working smart. Brilliant!",
+  "Success is no accident, and you're proving it every day.",
+  "Your dedication to What Matters is making waves.",
+  "Chase your dreams with vigor. You're on the right path!",
+  "You're building a bridge to your goals with every action.",
+  "Your progress is a testament to your unwavering commitment.",
+  "Be proud of every step you take toward reaching your goals."
+]
+
+encouragements.each { |e| Encouragement.create(encouragement: e) }
+
+puts "Encouragements seeded successfully"

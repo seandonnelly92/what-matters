@@ -1,0 +1,2 @@
+class Encouragement < ApplicationRecord
+end
