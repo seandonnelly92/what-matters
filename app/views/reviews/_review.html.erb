@@ -1,8 +1,13 @@
 <div class="card-review">
-  <div class="review-stars">
-    <% review.rating.times do %>
-      <i class="fa-solid fa-star star"></i>
-    <% end %>
+  <div class="review-header">
+    <div class="review-author">
+      <p>By <em><%= review.user.first_name %></em></p>
+    </div>
+    <div class="review-stars">
+      <% review.rating.times do %>
+        <i class="fa-solid fa-star star"></i>
+      <% end %>
+    </div>
   </div>
   <p class="review-content"><%= review.content %></p>
 </div>

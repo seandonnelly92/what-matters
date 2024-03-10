@@ -1,29 +1,36 @@
 .reviews-container {
-  width: 60%;
-  margin: 20px auto;
-  padding: 16px 0;
-  border-top: 1px solid rgb(206, 206, 206);
+  width: 100%;
+  margin: 12px auto;
+  padding: 0 4px;
+
   display: flex;
+  flex-direction: column;
 }
 
 .card-review {
-  margin: 0 3px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(206, 206, 206, 0.7);
 }
 
-.review-stars {
-  padding-top: 8px;
+.review-header {
+  padding: 0 8px;
 
-  .star {
-    color: gold;
-    font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+
+  p{
+    margin: 0;
   }
 }
 
+.review-stars {
+  color: $blue;
+  font-size: 16px;
+}
+
 .review-content {
-  padding-left: 3px;
+  margin: 4px 0 0;
+  padding: 0 8px;
   font-size: 14px;
   color: rgb(71, 71, 71);
-
-  border-bottom: 1px solid rgba(206, 206, 206, 0.7);
-  padding-bottom: 8px;
 }
