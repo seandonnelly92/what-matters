@@ -25,12 +25,24 @@ export default class extends Controller {
     this.handleDotRelease = this.handleDotRelease.bind(this);
     this.handleDotReset = this.handleDotReset.bind(this);
 
-    // Listen for both mouse and touch start events (i.e. start clicking or start touching)
-    this.circleTarget.addEventListener('mousedown', this.handleDotPress);
-    this.circleTarget.addEventListener('touchstart', this.handleDotPress);
+    this.circleTarget.classList.contains('completed') ? this.resetListener() : this.completionListener();
 
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  }
+
+  completionListener() {
+    this.circleTarget.addEventListener('mousedown', this.handleDotPress);
+    this.circleTarget.addEventListener('touchstart', this.handleDotPress);
+
+    this.circleTarget.removeEventListener('click', this.handleDotReset);
+  }
+
+  resetListener() {
+    this.circleTarget.addEventListener('click', this.handleDotReset);
+
+    this.circleTarget.removeEventListener('mousedown', this.handleDotPress);
+    this.circleTarget.removeEventListener('touchstart', this.handleDotPress);
   }
 
   handleDotPress(e) {
@@ -59,30 +71,40 @@ export default class extends Controller {
     }, this.pressTime);
   }
 
+  handleDotReset() {
+    const logId = this.circleTarget.dataset.id;
+    fetch(`/logs/${logId}`, {
+      method: 'PATCH',
+      "headers": {
+        "X-CSRF-Token": this.csrfToken,
+        "Accept": "application/json"
+      }
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+      this.messageTarget.innerText = data.message;
+      this.circleTarget.classList.remove("completed");
+
+      this.completionListener();
+    })
+  }
+
   handleDotRelease(e) {
     if (e.cancelable) {
       e.preventDefault();
     }
-    const habitCircle = this.circleTarget;
 
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
       console.log("Released too early, action cancelled.");
 
-      habitCircle.classList.remove('completing');
+      this.circleTarget.classList.remove('completing');
     }
-
-    habitCircle.removeEventListener(this.stopEvent, this.handleDotRelease);
-  }
-
-  handleDotReset() {
-    
-
+    this.circleTarget.removeEventListener(this.stopEvent, this.handleDotRelease);
   }
 
   completeHabit() {
-    // Your logic to handle the click event goes here
     const logId = this.circleTarget.dataset.id;
     fetch(`/logs/${logId}`, {
       method: 'PATCH',
@@ -95,10 +117,11 @@ export default class extends Controller {
     .then((data) => {
       this.habitTitle = data.habit;
       this.messageTarget.innerText = data.message;
+      this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
 
       this.completeMessage();
-      this.circleTarget.addEventListener('click', this.handleDotReset);
+      this.resetListener();
     })
   }
 
@@ -161,9 +184,6 @@ export default class extends Controller {
 
       const text = document.getElementById('text-container');
       text.innerHTML = '';
-
-      const habitCircle = this.circleTarget;
-      // habitCircle.remove('completing');
     }, 1000);
   }
 
@@ -172,6 +192,4 @@ export default class extends Controller {
       component.style.setProperty('--logo-animation-duration', duration);
     });
   }
-
-
 }
