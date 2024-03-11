@@ -4,6 +4,7 @@ import flatpickr from "flatpickr"
 // Connects to data-controller="multistage-step2"
 export default class extends Controller {
   static targets = [
+    "status",
     "form",
     "nicknameInput",
     "meetdateLabel",
@@ -12,6 +13,9 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage step2 controller!");
+
+    // Set status bar from input step (to include animation)
+    this.updateStatusBar(15);
 
     // Check if data is already available for the user
     this.fetchSessionData();
@@ -75,11 +79,8 @@ export default class extends Controller {
       this.submitBtnTarget.classList = ["primary-btn"]; // Resets the submit button
 
       if (data.errors) {
-        // console.log("ERROR");
-        console.log(data.errors);
         this.handleErrors(data.errors);
       } else {
-        console.log(data);
         window.location.href = '/multistages/step2_output';
       }
     })
@@ -154,5 +155,12 @@ export default class extends Controller {
 
   stepBack() {
     window.location.href = '/multistages/step1_input';
+  }
+
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '33%';
+
+    const currentWidth = parseFloat(this.statusTarget.style.width);
+    this.statusTarget.style.width = `${currentWidth + progress}%`;
   }
 }

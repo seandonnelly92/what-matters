@@ -1,19 +1,21 @@
-<div class="container mt-3" data-controller="multistage-step3">
-  <h3 data-multistage-step3-target="title">Finally, lets think about making the most of our time.</h3>
-  <%# <table data-multistage-step3-target="table"></table> %>
+<div data-controller="multistage-step3">
+  <div class="container mt-3">
+    <h3 data-multistage-step3-target="title">Finally, lets think about making the most of our time.</h3>
+    <%# <table data-multistage-step3-target="table"></table> %>
 
-  <%= simple_form_for :step3_data, url: step3_submit_multistages_path, html: { data: { action: "submit->multistage-step3#submitForm", "multistage-step3-target": "form" } } do |f| %>
-    <%= f.input :work_days_per_week, collection: 0..7, label: "How many days on average do you work per week?",
-          input_html: { data: { action: "input->multistage-step3#workHoursUpdate", "multistage-step3-target": "workDaysInput" } } %>
-    <%= f.input :work_hours_per_day, collection: 0..24, label: "On an average work day, how many hours do you spend working and commuting?",
-          input_html: { data: { "multistage-step3-target": "workHoursInput" } } %>
-    <%= f.input :sleep_hours_per_day, collection: 0..24, label: "How much sleep do you ideally get per day?" %>
-    <%= f.button :submit, "Next",
-      class: "primary-btn",
-      data: { "multistage-step3-target": "submitBtn" } %>
-  <% end %>
+    <%= simple_form_for :step3_data, url: step3_submit_multistages_path, html: { data: { action: "submit->multistage-step3#submitForm", "multistage-step3-target": "form" } } do |f| %>
+      <%= f.input :work_days_per_week, collection: 0..7, label: "How many days on average do you work per week?",
+            input_html: { data: { action: "input->multistage-step3#workHoursUpdate", "multistage-step3-target": "workDaysInput" } } %>
+      <%= f.input :work_hours_per_day, collection: 0..24, label: "On an average work day, how many hours do you spend working and commuting?",
+            input_html: { data: { "multistage-step3-target": "workHoursInput" } } %>
+      <%= f.input :sleep_hours_per_day, collection: 0..24, label: "How much sleep do you ideally get per day?" %>
+      <%= f.button :submit, "Next",
+        class: "primary-btn",
+        data: { "multistage-step3-target": "submitBtn" } %>
+    <% end %>
 
-  <button type="button"
-    class="secondary-btn"
-    data-action="click->multistage-step3#stepBack">Back to Step 2</button>
+    <button type="button"
+      class="secondary-btn"
+      data-action="click->multistage-step3#stepBack">Back to Step 2</button>
+  </div>
 </div>

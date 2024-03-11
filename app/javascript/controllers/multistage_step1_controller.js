@@ -65,10 +65,7 @@ export default class extends Controller {
   submitForm(e) {
     e.preventDefault();
 
-    if (this.validForm) {
-      this.updateStatusBar(15);
-      window.location.href = '/multistages/step2_input';
-    }
+    if (this.validForm) window.location.href = '/multistages/step2_input';
 
     const data = { user: { date_of_birth: this.dateOfBirthTarget.value } };
 
@@ -177,17 +174,17 @@ export default class extends Controller {
     this.backBtnTarget.classList.add('d-none');
     this.validForm = false;
 
-    this.updateStatusBar();
+    this.updateStatusBar(0, true);
   }
 
   resetScrollPosition() {
     window.scrollTo(0, 0);
   }
 
-  updateStatusBar(progress) {
-    console.log(this.statusTarget.style.width);
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '3%';
+
     const currentWidth = parseFloat(this.statusTarget.style.width);
     this.statusTarget.style.width = `${currentWidth + progress}%`;
-    console.log(this.statusTarget.style.width);
   }
 }
