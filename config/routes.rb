@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get '/application/fetch_user_name', to: 'application#fetch_user_name', as: :fetch_user_name
+  get '/encouragements/sample_encouragement', to: 'encouragements#sample_encouragement', as: :sample_encouragement
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
