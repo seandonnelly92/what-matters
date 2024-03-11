@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr"
 
 // Connects to data-controller="signup-form"
 export default class extends Controller {
@@ -34,28 +35,46 @@ export default class extends Controller {
   }
 
   autofillForm(data) {
-    // console.log(data.step1.date_of_birth)
     if(typeof data.step1.date_of_birth != "undefined") {
       this.showAllButtonTarget.classList.remove("form-optional")
-      const dateOfBirth = new Date(data.step1.date_of_birth);
-      this.dateOfBirthTarget.value = `${dateOfBirth.getFullYear()}-${dateOfBirth.getMonth()+1}-${dateOfBirth.getDate()}`;
+      // const dateOfBirth = new Date(data.step1.date_of_birth);
+      // console.log(data.step1.date_of_birth)
+      // this.dateOfBirthTarget.value = `${dateOfBirth.getFullYear()}-${dateOfBirth.getMonth()+1}-${dateOfBirth.getDate()}`;
+      const inputElement = this.dateOfBirthTarget;
+      const dateStr = this.rubyDateToString(data.step1.date_of_birth);
+      const fp = flatpickr(inputElement, {
+        dateFormat: "Y-m-d",
+      });
+      fp.setDate(dateStr);
       this.elementDisplay(this.dateOfBirthTarget);
     }
 
-    if(typeof data.step3.work_days_per_week != "undefined") {
-      this.workDaysTarget.value = data.step3.work_days_per_week
-      this.elementDisplay(this.workDaysTarget);
-    }
+    if('step3' in data) {
+      if(typeof data.step3.work_days_per_week != "undefined") {
+        this.workDaysTarget.value = data.step3.work_days_per_week
+        this.elementDisplay(this.workDaysTarget);
+      }
 
-    if(typeof data.step3.work_hours_per_day != "undefined") {
-      this.workHrsTarget.value = data.step3.work_hours_per_day
-      this.elementDisplay(this.workHrsTarget);
-    }
+      if(typeof data.step3.work_hours_per_day != "undefined") {
+        this.workHrsTarget.value = data.step3.work_hours_per_day
+        this.elementDisplay(this.workHrsTarget);
+      }
 
-    if(typeof data.step3.sleep_hours_per_day != "undefined") {
-      this.sleepHrsTarget.value = data.step3.sleep_hours_per_day
-      this.elementDisplay(this.sleepHrsTarget);
+      if(typeof data.step3.sleep_hours_per_day != "undefined") {
+        this.sleepHrsTarget.value = data.step3.sleep_hours_per_day
+        this.elementDisplay(this.sleepHrsTarget);
+      }
     }
+  }
+
+  rubyDateToString(dateInput) {
+    const date = new Date(dateInput);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
   elementDisplay(element) {
