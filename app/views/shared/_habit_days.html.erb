@@ -1,0 +1,44 @@
+<div class="days-of-week d-flex justify-content-between my-3">
+  <%# MONDAY %>
+  <% if habit.days_of_week.include?("monday") %>
+    <div class="day active-day"><p>M</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>M</p></div>
+  <% end %>
+  <%# TUESDAY %>
+  <% if habit.days_of_week.include?("tuesday") %>
+    <div class="day active-day"><p>T</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>T</p></div>
+  <% end %>
+  <%# WEDNESDAY %>
+  <% if habit.days_of_week.include?("wednesday") %>
+    <div class="day active-day"><p>W</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>W</p></div>
+  <% end %>
+  <%# THURSDAY %>
+  <% if habit.days_of_week.include?("thursday") %>
+    <div class="day active-day"><p>T</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>T</p></div>
+  <% end %>
+  <%# FRIDAY %>
+  <% if habit.days_of_week.include?("friday") %>
+    <div class="day active-day"><p>F</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>F</p></div>
+  <% end %>
+  <%# SATURDAY %>
+  <% if habit.days_of_week.include?("saturday") %>
+    <div class="day active-day"><p>S</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>S</p></div>
+  <% end %>
+  <%# SUNDAY %>
+  <% if habit.days_of_week.include?("sunday") %>
+    <div class="day active-day"><p>S</p></div>
+  <% else %>
+    <div class="day inactive-day"><p>S</p></div>
+  <% end %>
+</div>
