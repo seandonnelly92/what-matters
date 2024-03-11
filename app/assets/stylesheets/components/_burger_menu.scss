@@ -30,6 +30,11 @@
   width: 275px;
   height: 100%;
   z-index: 9;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   background-color: white;
   padding: 90px 30px 20px 30px;
   position: fixed;
@@ -55,19 +60,19 @@
   margin-bottom: 30px;
 }
 
-
 #menu.menu-open {
   right: 0px; // Class used to slide menu when selected
 }
 
 #menu.menu-open ~ .main {
-  transform: translateX(-100px);
+  transform: translateX(-100px); // Moves content slightly to the left for animation effect on opening menu
 }
 
 .main {
   transition: transform 500ms;
 }
 
+// Used in Stimulus controller to replace the burger icon on opening the menu
 .menu-bar {
   width: 3px;
   height: 20px;

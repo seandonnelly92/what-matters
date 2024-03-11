@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   get 'habits/tracker', to: 'habits#tracker'
   resources :habits
-
   resources :logs, only: [:update]
-
   resources :relationships, only: %i[new create delete]
 
   resources :multistages, only: %i[new create] do
@@ -28,6 +26,16 @@ Rails.application.routes.draw do
       get 'step3_output'
       get 'fetch_session_data', as: :fetch_session_data
       post 'add_session_data', as: :add_session_data
+    end
+  end
+
+  post '/reviews/add_review', to: 'reviews#add_review'
+  resources :reviews, only: %i[index] do
+    collection do
+      get 'sort_recent', to: 'reviews#sort_recent'
+      get 'sort_rating_high', to: 'reviews#sort_rating_high'
+      get 'sort_rating_low', to: 'reviews#sort_rating_low'
+      get 'sort_my_reviews', to: 'reviews#sort_my_reviews'
     end
   end
 end

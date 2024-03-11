@@ -4,7 +4,7 @@
     <i class="fa-solid fa-bars"></i>
   </div>
 
-  <div class="d-flex flex-column justify-content-between" id="menu" data-burger-menu-target="menuWindow">
+  <div id="menu" data-burger-menu-target="menuWindow">
     <div id="menu-top">
       <ul class="menu-options">
         <li> <%= link_to step1_input_multistages_path do %></li>What Matters Quiz<% end %>
@@ -12,6 +12,12 @@
         <li> <%= link_to habits_path do %></li>My Habits<% end %>
         <li> <%= link_to new_habit_path do %></li>Add Habit<% end %>
         <li> <%= link_to root_path do %></li>Insights<% end %>
+      </ul>
+    </div>
+
+    <div id="menu-mid">
+      <ul class="menu-options">
+        <li> <%= link_to reviews_path do %></li>Reviews<% end %>
       </ul>
     </div>
 
