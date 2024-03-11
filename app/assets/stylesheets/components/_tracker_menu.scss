@@ -1,0 +1,27 @@
+#tracker-menu {
+  position: sticky;
+  top: 95px;
+  left: 0;
+  z-index: 5;
+
+  background-color: $light-gray;
+  border-top: 1px solid $blue;
+  border-bottom: 1px solid $blue;
+}
+
+#tracker-input {
+  display: flex;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.input-month, .input-year {
+  margin: 4px 8px;
+}
+
+#tracker-days {
+  height: 30px;
+  background-color: $green;
+}
