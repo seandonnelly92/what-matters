@@ -29,6 +29,14 @@ class HabitsController < ApplicationController
     @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
     if @habit.save
       redirect_to habits_path, notice: "Habit was successfully created!"
+
+      Log.create!(
+        habit_id: current_user.id,
+        date_time: @habit.start_time,
+        completed: false
+      )
+
+
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
@@ -36,16 +44,19 @@ class HabitsController < ApplicationController
   end
 
   def tracker
-    @scare_crow = User.find_by(first_name: "Scare")
-    @scare_crow_habits = Habit.where(user_id: @scare_crow.id)
-    @times_table_habit = @scare_crow_habits.find_by(title: "learn my times tables")
-    if @times_table_habit.present?
-      # Find the most recent log associated with the times_table habit
-      @latest_log = @times_table_habit.logs.order(id: :desc).first
-    else
-      # Handle case when times_table habit is not found
-      @latest_log = nil
-    end
+    # @scare_crow = User.find_by(first_name: "Scare")
+    # @scare_crow_habits = Habit.where(user_id: @scare_crow.id)
+    # @times_table_habit = @scare_crow_habits.find_by(title: "learn my times tables")
+
+    @habits = current_user.habits
+
+    # if @times_table_habit.present?
+    #   # Find the most recent log associated with the times_table habit
+    #   @latest_log = @times_table_habit.logs.order(id: :desc).first
+    # else
+    #   # Handle case when times_table habit is not found
+    #   @latest_log = nil
+    # end
   end
 
 

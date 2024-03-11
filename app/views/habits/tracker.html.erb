@@ -1,6 +1,6 @@
 <div class="container col-11 col-md-6 col-lg-4 col-xl-4" data-controller="log-scroll">
   <div>
-    <% @scare_crow_habits.each do |habit| %>
+    <% @habits.each do |habit| %>
       <div>
         <%= render 'habits/habit_card', habit: habit %>
       </div>
