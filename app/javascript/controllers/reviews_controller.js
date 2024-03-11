@@ -156,6 +156,11 @@ export default class extends Controller {
     this.updateReviews('/reviews/sort_rating_low', 'Reviews - Low to high');
   }
 
+  myReviewsSort(e) {
+    if (e) e.preventDefault();
+    this.updateReviews('/reviews/sort_my_reviews', 'Reviews - My reviews');
+  }
+
   updateReviews(url, label) {
     fetch(url)
       .then(response => response.text())

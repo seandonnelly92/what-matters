@@ -32,6 +32,11 @@ class ReviewsController < ApplicationController
     render_review_html
   end
 
+  def sort_my_reviews
+    @reviews = Review.where(user: current_user).order(created_at: :desc)
+    render_review_html
+  end
+
   private
 
   def review_params

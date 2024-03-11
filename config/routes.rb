@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get 'sort_recent', to: 'reviews#sort_recent'
       get 'sort_rating_high', to: 'reviews#sort_rating_high'
       get 'sort_rating_low', to: 'reviews#sort_rating_low'
+      get 'sort_my_reviews', to: 'reviews#sort_my_reviews'
     end
   end
 end
