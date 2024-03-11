@@ -1,0 +1,24 @@
+<%= simple_form_for :review, url: reviews_add_review_path, html: { data: { action: "submit->reviews#submitReview", "reviews-target": "form" } } do |f| %>
+  <%= f.input :content, label: 'Comment', placeholder: 'Write review', class: "review-input" %>
+
+  <div class="d-flex align-items-end justify-content-between">
+    <div>
+      <%= f.label :rating %>
+      <div class="radio-star-container">
+        <%= f.collection_radio_buttons :rating, [1, 2, 3, 4, 5], :to_i, :to_i, item_wrapper_tag: false, boolean_style: :inline do |b| %>
+          <div class="radio-star">
+            <%= b.radio_button(class: "radio-btn-star", id: "rating_#{b.object}", data: { action: "click->reviews#setRating" }) %>
+            <%= b.label for: "rating_#{b.object}" do %>
+              <span class="fa fa-star radio-label-star" data-reviews-target="star"></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%= button_tag(type: 'submit', class: "primary-btn", id: "new-review-button") do %>
+      <i class='fa-solid fa-pen-to-square'></i> Post
+    <% end %>
+  </div>
+
+<% end %>
