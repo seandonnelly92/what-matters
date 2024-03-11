@@ -1,7 +1,7 @@
 <%# PARTNER FORM %>
 
 <%= simple_form_for(@habit) do |f| %>
-  <p class="tip mb-4"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <%= session[:user_data]["step2"]["nickname"] %>? We've included some suggestions below:</p>
+  <p class="tip mb-4"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <strong><%= session[:user_data]["step2"]["nickname"] %></strong>? We've included some suggestions below:</p>
   <%= f.input :title, :label => 'I will:', placeholder: "arrange date night with #{session[:user_data]["step2"]["nickname"]}, cook #{session[:user_data]["step2"]["nickname"]} their favourite meal" %>
   <div class="week-recurrence">
     <p>I will do this every </p>

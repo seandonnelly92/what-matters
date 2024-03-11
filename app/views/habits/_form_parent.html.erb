@@ -1,7 +1,7 @@
 <%# PARENT FORM %>
 
 <%= simple_form_for(@habit) do |f| %>
-  <p class="tip"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <%= session[:user_data]["step2"]["nickname"] %>? We've included some suggestions below:</p>
+  <p class="tip"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <strong><%= session[:user_data]["step2"]["nickname"] %></strong>? We've included some suggestions below:</p>
   <%= f.input :title, :label => 'I will:', placeholder: "call #{session[:user_data]["step2"]["nickname"]}, take #{session[:user_data]["step2"]["nickname"]} out for lunch" %>
   <div class="week-recurrence">
     <p>I will do this every </p>

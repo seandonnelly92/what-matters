@@ -3,6 +3,10 @@
   // Width is handled by the container now
 }
 
+.form-label {
+  font-size: 15px;
+}
+
 .tip {
   display:inline-block;
   background-color: rgba($color: $learning, $alpha: 0.20);
@@ -14,6 +18,12 @@
   color: rgba(58, 166, 144, 0.8);
 }
 // INPUTS
+
+// Input field label with tooltip
+
+.input-with-tooltip i {
+  color: $blue;
+}
 
 // Inputs - unfocussed/general
 .form-control, .form-select, .form-check-input {
