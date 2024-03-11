@@ -30,11 +30,31 @@ class HabitsController < ApplicationController
     if @habit.save
       redirect_to habits_path, notice: "Habit was successfully created!"
 
-      Log.create!(
-        habit_id: current_user.id,
-        date_time: @habit.start_time,
-        completed: false
-      )
+      next_90_days = []
+      current_day = Date.today
+
+      90.times do
+        next_day = current_day + 1
+        next_90_days << next_day
+        current_day = next_day
+      end
+
+      habit_days = @habit.days_of_week.map(&:downcase)
+
+      next_90_days.each do |day|
+        next unless habit_days.include?(day.strftime("%A").downcase)
+
+        p 'creating log'
+        Log.create!(
+          habit_id: @habit.id,
+          date_time: @habit.start_time,
+          completed: false
+        )
+      end
+
+
+      # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
+
 
 
     else
