@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr"
 
 // Connects to data-controller="multistage-step2"
 export default class extends Controller {
@@ -36,17 +37,20 @@ export default class extends Controller {
         const inputElement = this.element.querySelector(`[name="step2_data[${field}]"]`);
         if (!inputElement) continue; // Skip current iteration if inputElement is false/null
 
-        console.log(inputElement);
         let inputValue = this.sessionData.step2[`${field}`];
-        console.log(inputValue);
 
         if (field === 'date_of_birth') {
-          inputValue = this.rubyDateToString(inputValue);
+          const dateStr = this.rubyDateToString(inputValue);
+          const fp = flatpickr(inputElement, {
+            dateFormat: "Y-m-d",
+          });
+          fp.setDate(dateStr);
         } else if (field === 'meet_date') {
           const inputDate = new Date(inputValue);
-          inputValue = this.getAge(inputDate);
+          inputElement.value = this.getAge(inputDate);
+        } else {
+          inputElement.value = inputValue
         }
-        inputElement.value = inputValue
       }
     }
   }

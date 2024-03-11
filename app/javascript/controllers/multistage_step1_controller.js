@@ -43,17 +43,22 @@ export default class extends Controller {
     fetch('fetch_session_data')
       .then(response => response.json())
       .then(data => {
-        if (data.step1.date_of_birth) {
-          const inputElement = this.element.querySelector(`[name="step1_data[date_of_birth]"]`);
-          const dateStr = this.rubyDateToString(data.step1.date_of_birth);
-          console.log(inputElement);
-          const fp = flatpickr(inputElement, {
-            dateFormat: "Y-m-d",
-          });
-          fp.setDate(dateStr);
-        }
+        this.sessionData = data;
+        this.populateSessionData();
       })
       .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  populateSessionData() {
+    if (this.sessionData.step1.date_of_birth) {
+      const inputElement = this.element.querySelector(`[name="step1_data[date_of_birth]"]`);
+
+      const dateStr = this.rubyDateToString(this.sessionData.step1.date_of_birth);
+      const fp = flatpickr(inputElement, {
+        dateFormat: "Y-m-d",
+      });
+      fp.setDate(dateStr);
+    }
   }
 
   submitForm(e) {
