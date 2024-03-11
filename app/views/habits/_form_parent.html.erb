@@ -1,0 +1,32 @@
+<%# PARENT FORM %>
+
+<%= simple_form_for(@habit) do |f| %>
+  <%= f.input :title, :label => 'I will:', placeholder: "call #{session[:user_data]["step2"]["nickname"]}, take #{session[:user_data]["step2"]["nickname"]} out for lunch" %>
+  <div class="week-recurrence">
+    <p>I will do this every </p>
+    <%= f.input :week_recurrence, label: false, placeholder: "1" %>
+    <p>week/s on these days:</p>
+  </div>
+    <% days_of_week = Date::DAYNAMES.rotate(1) %>
+    <%# Days of the week toggles %>
+  <div class="days-checkboxes">
+    <% days_of_week.each do |day| %>
+      <%= check_box_tag "habit[days_of_week][]", day.downcase, (f.object.days_of_week || []).include?(day.downcase), id: "day_#{day.downcase}" %>
+      <%= label_tag "day_#{day.downcase}", day[0], class: 'day-checkbox-label' %>
+    <% end %>
+  </div>
+  <div class="time-duration">
+    <p>at:</p>
+    <%= f.input :start_time, label: false, as: :time, default: Time.parse('12:00') %>
+    <p>for</p>
+    <%= f.input :duration_in_minutes, label: false, placeholder: "45" %>
+    <p>minutes.</p>
+  </div>
+  <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a good son/daughter..." %>
+  <%= f.input :category, :label => 'Habit category:', selected: "Parents", as: :select, collection: Habit::CATEGORIES %>
+  <%# How can we make the categories look more like chips? %>
+  <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "after Sunday brunch, after walking the dog..." %>
+  <%= f.input :reward, :label => 'My reward for this is:', placeholder: "biscuits, a Costa Coffee..." %>
+  <%= f.input :photo, :label => 'Attached a photograph to this habit:', as: :file %>
+  <%= f.submit %>
+  <% end %>
