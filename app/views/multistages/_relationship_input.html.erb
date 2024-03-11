@@ -30,6 +30,11 @@
         class: "primary-btn",
         data: { "multistage-step2-target": "submitBtn" } %>
   <% end %>
+
+  <button type="button"
+    class="secondary-btn"
+    data-multistage-step2-target="backBtn"
+    data-action="click->multistage-step2#goBack">Back</button>
 </div>
 
 <%# TABLE IN THE SCHEMA %>

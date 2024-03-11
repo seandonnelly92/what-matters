@@ -29,7 +29,7 @@ export default class extends Controller {
         this.firstStepOutput();
       })
       .catch(error => console.error("Error fetching session data:", error));
-    }
+  }
 
   firstStepOutput() {
     this.nickname = this.sessionData.step2.nickname;
@@ -114,7 +114,7 @@ export default class extends Controller {
 
   fifthStepOutput(e) {
     this.resetScrollPosition()
-    
+
     // Colors the circles of the table based on the days
     this.colorCircles((this.youthYrs * 365) + (this.pastYrs - this.youthYrs) * this.annualContact, true); // True added for small circles class
 

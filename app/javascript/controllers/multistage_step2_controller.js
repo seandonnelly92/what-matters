@@ -6,7 +6,8 @@ export default class extends Controller {
     "form",
     "nicknameInput",
     "meetdateLabel",
-    "submitBtn"
+    "submitBtn",
+    "backBtn"
   ]
 
   connect() {
@@ -89,5 +90,9 @@ export default class extends Controller {
     const nickname = this.nicknameInputTarget.value;
     const labelText = nickname ? `How long has ${nickname} been important to you?` : "How long has ... been important to you?";
     this.meetdateLabelTarget.innerText = labelText;
+  }
+
+  goBack() {
+    window.location.href = '/multistages/step1_input';
   }
 }
