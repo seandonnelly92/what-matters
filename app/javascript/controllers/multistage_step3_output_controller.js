@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="multistage-step3-output"
 export default class extends Controller {
   static targets = [
+    "status",
     "title",
     "timeBreakdown",
     "legend",
@@ -12,6 +13,9 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage-step3-output controller!");
+
+    // Set status bar from input step +15% (to include animation)
+    this.updateStatusBar(15);
 
     this.fetchSessionData();
   }
@@ -40,7 +44,14 @@ export default class extends Controller {
     this.keyRelationship = annualContactHrs / 52; // Reflects weekly contact hours
   }
 
-  breakdownChart() {
+  breakdownChart(e) {
+    // Update status bar
+    if (e) {
+      e.target === this.nextBtnTarget ? this.updateStatusBar(5) : this.updateStatusBar(-5);
+    } else {
+      this.updateStatusBar(5);
+    }
+
     // Update title and legend
     const title = `Here’s a breakdown of your unavoidables vs free time in a typical week:`;
     this.setTitle(title);
@@ -80,7 +91,10 @@ export default class extends Controller {
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#backToInput');
   }
 
-  breakdownChartDetailed() {
+  breakdownChartDetailed(e) {
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(5) : this.updateStatusBar(-5);
+
     const nickname = this.sessionData.step2.nickname;
 
     // Update title and legend
@@ -115,7 +129,10 @@ export default class extends Controller {
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#breakdownChart');
   }
 
-  whatMattersChart() {
+  whatMattersChart(e) {
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(5) : this.updateStatusBar(-5);
+
     const nickname = this.sessionData.step2.nickname;
 
     // Update title and legend
@@ -159,5 +176,12 @@ export default class extends Controller {
 
   backToInput() {
     window.location.href = '/multistages/step3_input';
+  }
+
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '81%';
+
+    const currentWidth = parseFloat(this.statusTarget.style.width);
+    this.statusTarget.style.width = `${currentWidth + progress}%`;
   }
 }

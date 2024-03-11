@@ -1,15 +1,21 @@
-<div class="container mt-3" data-controller="multistage-step3-output">
-  <h3 data-multistage-step3-output-target="title">Here’s a breakdown of your unavoidables vs free time in a typical week:</h3>
-  <canvas id="timeBreakdownChart" data-multistage-step3-output-target="timeBreakdown"></canvas>
-  <p class="legend-label" data-multistage-step3-output-target="legend"><span class="second">Free time</span> vs <span class="first">unavoidables</span></p>
-<div class="d-flex justify-content-center">
-  <button type="submit"
-    class="primary-btn"
-    data-action="click->multistage-step3-output#breakdownChartDetailed"
-    data-multistage-step3-output-target="nextBtn">Next</button>
-</div>
-<button type="button"
-    class="secondary-btn"
-    data-multistage-step3-output-target="backBtn"
-    data-action="click->multistage-step3-output#backToInput">Back</button>
+<div data-controller="multistage-step3-output">
+  <div class="status-bar">
+    <div class="status" role="statusbar" style="width: 66%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" data-multistage-step3-output-target="status"></div>
+  </div>
+
+  <div class="container mt-3">
+    <h3 data-multistage-step3-output-target="title">Here’s a breakdown of your unavoidables vs free time in a typical week:</h3>
+    <canvas id="timeBreakdownChart" data-multistage-step3-output-target="timeBreakdown"></canvas>
+    <p class="legend-label" data-multistage-step3-output-target="legend"><span class="second">Free time</span> vs <span class="first">unavoidables</span></p>
+  <div class="d-flex justify-content-center">
+    <button type="submit"
+      class="primary-btn"
+      data-action="click->multistage-step3-output#breakdownChartDetailed"
+      data-multistage-step3-output-target="nextBtn">Next</button>
+  </div>
+  <button type="button"
+      class="secondary-btn"
+      data-multistage-step3-output-target="backBtn"
+      data-action="click->multistage-step3-output#backToInput">Back</button>
+  </div>
 </div>

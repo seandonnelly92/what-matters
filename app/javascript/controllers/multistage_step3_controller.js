@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="multistage-step3"
 export default class extends Controller {
   static targets = [
+    "status",
     "title",
     "form",
     "workDaysInput",
@@ -12,6 +13,9 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage-step3 controller!");
+
+    // Set status bar from previous step +3% (to include animation)
+    this.updateStatusBar(3);
 
     // Check if data is already available for the user
     this.fetchSessionData();
@@ -123,5 +127,12 @@ export default class extends Controller {
 
   stepBack() {
     window.location.href = '/multistages/step2_input';
+  }
+
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '33%';
+
+    const currentWidth = parseFloat(this.statusTarget.style.width);
+    this.statusTarget.style.width = `${currentWidth + progress}%`;
   }
 }
