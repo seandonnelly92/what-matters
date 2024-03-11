@@ -1,10 +1,26 @@
 
-<% habit.logs.order(date_time: :asc).each do  |log|%>
+<% habit.logs.order(date_time: :asc).each_with_index do |log, index| %>
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
 
         <%# <p data-loader-log-date-value= #{log.date}></p> %>
+  <% if index > 0 %>
+    <% previous_log = habit.logs.order(date_time: :asc)[index - 1] %>
+    <% if log.completed && previous_log.completed %>
+      <% two_day_streak = true %>
+      two day streak!
+    <% else %>
+      <% two_day_streak = false %>
+      not two day streak!
+    <% end %>
+    <!-- Now you can use `two_day_streak` as needed -->
+  <% end %>
+
+
+
+        <h5>Latest Log- <%= @latest_log.id %></h5>
+        <h5>Current Log- <%= log.id %></h5>
         <h6 class = "text" data-log-click-target='message'><%= log.format_message %></h6>
         <p data-log-scroll-target="today"></p>
       </div>
