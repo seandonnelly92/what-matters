@@ -9,22 +9,27 @@
     <div class="habit-content">
       <% if habit.photo.present? %>
       <% else %>
-      <h2><%= habit.title.titleize %></h2>
+      <h2 class="habit-title"><%= habit.title.titleize %></h2>
       <% end %>
-      <p><strong>User ID: </strong><%= habit.user_id %></p>
-      <p><strong>Relationship ID: </strong><%= habit.relationship_id %></p>
-      <p><strong>Category: </strong><%= habit.category %></p>
-      <p><strong>Identity Goal: </strong><%= habit.identity_goal %></p>
-      <p><strong>Week Recurrence: </strong><%= habit.week_recurrence %></p>
-      <p><strong>Trigger: </strong><%= habit.trigger %></p>
-      <p><strong>Reward: </strong><%= habit.reward %></p>
-      <p><strong>Duration in Minutes: </strong><%= habit.duration_in_minutes %></p>
-      <p><strong>Days of Week: </strong><%= habit.days_of_week %></p>
-      <p><strong>Start time/at: </strong><%= habit.relationship_id %></p>
+      <%# Category Chip (Render) %>
+      <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
+      <%# Trigger Chip %>
+      <% if habit.trigger.present? %>
+        <p class="chip"><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
+      <% end %>
+      <%# Reward Chip %>
+      <% if habit.reward.present? %>
+        <p class="chip"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
+      <% end %>
+      <p><i class="fa-solid fa-quote-left"></i> I will <%= habit.title.downcase %> every
+      <% if habit.week_recurrence == 1 %>
+      <%= habit.week_recurrence %> week
+      <% else %>
+      <%= habit.week_recurrence %> weeks
+      <% end %>
+      on <%= habit.days_of_week %> at <%= habit.start_time.strftime("%H:%M") %>. It will take around <%= habit.duration_in_minutes %> minutes.I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
       <p><strong>Current Streak: </strong><%= habit.current_streak %></p>
       <p><strong>Best Streak: </strong><%= habit.best_streak %></p>
-      <p><strong>Create at: </strong><%= habit.created_at %></p>
-      <p class="mb-5"><strong>Updated at: </strong><%= habit.updated_at %></p>
     </div>
   </div>
 <% end %>

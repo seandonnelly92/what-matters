@@ -1,4 +1,4 @@
-<div class="container" data-controller="log-scroll">
+<div class="container col-11 col-md-6 col-lg-4 col-xl-4" data-controller="log-scroll">
   <div>
     <% @scare_crow_habits.each do |habit| %>
       <div>
@@ -6,5 +6,13 @@
       </div>
     <% end %>
     <%= render 'habits/habit_button_card'%>
+  </div>
+  <div id="completion-message">
+    <div id="logo-container">
+      <div class="logo-line top"></div>
+      <div id="logo-circle"></div>
+      <div class="logo-line bottom"></div>
+    </div>
+    <div id="text-container"></div>
   </div>
 </div>

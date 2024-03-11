@@ -2,6 +2,7 @@
   background-color: white;
   border-radius: 20px;
   overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   }
 
 .habit-image {
@@ -23,6 +24,11 @@
   bottom: 0;
   width: 100%
 }
+
+.habit-title {
+  margin-bottom: 10px;
+}
+
 
 .habit-image-title-area h2 {
   margin: 0;

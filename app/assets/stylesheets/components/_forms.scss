@@ -51,9 +51,6 @@
   line-height: 49px;
 }
 
-.habit_title .form-control {
-  background-color: lightblue;
-}
 
 // Week recurrence
 
@@ -71,25 +68,34 @@
   margin-left: 6px;
   margin-right: 6px;
   text-align: center;
-  width: 70px;
+  width: 60px;
 }
 
 // Time and Duration
 
 .time-duration {
-  background-color: lightgreen;
+  margin-top: 20px;
   display: flex;
   white-space: nowrap;
 }
 
 .habit_duration_in_minutes .form-control {
-  width: 70px;
+  margin-left: 6px;
+  margin-right: 6px;
+  width: 60px;
   text-align: center;
+}
+
+.time-duration p {
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 49px;
 }
 
 #habit_start_time_4i {
   width: 80px
 }
+
 
 
 

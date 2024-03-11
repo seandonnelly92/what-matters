@@ -1,6 +1,6 @@
 
 <% habit.logs.order(date_time: :asc).each do  |log|%>
-  <div class="habit-card d-flex" data-controller="log-click" data-log-click-token-value="<%= form_authenticity_token %>" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
+  <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
 
@@ -10,7 +10,7 @@
       </div>
       <div class="col-6 right">
         <div class="line"></div>
-        <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle" data-action="click->log-click#handleDotClick"></span>
+        <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle"></span>
       </div>
     </div>
   </div>

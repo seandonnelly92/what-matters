@@ -1,0 +1,36 @@
+<% if habit.category.present? && habit.category == "Parents" %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-person me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Children"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-person me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Relationship"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-child me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Family"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-people-roof me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Friends"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-user-group me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Giving Back"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-hand-holding-heart me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Creativity"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-guitar me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Travel"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-plane me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Learning"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-user-graduate me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Wellbeing"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-face-smile me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Spirituality"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-hands-praying me-1"></i><%= habit.category %></p>
+
+<% elsif habit.category.present? && habit.category == "Pets"  %>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-paw me-1"></i><%= habit.category %></p>
+<% end %>

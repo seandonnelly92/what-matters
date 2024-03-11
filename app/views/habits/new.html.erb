@@ -1,5 +1,5 @@
 
-      <div id="add-habit-form" class="">
+      <div id="add-habit-form" class="col-11 col-md-6 col-lg-4 col-xl-4">
         <h3>Add a habit</h3>
         <%= simple_form_for(@habit) do |f| %>
           <%= f.input :title, :label => 'I will:', placeholder: "Call Mum, organise date night" %>
@@ -18,14 +18,15 @@
           </div>
           <div class="time-duration">
             <p>at:</p>
-            <%= f.input :start_time, label: false %>
+            <%= f.input :start_time, label: false, as: :time, default: Time.parse('8:00') %>
             <p>for</p>
             <%= f.input :duration_in_minutes, label: false, placeholder: "15" %>
             <p>minutes.</p>
           </div>
           <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "a proactive husband, the best uncle, a good citizen..." %>
           <%= f.input :category, :label => 'Habit category:', placeholder: "Partner", as: :select, collection: Habit::CATEGORIES %>
-          <%= f.input :trigger, :label => 'I will this before/while/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
+          <%# How can we make the categories look more like chips? %>
+          <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "while walking the dog, after brushing teeth, before dinner..." %>
           <%= f.input :reward, :label => 'My reward for this is:', placeholder: "a coffee, cake, an episode of Breaking Bad..." %>
           <%= f.input :photo, :label => 'Attached a photograph to this habit:', as: :file %>
           <%= f.submit %>

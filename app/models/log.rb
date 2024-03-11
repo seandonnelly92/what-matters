@@ -4,15 +4,6 @@ class Log < ApplicationRecord
   validates :date_time, presence: true
   validates :completed, inclusion: [true, false]
 
-#buildingtoday_message
-def today_message
-  if date_time.to_date == Time.now.to_date
-    "Today:"
-  end
-end
-
-##
-
   def format_message
     day = date_time.strftime("%d").to_i
 
@@ -38,7 +29,7 @@ end
     if date_time.to_date < Time.now.to_date
       completed ? "Well done! '#{habit.title.capitalize}' completed on  #{formatted_date}": "'#{habit.title.capitalize}' not completed for #{formatted_date}. Remember your trigger for this habit is '#{habit.trigger}!'"
     elsif date_time.to_date == Time.now.to_date
-      completed ? "Well done for '#{habit.title.capitalize}' today!": " Remember to '#{habit.title.capitalize}' today!' You set your trigger to be '#{habit.trigger}'"
+      completed ? "Well done for completing your habit, '#{habit.title.capitalize}' today!": " Remember to '#{habit.title.capitalize}' today!' You set your trigger to be '#{habit.trigger}'"
     else date_time.to_date > Time.now.to_date
       "#{habit.title.capitalize} on #{formatted_date}"
     end
