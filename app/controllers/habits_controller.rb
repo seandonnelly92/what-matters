@@ -49,6 +49,7 @@ class HabitsController < ApplicationController
 
 
 
+
     # @scare_crow_logs = Habit.Log.all
     # @scare_crow_habit.logs
 

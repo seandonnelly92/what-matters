@@ -7,11 +7,15 @@
         <%# <p data-loader-log-date-value= #{log.date}></p> %>
   <% if index > 0 %>
     <% previous_log = habit.logs.order(date_time: :asc)[index - 1] %>
-    <% if log.completed && previous_log.completed %>
-      <% two_day_streak = true %>
+    <% previous_log_2 = habit.logs.order(date_time: :asc)[index - 2] %>
+    <% previous_log_3 = habit.logs.order(date_time: :asc)[index - 3] %>
+    <% if log.completed && previous_log.completed && previous_log_2.completed && previous_log_3.completed  %>
+      You are on a roll, keep it up!
+    <% elsif log.completed && previous_log.completed && previous_log_2.completed  %>
+      three day streak!
+    <% elsif log.completed && previous_log.completed %>
       two day streak!
     <% else %>
-      <% two_day_streak = false %>
       not two day streak!
     <% end %>
     <!-- Now you can use `two_day_streak` as needed -->
