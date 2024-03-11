@@ -1,0 +1,19 @@
+<div class="card-review">
+  <div class="review-header">
+    <div class="review-author">
+      <p><em><%= review.user.first_name %> on <%= review.created_at.strftime("%-d %B %Y") %></em></p>
+    </div>
+    <div class="review-stars">
+      <% review.rating.times do %>
+        <i class="fa-solid fa-star star"></i>
+      <% end %>
+    </div>
+  </div>
+  <div class="review-body">
+    <p class="review-content"><%= review.content %></p>
+    <% if review.user == current_user %>
+      <i class='fa-solid fa-pen-to-square' data-action="click->reviews#editReview"></i>
+      <i class="fa-solid fa-trash" data-action="click->reviews#deleteReview"></i>
+    <% end %>
+  </div>
+</div>

@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :habits
   has_many :relationships
+  has_many :reviews
 
   # validates :first_name, :last_name, :date_of_birth, :work_days_per_week, :work_hours_per_day, :sleep_hours_per_day, presence: true
 
