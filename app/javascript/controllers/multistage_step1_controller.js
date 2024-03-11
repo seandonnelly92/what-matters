@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr"
 
 // Connects to data-controller="multistage-step1"
 export default class extends Controller {
@@ -31,8 +32,33 @@ export default class extends Controller {
       this.tableTarget.insertAdjacentHTML('beforeend', rowHTML);
     }
 
+    // Check if data is already available for the user
+    this.fetchSessionData();
+
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  }
+
+  fetchSessionData() {
+    fetch('fetch_session_data')
+      .then(response => response.json())
+      .then(data => {
+        this.sessionData = data;
+        this.populateSessionData();
+      })
+      .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  populateSessionData() {
+    if (this.sessionData.step1.date_of_birth) {
+      const inputElement = this.element.querySelector(`[name="step1_data[date_of_birth]"]`);
+
+      const dateStr = this.rubyDateToString(this.sessionData.step1.date_of_birth);
+      const fp = flatpickr(inputElement, {
+        dateFormat: "Y-m-d",
+      });
+      fp.setDate(dateStr);
+    }
   }
 
   submitForm(e) {
@@ -71,14 +97,6 @@ export default class extends Controller {
     })
   }
 
-  differenceInYears(date1, date2) {
-    let yearsDifference = date2.getFullYear() - date1.getFullYear();
-    if (date2.getMonth() < date1.getMonth() || (date2.getMonth() === date1.getMonth() && date2.getDate() < date1.getDate())) {
-      yearsDifference--;
-    }
-    return yearsDifference;
-  }
-
   colorCircles(years) {
     const circles = this.tableTarget.querySelectorAll('.year-circle');
     let delay = 0; // Initial delay in milliseconds
@@ -97,13 +115,14 @@ export default class extends Controller {
     });
   }
 
+  // Error handling
   handleErrors(errors) {
     for (const [key, messages] of Object.entries(errors)) {
       console.log(`Current error is: ${key}`);
       const inputElement = this.element.querySelector(`[name="step1_data[${key}]"]`); // Based on simple form name of input
       if (inputElement) {
 
-        const errorsContainer = document.createElement('div'); // Will include all errors for the respective input field
+        const errorsContainer = document.createElement('div');
         errorsContainer.classList.add('errors-container');
 
         // Adds the first message to the errorsContainer (we show one error at a time)
@@ -124,6 +143,25 @@ export default class extends Controller {
     errorContainers.forEach(container => {
       container.remove();
     });
+  }
+
+  // Helper methods
+  rubyDateToString(dateInput) {
+    const date = new Date(dateInput);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  differenceInYears(date1, date2) {
+    let yearsDifference = date2.getFullYear() - date1.getFullYear();
+    if (date2.getMonth() < date1.getMonth() || (date2.getMonth() === date1.getMonth() && date2.getDate() < date1.getDate())) {
+      yearsDifference--;
+    }
+    return yearsDifference;
   }
 
   resetForm() {

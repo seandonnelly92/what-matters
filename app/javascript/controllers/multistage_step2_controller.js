@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr"
 
 // Connects to data-controller="multistage-step2"
 export default class extends Controller {
@@ -12,8 +13,46 @@ export default class extends Controller {
   connect() {
     console.log("Hello from the multistage step2 controller!");
 
+    // Check if data is already available for the user
+    this.fetchSessionData();
+
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  }
+
+  fetchSessionData() {
+    fetch('fetch_session_data')
+      .then(response => response.json())
+      .then(data => {
+        this.sessionData = data;
+        this.populateSessionData();
+      })
+      .catch(error => console.error("Error fetching session data:", error));
+    }
+
+  populateSessionData() {
+    if (this.sessionData.step2) {
+      const fields = ['nickname', 'relation_to', 'date_of_birth', 'contact_days', 'contact_days_per', 'meet_date']
+      for (const field of fields) {
+        const inputElement = this.element.querySelector(`[name="step2_data[${field}]"]`);
+        if (!inputElement) continue; // Skip current iteration if inputElement is false/null
+
+        let inputValue = this.sessionData.step2[`${field}`];
+
+        if (field === 'date_of_birth') {
+          const dateStr = this.rubyDateToString(inputValue);
+          const fp = flatpickr(inputElement, {
+            dateFormat: "Y-m-d",
+          });
+          fp.setDate(dateStr);
+        } else if (field === 'meet_date') {
+          const inputDate = new Date(inputValue);
+          inputElement.value = this.getAge(inputDate);
+        } else {
+          inputElement.value = inputValue
+        }
+      }
+    }
   }
 
   submitForm(e) {
@@ -85,9 +124,34 @@ export default class extends Controller {
     });
   }
 
+  // Helper methods
+  rubyDateToString(dateInput) {
+    const date = new Date(dateInput);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  getAge(birthDate) {
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+  }
+
   updateMeetdateLabel() {
     const nickname = this.nicknameInputTarget.value;
     const labelText = nickname ? `How long has ${nickname} been important to you?` : "How long has ... been important to you?";
     this.meetdateLabelTarget.innerText = labelText;
+  }
+
+  stepBack() {
+    window.location.href = '/multistages/step1_input';
   }
 }
