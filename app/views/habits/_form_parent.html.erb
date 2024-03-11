@@ -1,6 +1,7 @@
 <%# PARENT FORM %>
 
 <%= simple_form_for(@habit) do |f| %>
+  <p class="tip"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <%= session[:user_data]["step2"]["nickname"] %>? We've included some suggestions below:</p>
   <%= f.input :title, :label => 'I will:', placeholder: "call #{session[:user_data]["step2"]["nickname"]}, take #{session[:user_data]["step2"]["nickname"]} out for lunch" %>
   <div class="week-recurrence">
     <p>I will do this every </p>
@@ -27,6 +28,6 @@
   <%# How can we make the categories look more like chips? %>
   <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "after Sunday brunch, after walking the dog..." %>
   <%= f.input :reward, :label => 'My reward for this is:', placeholder: "biscuits, a Costa Coffee..." %>
-  <%= f.input :photo, :label => 'Attached a photograph to this habit:', as: :file %>
+  <%= f.input :photo, :label => 'Attach a photograph to this habit:', as: :file, input_html: { class: 'custom-file-input' }  %>
   <%= f.submit %>
   <% end %>
