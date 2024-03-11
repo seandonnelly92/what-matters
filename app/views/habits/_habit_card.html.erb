@@ -3,28 +3,23 @@
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
+                <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
+                  <% if index > 0 %>
+                    <% previous_log = habit.logs.order(date_time: :asc)[index - 1] %>
+                    <% previous_log_2 = habit.logs.order(date_time: :asc)[index - 2] %>
+                    <% previous_log_3 = habit.logs.order(date_time: :asc)[index - 3] %>
+                    <% if log.completed && previous_log.completed && previous_log_2.completed && previous_log_3.completed  %>
+                      <p class = "chip 4-day-streak"> You are on a roll, keep it up! </p>
+                    <% elsif log.completed && previous_log.completed && previous_log_2.completed  %>
+                      three day streak!
+                    <% elsif log.completed && previous_log.completed %>
+                      two day streak!
+                    <% else %>
+                      not two day streak!
+                    <% end %>
+                    <!-- Now you can use `two_day_streak` as needed -->
+                  <% end %>
 
-        <%# <p data-loader-log-date-value= #{log.date}></p> %>
-  <% if index > 0 %>
-    <% previous_log = habit.logs.order(date_time: :asc)[index - 1] %>
-    <% previous_log_2 = habit.logs.order(date_time: :asc)[index - 2] %>
-    <% previous_log_3 = habit.logs.order(date_time: :asc)[index - 3] %>
-    <% if log.completed && previous_log.completed && previous_log_2.completed && previous_log_3.completed  %>
-      You are on a roll, keep it up!
-    <% elsif log.completed && previous_log.completed && previous_log_2.completed  %>
-      three day streak!
-    <% elsif log.completed && previous_log.completed %>
-      two day streak!
-    <% else %>
-      not two day streak!
-    <% end %>
-    <!-- Now you can use `two_day_streak` as needed -->
-  <% end %>
-
-
-
-        <h5>Latest Log- <%= @latest_log.id %></h5>
-        <h5>Current Log- <%= log.id %></h5>
         <h6 class = "text" data-log-click-target='message'><%= log.format_message %></h6>
         <p data-log-scroll-target="today"></p>
       </div>
