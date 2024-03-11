@@ -1,1 +1,13 @@
-<%= render 'relationship_input', relationship: @relationship %>
+<div data-controller="multistage-step2">
+  <div class="status-bar">
+    <div class="status" role="statusbar" style="width: 33.5%" aria-valuenow="33.5" aria-valuemin="0" aria-valuemax="100" data-multistage-step2-target="status"></div>
+  </div>
+  <div class="container mt-3">
+    <h2>Tell us of someone you care about deeply</h2>
+    <%= render 'relationship_input', relationship: @relationship %>
+
+    <button type="button"
+      class="secondary-btn"
+      data-action="click->multistage-step2#stepBack">Back to Step 1</button>
+  </div>
+</div>

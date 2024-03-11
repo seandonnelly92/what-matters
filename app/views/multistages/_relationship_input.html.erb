@@ -1,37 +1,28 @@
-<div class="container mt-3" data-controller="multistage-step2">
-  <h2>Tell us of someone you care about deeply</h2>
+<%= simple_form_for :step2_data, url: step2_submit_multistages_path, html: { data: { action: "submit->multistage-step2#submitForm", "multistage-step2-target": "form" } } do |f| %>
+  <%= f.input :nickname, as: :string, label: "What do you call them?",
+        input_html: { data: { action: "input->multistage-step2#updateMeetdateLabel", "multistage-step2-target": "nicknameInput" } } %>
+  <%= f.input :relation_to, as: :select, collection: Relationship.relation_to_options(true), label: "What is their relationship to you?"%>
+  <%= f.input :date_of_birth,
+        label: "What is their date of birth?", # Reflects custom label
+        as: :string,
+        input_html: { data: { controller: "datepicker" } } %>
 
-  <%= simple_form_for :step2_data, url: step2_submit_multistages_path, html: { data: { action: "submit->multistage-step2#submitForm", "multistage-step2-target": "form" } } do |f| %>
-    <%= f.input :nickname, as: :string, label: "What do you call them?",
-          input_html: { data: { action: "input->multistage-step2#updateMeetdateLabel", "multistage-step2-target": "nicknameInput" } } %>
-    <%= f.input :relation_to, as: :select, collection: Relationship.relation_to_options(true), label: "What is their relationship to you?"%>
-    <%= f.input :date_of_birth,
-          label: "What is their date of birth?", # Reflects custom label
-          as: :string,
-          input_html: { data: { controller: "datepicker" } } %>
-
-    <%= f.label :contact_days, "How much quality time do you spend together these days?" %>
-    <div class="input-group">
-      <%= f.input :contact_days, as: :integer, placeholder: "1", label: false %>
-        <p class="form-p">day(s) per</p>
-      <%= f.input :contact_days_per, as: :select, collection: Relationship.contact_days_per_options, label: false %>
-    </div>
+  <%= f.label :contact_days, "How much quality time do you spend together these days?" %>
+  <div class="input-group">
+    <%= f.input :contact_days, as: :integer, placeholder: "1", label: false %>
+      <p class="form-p">day(s) per</p>
+    <%= f.input :contact_days_per, as: :select, collection: Relationship.contact_days_per_options, label: false %>
+  </div>
 
 
-    <%= f.label :meet_date, "How long has ... been important to you?",
-          data: { "multistage-step2-target": "meetdateLabel" } %>
-    <div class="input-group">
-      <%= f.input :meet_date, as: :integer, placeholder: "1", label: false %>
-      <p class="form-p">years</p>
-    </div>
+  <%= f.label :meet_date, "How long has ... been important to you?",
+        data: { "multistage-step2-target": "meetdateLabel" } %>
+  <div class="input-group">
+    <%= f.input :meet_date, as: :integer, placeholder: "1", label: false %>
+    <p class="form-p">years</p>
+  </div>
 
-
-    <%= f.button :submit, "Next",
-        class: "primary-btn",
-        data: { "multistage-step2-target": "submitBtn" } %>
-  <% end %>
-
-  <button type="button"
-    class="secondary-btn"
-    data-action="click->multistage-step2#stepBack">Back to previous</button>
-</div>
+  <%= f.button :submit, "Next",
+      class: "primary-btn",
+      data: { "multistage-step2-target": "submitBtn" } %>
+<% end %>

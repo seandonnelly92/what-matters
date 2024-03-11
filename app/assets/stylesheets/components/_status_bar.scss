@@ -1,0 +1,19 @@
+.status-bar {
+  position: absolute;
+  top: 110px;
+
+  width: 90%;
+  height: 10px;
+  margin: 0 auto;
+  padding: 0;
+
+  background-color: rgb(230, 230, 230);
+  border-radius: 10px;
+}
+
+.status {
+  background-color: $blue;
+  border-radius: 10px;
+  height: 100%;
+  transition: width 0.3s linear;
+}

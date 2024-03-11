@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="multistage-step3-output"
 export default class extends Controller {
   static targets = [
+    "status",
     "title",
     "timeBreakdown",
     "legend",
@@ -12,6 +13,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage-step3-output controller!");
+    console.log(`Status at connect: ${this.statusTarget.style.width}`);
+
+    // Set status bar details
+    this.statusIncrements = 5;
 
     this.fetchSessionData();
   }
@@ -40,7 +45,14 @@ export default class extends Controller {
     this.keyRelationship = annualContactHrs / 52; // Reflects weekly contact hours
   }
 
-  breakdownChart() {
+  breakdownChart(e) {
+    // Update status bar
+    if (e) {
+      e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
+    } else {
+      this.updateStatusBar(this.statusIncrements);
+    }
+
     // Update title and legend
     const title = `Here’s a breakdown of your unavoidables vs free time in a typical week:`;
     this.setTitle(title);
@@ -80,7 +92,10 @@ export default class extends Controller {
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#backToInput');
   }
 
-  breakdownChartDetailed() {
+  breakdownChartDetailed(e) {
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
+
     const nickname = this.sessionData.step2.nickname;
 
     // Update title and legend
@@ -112,10 +127,14 @@ export default class extends Controller {
 
     // Update next and back buttons
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#whatMattersChart');
+    this.nextBtnTarget.innerText = 'Next';
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#breakdownChart');
   }
 
-  whatMattersChart() {
+  whatMattersChart(e) {
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
+
     const nickname = this.sessionData.step2.nickname;
 
     // Update title and legend
@@ -159,5 +178,14 @@ export default class extends Controller {
 
   backToInput() {
     window.location.href = '/multistages/step3_input';
+  }
+
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '85.5%';
+
+    console.log(`Status update start: ${this.statusTarget.style.width}`);
+    const currentWidth = parseFloat(this.statusTarget.style.width);
+    this.statusTarget.style.width = `${currentWidth + progress}%`;
+    console.log(`Status update end: ${this.statusTarget.style.width}`);
   }
 }

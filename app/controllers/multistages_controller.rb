@@ -11,7 +11,7 @@ class MultistagesController < ApplicationController
       custom_params[:date_of_birth] = date_of_birth
     end
 
-    session[:user_data] = {}
+    session[:user_data] ||= {}
     session[:user_data][:step1] = custom_params
 
     @user = User.new
