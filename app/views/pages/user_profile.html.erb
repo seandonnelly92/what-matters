@@ -1,0 +1,13 @@
+<h1>Hi, <%= @user.first_name %>!</h1>
+<h4>Member for:<%= render 'devise/registrations/active_since', user: @user %></h4>
+
+<h2>Account Details</h2>
+<p><strong>First Name:</strong> <%= @user.first_name %></p>
+<p><strong>Last Name:</strong> <%= @user.last_name %></p>
+<p><strong>Email:</strong> <%= @user.email %></p>
+<p><strong>DOB:</strong>  <%= @user.date_of_birth %></p>
+
+<h3>Unavoidables (Avg)</h3>
+<p><strong>Work Days:</strong> <%= @user.work_days_per_week %> per week</p>
+<p><strong>Work Hours:</strong> <%= @user.work_hours_per_day %> per day</p>
+<p><strong>Sleep Hours:</strong> <%= @user.sleep_hours_per_day %> per day</p>

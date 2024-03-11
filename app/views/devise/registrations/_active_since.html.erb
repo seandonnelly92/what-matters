@@ -1,0 +1,14 @@
+<% account_created = user.created_at %>
+<% current_time = Time.zone.now %>
+
+<% minutes_active = (current_time - account_created) / 60 %>
+<% hours_active = minutes_active / 60 %>
+<% days_active = hours_active / 24 %>
+
+<% if minutes_active < 60 %>
+  <p><%= minutes_active.round(0) %> minute(s)</p>
+<% elsif hours_active < 24 %>
+  <p><%= hours_active.round(0) %> hour(s)</p>
+<% else %>
+  <p><%= days_active.round(0) %> day(s)</p>
+<% end %>

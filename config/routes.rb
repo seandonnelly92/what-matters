@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get "profile", to: "pages#user_profile", as: :profile
+  
+  
   post '/reviews/add_review', to: 'reviews#add_review'
   resources :reviews, only: %i[index] do
     collection do
