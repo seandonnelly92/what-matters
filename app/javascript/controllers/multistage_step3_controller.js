@@ -94,4 +94,8 @@ export default class extends Controller {
       workHoursField.classList.remove('d-none');
     }
   }
+
+  stepBack() {
+    window.location.href = '/multistages/step2_input';
+  }
 }

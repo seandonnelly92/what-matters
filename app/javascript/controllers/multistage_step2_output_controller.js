@@ -154,8 +154,6 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
-        console.log("SUCCESS");
-        console.log(`Data is: ${data}`);
         window.location.href = '/multistages/step3_input';
     })
   }
