@@ -9,11 +9,11 @@ class User < ApplicationRecord
   has_many :habits
   has_many :relationships
 
-  # validates :first_name, :last_name, :date_of_birth, :work_days_per_week, :work_hours_per_day, :sleep_hours_per_day, presence: true
+  validates :first_name, :last_name, :date_of_birth, :work_days_per_week, :work_hours_per_day, :sleep_hours_per_day, presence: true
 
-  # validates :work_days_per_week, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 7, message: "must be less than or equal to 7" }
-  # validates :work_hours_per_day, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 24, message: "must be less than or equal to 24" }
-  # validates :sleep_hours_per_day, numericality: { greater_than_or_equal_to: 0, message: "must be greater than 0" }
+  validates :work_days_per_week, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 7, message: "must be less than or equal to 7" }
+  validates :work_hours_per_day, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 24, message: "must be less than or equal to 24" }
+  validates :sleep_hours_per_day, numericality: { greater_than_or_equal_to: 0, message: "must be greater than 0" }
 
   # # MULTIFACTOR STEP VALIDATIONS
   validate :date_of_birth_validation, on: :step1_valid

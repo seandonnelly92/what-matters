@@ -30,4 +30,6 @@ Rails.application.routes.draw do
       post 'add_session_data', as: :add_session_data
     end
   end
+
+  get "profile", to: "pages#user_profile", as: :profile
 end

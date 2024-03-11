@@ -1,5 +1,5 @@
 class MultistagesController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :configure_permitted_parameters, if: :devise_controller?
 
   def step1_input
   end
@@ -11,7 +11,7 @@ class MultistagesController < ApplicationController
       custom_params[:date_of_birth] = date_of_birth
     end
 
-    session[:user_data] ||= {}
+    session[:user_data] = {}
     session[:user_data][:step1] = custom_params
 
     @user = User.new
