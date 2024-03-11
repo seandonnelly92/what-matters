@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[email password first_name last_name date_of_birth work_days_per_week work_hours_per_day sleep_hours_per_day])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[email password first_name last_name date_of_birth work_days_per_week work_hours_per_day sleep_hours_per_day])
   end
 
   def fetch_user_name
