@@ -14,32 +14,27 @@ export default class extends Controller {
   connect() {
     console.log("Hello from the reviews controller!");
 
-    this.showForm() = this.showForm().bind(this);
-    this.hideForm() = this.hideForm().bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.hideForm = this.hideForm.bind(this);
 
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
   }
 
-  showForm() {
+  showForm(e) {
     this.formDisplayTarget.classList.add('show')
-    this.formDisplayTarget.classList.add('visible')
+    e.target.innerText = 'Close';
 
-    this.target.innerText = 'Close';
-    this.target.removeEventListener('click', this.showForm());
-    this.target.addEventListener('click', this.resetForm());
+    e.target.removeEventListener('click', this.showForm);
+    e.target.addEventListener('click', this.hideForm);
   }
 
-  hideForm() {
+  hideForm(e) {
     this.formDisplayTarget.classList.remove('show')
-    setTimeout(() => {
-      this.formDisplayTarget.classList.remove('visible');
+    e.target.innerText = 'Leave a review';
 
-      this.target.innerText = 'Leave a review';
-      this.target.addEventListener('click', this.showForm());
-      this.target.removeEventListener('click', this.resetForm());
-    }, 300);
-
+    e.target.addEventListener('click', this.showForm);
+    e.target.removeEventListener('click', this.hideForm);
   }
 
   setRating(e) {

@@ -1,6 +1,6 @@
 .reviews-container {
   width: 100%;
-  margin: 12px auto;
+  margin: 0 auto;
   padding: 8px 4px;
 
   display: flex;
@@ -17,18 +17,17 @@
 
 #reviews-form {
   border-top: 1px solid $green;
-  padding: 8px 4px;
+  padding: 0 4px;
 
   visibility: hidden;
+  height: 0;
   transform: scale(0);
-  transform-origin: top;
-  transition: transform 0.3s ease-out;
-
-  &.visible {
-    visibility: visible;
-  }
+  transform-origin: top left;
 
   &.show {
+    visibility: visible;
+    height: auto;
+    padding: 8px 4px;
     transform: scale(1);
   }
 }
