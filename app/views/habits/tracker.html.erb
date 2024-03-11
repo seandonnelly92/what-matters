@@ -3,7 +3,7 @@
     <div class="input-month"><%= Date.today.strftime("%B") %> <i class="fa-solid fa-caret-down"></i></div>
     <div class="input-year"><%= Date.today.year %> <i class="fa-solid fa-caret-down"></i></div>
   </div>
-  <div id="tracker-days" data-tracker-menu-target="datesCarousel">
+  <div id="tracker-days" data-tracker-menu-target="days" data-action="scroll->tracker-menu#menuScroll">
   </div>
 </div>
 

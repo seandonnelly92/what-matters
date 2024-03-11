@@ -3,6 +3,7 @@
   top: 95px;
   left: 0;
   z-index: 5;
+  padding: 0;
 
   background-color: $light-gray;
   border-top: 1px solid $blue;
@@ -22,6 +23,29 @@
 }
 
 #tracker-days {
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Ensures items are in a single line */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+#tracker-days .t-day {
+  display: inline-block;
+  width: 30px;
   height: 30px;
-  background-color: $green;
+  background-color: $light-gray;
+  color: $blue;
+  border: 1px solid whitesmoke;
+
+  text-align: center;
+  cursor: pointer;
+
+  &.today {
+    width: fit-content;
+    padding: 0 4px;
+    background-color: $blue;
+    color: white;
+    font-weight: 600;
+  }
 }
