@@ -174,4 +174,12 @@ export default class extends Controller {
       review.remove();
     });
   }
+
+  editReview(e) {
+    console.log(e);
+  }
+
+  deleteReview(e) {
+    console.log(e);
+  }
 }

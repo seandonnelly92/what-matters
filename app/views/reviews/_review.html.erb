@@ -9,5 +9,11 @@
       <% end %>
     </div>
   </div>
-  <p class="review-content"><%= review.content %></p>
+  <div class="review-body">
+    <p class="review-content"><%= review.content %></p>
+    <% if review.user == current_user %>
+      <i class='fa-solid fa-pen-to-square' data-action="click->reviews#editReview"></i>
+      <i class="fa-solid fa-trash" data-action="click->reviews#deleteReview"></i>
+    <% end %>
+  </div>
 </div>

@@ -119,9 +119,23 @@
   font-size: 15px;
 }
 
-.review-content {
+.review-body {
   margin: 4px 0 0;
-  padding: 0 8px;
+  padding: 8px;
+
+  display: flex;
+  align-items: end;
+
+  i {
+    color: $blue;
+    margin-right: 4px;
+  }
+}
+
+.review-content {
+  flex-grow: 1;
+  margin: 0 0 4px;
+
   font-size: 14px;
   color: rgb(71, 71, 71);
 }
