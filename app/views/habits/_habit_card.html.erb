@@ -9,13 +9,11 @@
                     <% previous_log_2 = habit.logs.order(date_time: :asc)[index - 2] %>
                     <% previous_log_3 = habit.logs.order(date_time: :asc)[index - 3] %>
                     <% if log.completed && previous_log.completed && previous_log_2.completed && previous_log_3.completed  %>
-                      <p class = "chip 4-day-streak"> You are on a roll, keep it up! </p>
+                      <p class = "chip" id = "four-day-streak"> Huge Streak! </p>
                     <% elsif log.completed && previous_log.completed && previous_log_2.completed  %>
-                      three day streak!
+                    <p class = "chip" id = "three-day-streak"> Three day streak! </p>
                     <% elsif log.completed && previous_log.completed %>
-                      two day streak!
-                    <% else %>
-                      not two day streak!
+                      <p class = "chip" id = "two-day-streak"> Streak started! </p>
                     <% end %>
                     <!-- Now you can use `two_day_streak` as needed -->
                   <% end %>
