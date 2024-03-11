@@ -18,7 +18,7 @@
           </div>
           <div class="time-duration">
             <p>at:</p>
-            <%= f.input :start_time, label: false %>
+            <%= f.input :start_time, label: false, as: :time, default: Time.parse('8:00') %>
             <p>for</p>
             <%= f.input :duration_in_minutes, label: false, placeholder: "15" %>
             <p>minutes.</p>
