@@ -5,6 +5,8 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="tracker-menu"
 export default class extends Controller {
   static targets = [
+    "month",
+    "year",
     "days",
     "selected"
   ]
@@ -109,6 +111,8 @@ export default class extends Controller {
     }
     console.log(`Final calcDay:`);
     console.log(calcDay);
+
+    this.setTrackerInput(calcDay);
   }
 
   menuCenter() {
@@ -120,6 +124,15 @@ export default class extends Controller {
       const leftScrollPosition = selectElement.offsetLeft + (selectElement.offsetWidth / 2) - (scrollElement.offsetWidth / 2);
       scrollElement.scrollLeft = leftScrollPosition;
     }
+  }
+
+  setTrackerInput(day) {
+    const date = new Date(day.dataset.date);
+    const month = date.toLocaleDateString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+
+    this.monthTarget.innerHTML = `${month} <i class="fa-solid fa-caret-down"></i>`
+    this.yearTarget.innerHTML = `${year} <i class="fa-solid fa-caret-down"></i>`
   }
 
   selectDay(e) {
