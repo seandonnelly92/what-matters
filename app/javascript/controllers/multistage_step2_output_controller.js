@@ -25,8 +25,8 @@ export default class extends Controller {
     fetch('fetch_session_data')
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.sessionData = data;
+        this.relationYears(); // Get the relevant instances variables for the relation
         this.firstStepOutput();
       })
       .catch(error => console.error("Error fetching session data:", error));
@@ -34,13 +34,19 @@ export default class extends Controller {
 
   firstStepOutput() {
     this.nickname = this.sessionData.step2.nickname;
-    this.relationYears(); // Get the relevant instances variables for the relation
 
+    if (this.hasDivStep3Target) this.divStep3Target.remove(); // Remove thirdStep div in case it exists
+
+    this.resetYearsTable(); // Called in case going back from secondStep to firstStep
     this.buildYearsTable(this.sharedYrs); // Build empty years table based on the total shared years
 
     // Set the title of the page
     const firstTitle = `Assuming you and ${this.nickname} both live to 90, you’ll share ${this.sharedYrs} years of co-existence on planet Earth.`;
     this.setTitle(firstTitle);
+
+    // Update next and back buttons
+    this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#secondStepOutput');
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#backToInput');
   }
 
   secondStepOutput() {
@@ -52,13 +58,14 @@ export default class extends Controller {
     const secondTitle = `You've used up ${this.pastYrs} of those ${this.sharedYrs} years. That's ${percentage}%. You have ${this.futureYrs} years left.`;
     this.setTitle(secondTitle);
 
-    // Update the next button to be used for the thirdStepOutput() if the relation_to is a 'parent' or 'child'
+    // Update next and back buttons
     const relation_to = this.sessionData.step2.relation_to.toLowerCase();
     if (relation_to === 'parent' || relation_to === 'child') {
       this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#thirdStepOutput');
     } else {
       this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#finalStep');
     }
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#firstStepOutput');
   }
 
   thirdStepOutput() {
@@ -93,15 +100,19 @@ export default class extends Controller {
     const part5 = `Based on this, the total time you’ll ever spend with ${this.nickname} is ${this.totalDays.toLocaleString()} days.`;
     this.divStep3Target.insertAdjacentHTML('beforeend', `<h3>${part5}</h3>`);
 
-    // Update the next button to be used for the fourthStepOutput()
+    // Update next and back buttons
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#fourthStepOutput');
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#firstStepOutput');
   }
 
   fourthStepOutput() {
-    // Clear the divStep3Target div
-    this.divStep3Target.remove();
+    this.resetScrollPosition()
+
+    // Clear the divStep3Target div (unless coming back from the fifthStep)
+    if (this.hasDivStep3Target) this.divStep3Target.remove();
 
     // Build the table again, but on a per day basis
+    this.resetYearsTable(); // Called in case going back from fifthStep to fourthStep
     this.tableTarget.classList.add('days'); // Reference the _multistages.scss partial for the specification of the table.days class
     this.buildYearsTable(this.totalDays, 55, true); // Build empty years table but with small circles on a daily basis
 
@@ -109,12 +120,17 @@ export default class extends Controller {
     const fourthTitle = `Here’s your ${this.totalDays.toLocaleString()} days with ${this.nickname}. Each dot represents one day of contact time.`;
     this.setTitle(fourthTitle);
 
-    // Update the next button to be used for the fifthStepOutput()
+    // Update next and back buttons
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#fifthStepOutput');
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#thirdStepOutput');
   }
 
   fifthStepOutput(e) {
     this.resetScrollPosition()
+
+    // Update next button if you want to skip and back button if you want to go back prior to animation finishing
+    this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#finalStep');
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#fourthStepOutput');
 
     // Colors the circles of the table based on the days
     this.colorCircles((this.youthYrs * 365) + (this.pastYrs - this.youthYrs) * this.annualContact, true); // True added for small circles class
@@ -122,9 +138,6 @@ export default class extends Controller {
     // Set the title of the page
     const fifthTitle = `You used up ${(this.youthYrs * 365).toLocaleString()} days by the time you were 18. You have ${(this.futureYrs * this.annualContact).toLocaleString()} days left:`;
     this.setTitle(fifthTitle);
-
-    // Update the next button to be used for the finalStep()
-    this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#finalStep');
   }
 
   finalStep () {
