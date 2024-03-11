@@ -38,7 +38,10 @@
         </div>
         <div class="input-with-tooltip d-flex justify-content-between align-items-start">
           <p>I will do this because I want to be:</p>
-          <i class="fa-solid fa-circle-info"></i>
+          <button type="button" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+
         </div>
         <%= f.input :identity_goal, label: false, placeholder: "a good citizen, a thoughtful friend..." %>
         <%= f.input :category, :label => 'Habit category:', as: :select, collection: Habit::CATEGORIES %>
