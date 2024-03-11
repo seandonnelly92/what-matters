@@ -21,13 +21,20 @@
       <% if habit.reward.present? %>
         <p class="chip"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
       <% end %>
-      <p><i class="fa-solid fa-quote-left"></i> I will <%= habit.title.downcase %> every
+      <%# Time and duration %>
+      <p><i class="fa-regular fa-clock me-1"></i><%= habit.start_time.strftime("%H:%M") %> for <%= habit.duration_in_minutes %> minutes
       <% if habit.week_recurrence == 1 %>
-      <%= habit.week_recurrence %> week
+      every week.
       <% else %>
-      <%= habit.week_recurrence %> weeks
+      every <%= habit.week_recurrence %> weeks.
       <% end %>
-      on <%= habit.days_of_week %> at <%= habit.start_time.strftime("%H:%M") %>. It will take around <%= habit.duration_in_minutes %> minutes.I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
+      </p>
+
+      <%# Days of the Week %>
+      <%= render partial: 'shared/habit_days', locals: { habit: habit } %>
+
+
+      <p class="mt-4 mb-3"><i class="fa-solid fa-quote-left"></i> I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
       <p><strong>Current Streak: </strong><%= habit.current_streak %></p>
       <p><strong>Best Streak: </strong><%= habit.best_streak %></p>
     </div>
