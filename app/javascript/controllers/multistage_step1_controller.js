@@ -175,7 +175,6 @@ export default class extends Controller {
   }
 
   resetForm() {
-    this.formTarget.reset();
     this.titleTarget.innerText = 'Here is your whole life in years if you live until 90 years old:'
     this.colorCircles(0); // Will set all the circles to white
     this.backBtnTarget.classList.add('d-none');
