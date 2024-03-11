@@ -13,8 +13,34 @@ export default class extends Controller {
   connect() {
     console.log("Hello from the multistage-step3 controller!");
 
+    // Check if data is already available for the user
+    this.fetchSessionData();
+
     // Retrieves the required CRSF token from the HTML header (used to send requests)
     this.csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  }
+
+  fetchSessionData() {
+    fetch('fetch_session_data')
+      .then(response => response.json())
+      .then(data => {
+        this.sessionData = data;
+        this.populateSessionData();
+      })
+      .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  populateSessionData() {
+    if (this.sessionData.step3) {
+      console.log(this.sessionData.step3);
+      const fields = ['sleep_hours_per_day', 'work_days_per_week', 'work_hours_per_day']
+      for (const field of fields) {
+        const inputElement = this.element.querySelector(`[name="step3_data[${field}]"]`);
+        if (!inputElement) continue; // Skip current iteration if inputElement is false/null
+
+        inputElement.value = this.sessionData.step3[`${field}`];
+      }
+    }
   }
 
   submitForm(e) {
