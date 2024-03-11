@@ -42,8 +42,11 @@
   cursor: pointer;
 
   &.today {
-    width: fit-content;
     padding: 0 4px;
+    width: fit-content;
+  }
+
+  &.selected {
     background-color: $blue;
     color: white;
     font-weight: 600;
