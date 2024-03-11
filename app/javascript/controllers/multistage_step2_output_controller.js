@@ -6,6 +6,7 @@ export default class extends Controller {
     "title",
     "table",
     "nextBtn",
+    "backBtn",
     "divStep3" // Note: divStep3 is dynamically added in the third step of the output so can only be targetted after creation
   ]
 
@@ -249,5 +250,9 @@ export default class extends Controller {
         annualContact = contactDays;
     }
     return annualContact;
+  }
+
+  backToInput(e) {
+    window.location.href = '/multistages/step2_input';
   }
 }

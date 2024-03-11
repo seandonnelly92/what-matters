@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr"
 
 // Connects to data-controller="multistage-step1"
 export default class extends Controller {
@@ -45,7 +46,11 @@ export default class extends Controller {
         if (data.step1.date_of_birth) {
           const inputElement = this.element.querySelector(`[name="step1_data[date_of_birth]"]`);
           const dateStr = this.rubyDateToString(data.step1.date_of_birth);
-          inputElement.value = dateStr;
+          console.log(inputElement);
+          const fp = flatpickr(inputElement, {
+            dateFormat: "Y-m-d",
+          });
+          fp.setDate(dateStr);
         }
       })
       .catch(error => console.error("Error fetching session data:", error));
