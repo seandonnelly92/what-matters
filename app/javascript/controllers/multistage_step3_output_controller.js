@@ -13,9 +13,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage-step3-output controller!");
+    console.log(`Status at connect: ${this.statusTarget.style.width}`);
 
-    // Set status bar from input step +15% (to include animation)
-    this.updateStatusBar(15);
+    // Set status bar details
+    this.statusIncrements = 5;
 
     this.fetchSessionData();
   }
@@ -47,9 +48,9 @@ export default class extends Controller {
   breakdownChart(e) {
     // Update status bar
     if (e) {
-      e.target === this.nextBtnTarget ? this.updateStatusBar(5) : this.updateStatusBar(-5);
+      e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
     } else {
-      this.updateStatusBar(5);
+      this.updateStatusBar(this.statusIncrements);
     }
 
     // Update title and legend
@@ -93,7 +94,7 @@ export default class extends Controller {
 
   breakdownChartDetailed(e) {
     // Update status bar
-    e.target === this.nextBtnTarget ? this.updateStatusBar(5) : this.updateStatusBar(-5);
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
 
     const nickname = this.sessionData.step2.nickname;
 
@@ -126,12 +127,13 @@ export default class extends Controller {
 
     // Update next and back buttons
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#whatMattersChart');
+    this.nextBtnTarget.innerText = 'Next';
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#breakdownChart');
   }
 
   whatMattersChart(e) {
     // Update status bar
-    e.target === this.nextBtnTarget ? this.updateStatusBar(5) : this.updateStatusBar(-5);
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
 
     const nickname = this.sessionData.step2.nickname;
 
@@ -179,9 +181,11 @@ export default class extends Controller {
   }
 
   updateStatusBar(progress, init=false) {
-    if (init) this.statusTarget.style.width = '81%';
+    if (init) this.statusTarget.style.width = '85.5%';
 
+    console.log(`Status update start: ${this.statusTarget.style.width}`);
     const currentWidth = parseFloat(this.statusTarget.style.width);
     this.statusTarget.style.width = `${currentWidth + progress}%`;
+    console.log(`Status update end: ${this.statusTarget.style.width}`);
   }
 }

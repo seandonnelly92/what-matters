@@ -13,9 +13,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage-step3 controller!");
+    console.log(`Status at connect: ${this.statusTarget.style.width}`);
 
-    // Set status bar from previous step +3% (to include animation)
-    this.updateStatusBar(3);
+    // Set status bar from previous step +3.3% (animation increment for each step)
+    this.updateStatusBar(3.3);
 
     // Check if data is already available for the user
     this.fetchSessionData();
@@ -65,12 +66,9 @@ export default class extends Controller {
       this.clearErrors();
 
       if (data.errors) {
-        console.log("ERRORS");
-        console.log(data.errors);
         this.handleErrors(data.errors);
       } else {
-        console.log("SUCCESS");
-        console.log(data);
+        this.updateStatusBar(15);
         window.location.href = '/multistages/step3_output';
       }
     })
@@ -130,9 +128,11 @@ export default class extends Controller {
   }
 
   updateStatusBar(progress, init=false) {
-    if (init) this.statusTarget.style.width = '33%';
+    if (init) this.statusTarget.style.width = '70.5%';
 
+    console.log(`Status update start: ${this.statusTarget.style.width}`);
     const currentWidth = parseFloat(this.statusTarget.style.width);
     this.statusTarget.style.width = `${currentWidth + progress}%`;
+    console.log(`Status update end: ${this.statusTarget.style.width}`);
   }
 }

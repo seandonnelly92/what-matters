@@ -15,6 +15,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage step1 controller!");
+    console.log(`Status at connect: ${this.statusTarget.style.width}`);
+
+    // Set status bar from previous step +3.3% (animation increment for each step)
+    this.updateStatusBar(3.3);
 
     this.validForm = false;
 
@@ -65,7 +69,10 @@ export default class extends Controller {
   submitForm(e) {
     e.preventDefault();
 
-    if (this.validForm) window.location.href = '/multistages/step2_input';
+    if (this.validForm) {
+      this.updateStatusBar(15)
+      window.location.href = '/multistages/step2_input';
+    }
 
     const data = { user: { date_of_birth: this.dateOfBirthTarget.value } };
 
@@ -184,7 +191,9 @@ export default class extends Controller {
   updateStatusBar(progress, init=false) {
     if (init) this.statusTarget.style.width = '3%';
 
+    console.log(`Status update start: ${this.statusTarget.style.width}`);
     const currentWidth = parseFloat(this.statusTarget.style.width);
     this.statusTarget.style.width = `${currentWidth + progress}%`;
+    console.log(`Status update end: ${this.statusTarget.style.width}`);
   }
 }
