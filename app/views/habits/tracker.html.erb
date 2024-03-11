@@ -1,9 +1,9 @@
-<div id="tracker-menu" data-controller="tracker-dates">
+<div id="tracker-menu" data-controller="tracker-menu">
   <div id="tracker-input">
     <div class="input-month"><%= Date.today.strftime("%B") %> <i class="fa-solid fa-caret-down"></i></div>
     <div class="input-year"><%= Date.today.year %> <i class="fa-solid fa-caret-down"></i></div>
   </div>
-  <div id="tracker-days" data-tracker-dates-target="datesCarousel">
+  <div id="tracker-days" data-tracker-menu-target="datesCarousel">
   </div>
 </div>
 
