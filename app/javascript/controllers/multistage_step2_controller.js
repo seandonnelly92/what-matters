@@ -31,6 +31,7 @@ export default class extends Controller {
     }
 
   populateSessionData() {
+    console.log(this.sessionData);
     if (this.sessionData.step2) {
       const fields = ['nickname', 'relation_to', 'date_of_birth', 'contact_days', 'contact_days_per', 'meet_date']
       for (const field of fields) {
