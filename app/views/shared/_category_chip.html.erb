@@ -2,10 +2,10 @@
   <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-person me-1"></i><%= habit.category %></p>
 
 <% elsif habit.category.present? && habit.category == "Children"  %>
-  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-person me-1"></i><%= habit.category %></p>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-child me-1"></i><%= habit.category %></p>
 
 <% elsif habit.category.present? && habit.category == "Relationship"  %>
-  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-child me-1"></i><%= habit.category %></p>
+  <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-heart me-1"></i><%= habit.category %></p>
 
 <% elsif habit.category.present? && habit.category == "Family"  %>
   <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-people-roof me-1"></i><%= habit.category %></p>

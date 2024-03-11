@@ -1,0 +1,33 @@
+<%# PARTNER FORM %>
+
+<%= simple_form_for(@habit) do |f| %>
+  <p class="tip mb-4"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <strong><%= session[:user_data]["step2"]["nickname"] %></strong>? We've included some suggestions below:</p>
+  <%= f.input :title, :label => 'I will:', placeholder: "arrange date night with #{session[:user_data]["step2"]["nickname"]}, cook #{session[:user_data]["step2"]["nickname"]} their favourite meal" %>
+  <div class="week-recurrence">
+    <p>I will do this every </p>
+    <%= f.input :week_recurrence, label: false, placeholder: "4" %>
+    <p>week/s on these days:</p>
+  </div>
+    <% days_of_week = Date::DAYNAMES.rotate(1) %>
+    <%# Days of the week toggles %>
+  <div class="days-checkboxes">
+    <% days_of_week.each do |day| %>
+      <%= check_box_tag "habit[days_of_week][]", day.downcase, (f.object.days_of_week || []).include?(day.downcase), id: "day_#{day.downcase}" %>
+      <%= label_tag "day_#{day.downcase}", day[0], class: 'day-checkbox-label' %>
+    <% end %>
+  </div>
+  <div class="time-duration">
+    <p>at:</p>
+    <%= f.input :start_time, label: false, as: :time, default: Time.parse('19:00') %>
+    <p>for</p>
+    <%= f.input :duration_in_minutes, label: false, placeholder: "15" %>
+    <p>minutes.</p>
+  </div>
+  <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "an amazing partner for #{session[:user_data]["step2"]["nickname"]}" %>
+  <%= f.input :category, :label => 'Habit category:', selected: "Relationship", as: :select, collection: Habit::CATEGORIES %>
+  <%# How can we make the categories look more like chips? %>
+  <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "after pay day, before Aoife wakes up..." %>
+  <%= f.input :reward, :label => 'My reward for this is:', placeholder: "the date itself, nice breakfast" %>
+  <%= f.input :photo, :label => 'Attach a photograph to this habit:', as: :file, input_html: { class: 'custom-file-input' }  %>
+  <%= f.submit %>
+  <% end %>

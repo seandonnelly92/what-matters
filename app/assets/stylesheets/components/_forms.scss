@@ -3,7 +3,27 @@
   // Width is handled by the container now
 }
 
+.form-label {
+  font-size: 15px;
+}
+
+.tip {
+  display:inline-block;
+  background-color: rgba($color: $learning, $alpha: 0.20);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.simple_form .tip {
+  color: rgba(58, 166, 144, 0.8);
+}
 // INPUTS
+
+// Input field label with tooltip
+
+.input-with-tooltip i {
+  color: $blue;
+}
 
 // Inputs - unfocussed/general
 .form-control, .form-select, .form-check-input {
@@ -96,7 +116,15 @@
   width: 80px
 }
 
+// File upload
 
+.custom-file-input {
+  // text-indent: -9999px;     /* sends the text off-screen */
+  // background-image: url(app/assets/images/what-matters-logo.png);
+  // width: 100%;
+  // white-space: nowrap;            /* because only the first line is indented */
+  height: 35px;                        /* be sure to set height & width */
+}
 
 
 /* DAYS OF WEEK PICKER */

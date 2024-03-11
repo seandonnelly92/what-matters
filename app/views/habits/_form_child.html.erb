@@ -1,0 +1,33 @@
+<%# CHILD FORM %>
+
+<%= simple_form_for(@habit) do |f| %>
+  <p class="tip"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <strong><%= session[:user_data]["step2"]["nickname"]%></strong>? We've included some suggestions below:</p>
+  <%= f.input :title, :label => 'I will:', placeholder: "organise a day out for #{session[:user_data]["step2"]["nickname"]}, cook #{session[:user_data]["step2"]["nickname"]}'s favourite breakfast" %>
+  <div class="week-recurrence">
+    <p>I will do this every </p>
+    <%= f.input :week_recurrence, label: false, placeholder: "2" %>
+    <p>week/s on these days:</p>
+  </div>
+    <% days_of_week = Date::DAYNAMES.rotate(1) %>
+    <%# Days of the week toggles %>
+  <div class="days-checkboxes">
+    <% days_of_week.each do |day| %>
+      <%= check_box_tag "habit[days_of_week][]", day.downcase, (f.object.days_of_week || []).include?(day.downcase), id: "day_#{day.downcase}" %>
+      <%= label_tag "day_#{day.downcase}", day[0], class: 'day-checkbox-label' %>
+    <% end %>
+  </div>
+  <div class="time-duration">
+    <p>at:</p>
+    <%= f.input :start_time, label: false, as: :time, default: Time.parse('20:00') %>
+    <p>for</p>
+    <%= f.input :duration_in_minutes, label: false, placeholder: "20" %>
+    <p>minutes.</p>
+  </div>
+  <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "the best Mum/Dad ever (in #{session[:user_data]["step2"]["nickname"]}'s eyes!)" %>
+  <%= f.input :category, :label => 'Habit category:', selected: "Children", as: :select, collection: Habit::CATEGORIES %>
+  <%# How can we make the categories look more like chips? %>
+  <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "after bath time, after bed time, before school run..." %>
+  <%= f.input :reward, :label => 'My reward for this is:', placeholder: "a glass of wine and TV..." %>
+  <%= f.input :photo, :label => 'Attach a photograph to this habit:', as: :file, input_html: { class: 'custom-file-input' }  %>
+  <%= f.submit %>
+  <% end %>
