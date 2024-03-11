@@ -12,4 +12,9 @@ class PagesController < ApplicationController
   def user_profile
     @user = current_user
   end
+
+  def profile_edit
+    @user = User.find(params[:id])
+    raise
+  end
 end
