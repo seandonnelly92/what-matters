@@ -30,15 +30,8 @@
         class: "primary-btn",
         data: { "multistage-step2-target": "submitBtn" } %>
   <% end %>
-</div>
 
-<%# TABLE IN THE SCHEMA %>
-<%# t.bigint "user_id", null: false
-    t.string "nickname"
-    t.string "relation_to"
-    t.datetime "date_of_birth"
-    t.datetime "meet_date"
-    t.integer "contact_minutes_per_week"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_relationships_on_user_id" %>
+  <button type="button"
+    class="secondary-btn"
+    data-action="click->multistage-step2#stepBack">Back to previous</button>
+</div>

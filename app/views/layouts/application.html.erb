@@ -22,10 +22,7 @@
 
     <div data-controller="burger-menu">
       <%= render "shared/burger_menu" %>
-      <div class="main mb-5 row justify-content-center m-0">
-        <div class="row justify-content-center w-100">
-          <% @custom_column_class ||= "col-11 col-md-6 col-lg-4 col-xl-4" %>
-          <div class="<%= @custom_column_class %>">
+      <div class="main mb-5 row justify-content-center m-0 p-0">
             <%= yield %>
           </div>
         </div>
@@ -34,3 +31,6 @@
 
   </body>
 </html>
+
+
+<%# col-11 col-md-6 col-lg-4 col-xl-4  %>

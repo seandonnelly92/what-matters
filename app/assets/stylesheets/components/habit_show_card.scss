@@ -35,3 +35,31 @@
   padding: 40px 21px 27px 21px;
   color: white
 }
+
+.day {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  font-size: 5px
+}
+
+.active-day {
+  background-color: $blue
+}
+
+.active-day p {
+  font-size: 12px;
+  color: white
+}
+
+.inactive-day {
+  background-color: rgba($color: $secondary-font, $alpha: 0.1);
+}
+
+.inactive-day p {
+  font-size: 12px;
+  color: rgba($color: $secondary-font, $alpha: 1)
+}
