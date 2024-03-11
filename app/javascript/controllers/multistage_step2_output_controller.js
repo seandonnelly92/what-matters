@@ -263,7 +263,7 @@ export default class extends Controller {
     return annualContact;
   }
 
-  backToInput(e) {
+  backToInput() {
     window.location.href = '/multistages/step2_input';
   }
 }

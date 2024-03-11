@@ -6,12 +6,12 @@ export default class extends Controller {
     "title",
     "timeBreakdown",
     "legend",
-    "nextBtn"
+    "nextBtn",
+    "backBtn"
   ]
 
   connect() {
     console.log("Hello from the multistage-step3-output controller!");
-    console.log(Chart);
 
     this.fetchSessionData();
   }
@@ -41,6 +41,11 @@ export default class extends Controller {
   }
 
   breakdownChart() {
+    // Update title and legend
+    const title = `Here’s a breakdown of your unavoidables vs free time in a typical week:`;
+    this.setTitle(title);
+    this.legendTarget.innerHTML = `<span class="second">Free time</span> vs <span class="first">unavoidables</span>`;
+
     const data = {
       labels: [
         'Unavoidables',
@@ -69,14 +74,22 @@ export default class extends Controller {
     };
 
     this.outputChart = new Chart(this.timeBreakdownTarget, config);
+
+    // Update next and back buttons
+    this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#breakdownChartDetailed');
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#backToInput');
   }
 
   breakdownChartDetailed() {
     const nickname = this.sessionData.step2.nickname;
 
+    // Update title and legend
+    const title = `Here is how much of that you spend with ${nickname}:`;
+    this.setTitle(title);
+    this.legendTarget.innerHTML = `<span class="third">Time w/ ${nickname}</span> vs <span class="second">other free time</span> vs <span class="first">unavoidables</span>`;
+
     const adjustedFreeTime = this.freeTime - this.keyRelationship;
 
-    // Assuming `this.chart` is the chart instance
     // Update labels
     this.outputChart.data.labels = [
         'Unavoidables',
@@ -97,17 +110,18 @@ export default class extends Controller {
     // Re-render the chart to animate the changes
     this.outputChart.update();
 
-    // Update title and legend
-    const title = `Here is how much of that you spend with ${nickname}:`;
-    this.setTitle(title);
-    this.legendTarget.innerHTML = `<span class="third">Time w/ ${nickname}</span> vs <span class="second">other free time</span> vs <span class="first">unavoidables</span>`;
-
-    // Update the next button to be used for the finalStep()
+    // Update next and back buttons
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#whatMattersChart');
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#breakdownChart');
   }
 
   whatMattersChart() {
     const nickname = this.sessionData.step2.nickname;
+
+    // Update title and legend
+    const title = `Ready to grow into new habits and refocus your freetime on what matters?`;
+    this.setTitle(title);
+    this.legendTarget.innerHTML = `<span class="third">Time w/ ${nickname}</span> and <span class="second">other free time</span>`;
 
     // Assuming `this.chart` is the chart instance
     // Update labels
@@ -128,14 +142,10 @@ export default class extends Controller {
     // Re-render the chart to animate the changes
     this.outputChart.update();
 
-    // Update title and legend
-    const title = `Ready to grow into new habits and refocus your freetime on what matters?`;
-    this.setTitle(title);
-    this.legendTarget.innerHTML = `<span class="third">Time w/ ${nickname}</span> and <span class="second">other free time</span>`;
-
-    // Update the next button to be used for the finalStep()
+    // Update next and back buttons
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#finalStep');
     this.nextBtnTarget.innerText = 'Get Started!'
+    this.backBtnTarget.setAttribute('data-action', 'click->multistage-step3-output#breakdownChartDetailed');
   }
 
   finalStep() {
@@ -145,5 +155,9 @@ export default class extends Controller {
 
   setTitle(newTitle) {
     this.titleTarget.innerText = newTitle;
+  }
+
+  backToInput() {
+    window.location.href = '/multistages/step3_input';
   }
 }
