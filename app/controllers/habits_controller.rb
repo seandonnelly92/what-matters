@@ -26,7 +26,7 @@ class HabitsController < ApplicationController
   def create
     @habit = Habit.new(habit_params)
     @habit.user = current_user
-    @habit.start_time = Time.parse("#{params["start_time(4i)"]}:#{params["start_time(5i)"]}")
+    @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
     if @habit.save
       redirect_to habits_path, notice: "Habit was successfully created!"
     else
