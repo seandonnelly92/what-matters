@@ -27,7 +27,7 @@
       <% else %>
       <%= habit.week_recurrence %> weeks
       <% end %>
-      on <%= habit.days_of_week %> at 10:00. It will take around <%= habit.duration_in_minutes %> minutes.I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
+      on <%= habit.days_of_week %> at <%= habit.start_time.strftime("%H:%M") %>. It will take around <%= habit.duration_in_minutes %> minutes.I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
       <p><strong>Current Streak: </strong><%= habit.current_streak %></p>
       <p><strong>Best Streak: </strong><%= habit.best_streak %></p>
     </div>

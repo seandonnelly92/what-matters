@@ -1,5 +1,3 @@
-<%# PUT DIFFERENT ICON LOGIC HERE %>
-
 <% if habit.category.present? && habit.category == "Parents" %>
   <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-person me-1"></i><%= habit.category %></p>
 
