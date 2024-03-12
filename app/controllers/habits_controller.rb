@@ -29,6 +29,39 @@ class HabitsController < ApplicationController
     @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
     if @habit.save
       redirect_to habits_path, notice: "Habit was successfully created!"
+
+      next_90_days = []
+      current_day = DateTime.now
+
+      90.times do
+        current_day += 1
+        next_90_days << current_day
+      end
+
+      habit_days = @habit.days_of_week.map(&:downcase)
+
+      next_90_days.each do |day|
+        next unless habit_days.include?(day.strftime("%A").downcase)
+
+        # if Date.new(day) == Date.today &&
+
+        log_hour = @habit.start_time.hour
+        log_minute = @habit.start_time.min
+        log_timestamp = day.change(hour: log_hour, min: log_minute)
+
+        p 'creating log'
+        Log.create!(
+          habit_id: @habit.id,
+          date_time: log_timestamp,
+          completed: false
+        )
+      end
+
+
+      # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
+
+
+
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
@@ -36,16 +69,19 @@ class HabitsController < ApplicationController
   end
 
   def tracker
-    @scare_crow = User.find_by(first_name: "Scare")
-    @scare_crow_habits = Habit.where(user_id: @scare_crow.id)
-    @times_table_habit = @scare_crow_habits.find_by(title: "learn my times tables")
-    if @times_table_habit.present?
-      # Find the most recent log associated with the times_table habit
-      @latest_log = @times_table_habit.logs.order(id: :desc).first
-    else
-      # Handle case when times_table habit is not found
-      @latest_log = nil
-    end
+    # @scare_crow = User.find_by(first_name: "Scare")
+    # @scare_crow_habits = Habit.where(user_id: @scare_crow.id)
+    # @times_table_habit = @scare_crow_habits.find_by(title: "learn my times tables")
+
+    @habits = current_user.habits
+
+    # if @times_table_habit.present?
+    #   # Find the most recent log associated with the times_table habit
+    #   @latest_log = @times_table_habit.logs.order(id: :desc).first
+    # else
+    #   # Handle case when times_table habit is not found
+    #   @latest_log = nil
+    # end
   end
 
 
