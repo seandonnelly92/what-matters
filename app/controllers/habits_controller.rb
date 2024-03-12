@@ -31,12 +31,11 @@ class HabitsController < ApplicationController
       redirect_to habits_path, notice: "Habit was successfully created!"
 
       next_90_days = []
-      current_day = Date.today
+      current_day = DateTime.now
 
       90.times do
-        next_day = current_day + 1
-        next_90_days << next_day
-        current_day = next_day
+        current_day += 1
+        next_90_days << current_day
       end
 
       habit_days = @habit.days_of_week.map(&:downcase)
@@ -44,10 +43,16 @@ class HabitsController < ApplicationController
       next_90_days.each do |day|
         next unless habit_days.include?(day.strftime("%A").downcase)
 
+        # if Date.new(day) == Date.today &&
+
+        log_hour = @habit.start_time.hour
+        log_minute = @habit.start_time.min
+        log_timestamp = day.change(hour: log_hour, min: log_minute)
+
         p 'creating log'
         Log.create!(
           habit_id: @habit.id,
-          date_time: @habit.start_time,
+          date_time: log_timestamp,
           completed: false
         )
       end
