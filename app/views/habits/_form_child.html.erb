@@ -1,33 +1,144 @@
 <%# CHILD FORM %>
 
 <%= simple_form_for(@habit) do |f| %>
-  <p class="tip"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <strong><%= session[:user_data]["step2"]["nickname"]%></strong>? We've included some suggestions below:</p>
-  <%= f.input :title, :label => 'I will:', placeholder: "organise a day out for #{session[:user_data]["step2"]["nickname"]}, cook #{session[:user_data]["step2"]["nickname"]}'s favourite breakfast" %>
-  <div class="week-recurrence">
-    <p>I will do this every </p>
-    <%= f.input :week_recurrence, label: false, placeholder: "2" %>
-    <p>week/s on these days:</p>
-  </div>
-    <% days_of_week = Date::DAYNAMES.rotate(1) %>
-    <%# Days of the week toggles %>
-  <div class="days-checkboxes">
-    <% days_of_week.each do |day| %>
-      <%= check_box_tag "habit[days_of_week][]", day.downcase, (f.object.days_of_week || []).include?(day.downcase), id: "day_#{day.downcase}" %>
-      <%= label_tag "day_#{day.downcase}", day[0], class: 'day-checkbox-label' %>
-    <% end %>
-  </div>
-  <div class="time-duration">
-    <p>at:</p>
-    <%= f.input :start_time, label: false, as: :time, default: Time.parse('20:00') %>
-    <p>for</p>
-    <%= f.input :duration_in_minutes, label: false, placeholder: "20" %>
-    <p>minutes.</p>
-  </div>
-  <%= f.input :identity_goal, :label => 'I will do this because I want to be:', placeholder: "the best Mum/Dad ever (in #{session[:user_data]["step2"]["nickname"]}'s eyes!)" %>
-  <%= f.input :category, :label => 'Habit category:', selected: "Children", as: :select, collection: Habit::CATEGORIES %>
-  <%# How can we make the categories look more like chips? %>
-  <%= f.input :trigger, :label => 'I will do this before/while/after:', placeholder: "after bath time, after bed time, before school run..." %>
-  <%= f.input :reward, :label => 'My reward for this is:', placeholder: "a glass of wine and TV..." %>
-  <%= f.input :photo, :label => 'Attach a photograph to this habit:', as: :file, input_html: { class: 'custom-file-input' }  %>
-  <%= f.submit %>
+  <p class="tip"><i class="fa-solid fa-lightbulb me-1"></i>Why not create a habit related to <strong><%= session[:user_data]["step2"]["nickname"].capitalize%></strong>? We've included some suggestions below:</p>
+  <%= f.input :title, :label => 'I will:', placeholder: "organise a day out for #{session[:user_data]["step2"]["nickname"].capitalize}, cook #{session[:user_data]["step2"]["nickname"].capitalize}'s favourite breakfast", input_html: { "data-tooltip" => true, :class => "has-tip", :title => "Bla bla bla" } %>
+    <div class="week-recurrence">
+      <p>I will do this every </p>
+      <%= f.input :week_recurrence, label: false, placeholder: "2" %>
+      <p>week/s on these days:</p>
+    </div>
+      <% days_of_week = Date::DAYNAMES.rotate(1) %>
+      <%# Days of the week toggles %>
+    <div class="days-checkboxes">
+      <% days_of_week.each do |day| %>
+        <%= check_box_tag "habit[days_of_week][]", day.downcase, (f.object.days_of_week || []).include?(day.downcase), id: "day_#{day.downcase}" %>
+        <%= label_tag "day_#{day.downcase}", day[0], class: 'day-checkbox-label' %>
+      <% end %>
+    </div>
+    <div class="time-duration">
+      <p>at:</p>
+      <%= f.input :start_time, label: false, as: :time, default: Time.parse('12:00') %>
+      <p>for</p>
+      <%= f.input :duration_in_minutes, label: false, placeholder: "15" %>
+      <p>minutes.</p>
+    </div>
+
+    <%# IDENTITY GOAL %>
+    <div class="input-with-tooltip d-flex justify-content-between align-items-start">
+      <p>I will do this because I want to be:</p>
+      <div class="label-tooltip" data-controller="tooltip">
+        <button type="button" data-action="click->tooltip#open" data-tooltip-target="tticon">
+          <i class="tooltip-icon fa-solid fa-circle-info"></i>
+        </button>
+        <div class="d-none tooltip-back d-flex justify-content-center" data-tooltip-target="ttcard" data-action="click->tooltip#close">
+          <div class="tooltip-card col-10 col-md-7 col-lg-6 col-xl-5 align-self-center p-3">
+            <div class="tooltip-content">
+              <div class="tooltip-headline d-flex justify-content-between">
+              <h3 class="mb-0"><i class="fa-solid fa-user-graduate me-2"></i>Identity Goals</h3>
+              <h3><i class="fa-solid fa-xmark ms-1 mb-0" role="button" data-tooltip-target="ttcross" data-action="click->tooltip#cross"></i></h3>
+              </div>
+              <p>Here you are setting an identity goal about the person you want to be.
+              This is a really important part of building a sustainable habit.
+              It's all about setting goals that are <strong>identity-based rather than outcome-based</strong>.
+              </p>
+              <p>
+              For example, you should strive to become a healthy eater (identity-based) instead of striving to lose two stone (outcome-based).
+              You should strive to become a runner, not to run a marathon.
+              </p>
+              <p>
+              The science behind this is solid. If you identify with a certain pattern of behaviour, you are more likely to maintain that behaviour
+              and it is jarring if you do things that conflict with that self-identity you have established. That jarring feeling is what psychologists call
+              'cognitive dissonance'. It's uncomfortable and humans naturally try to avoid it.
+              </p>
+              <p>So, how would you describe the person you will be if you sustain your habit? As <a href="https://jamesclear.com/identity-based-habits" target="_blank">James Clear outlines in Atomic Habits</a>,
+              every time you complete a reptition of this habit, it's like a vote for affirming the identity goal that you set here.
+              Each rep reinforces the truth of that identity!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= f.input :identity_goal, label: false, placeholder: "the best Mum/Dad ever (in #{session[:user_data]["step2"]["nickname"].capitalize}'s eyes!)" %>
+
+    <%# HABIT CATEGORY %>
+    <div class="input-with-tooltip d-flex justify-content-between align-items-start">
+      <p>Habit category:</p>
+      <div class="label-tooltip" data-controller="tooltip">
+        <button type="button" data-action="click->tooltip#open" data-tooltip-target="tticon">
+          <i class="tooltip-icon fa-solid fa-circle-info"></i>
+        </button>
+        <div class="d-none tooltip-back d-flex justify-content-center" data-tooltip-target="ttcard" data-action="click->tooltip#close">
+          <div class="tooltip-card col-9 col-md-7 col-lg-6 col-xl-5 align-self-center p-3">
+            <div class="tooltip-content">
+              <div class="tooltip-headline d-flex justify-content-between">
+              <h3><i class="fa-solid fa-user-graduate me-0 me-2"></i>Habit Categories</h3>
+              <h3><i class="fa-solid fa-xmark ms-1 mb-0" role="button" data-tooltip-target="ttcross" data-action="click->tooltip#cross"></i></h3>
+              </div>
+              <p>The category you choose here will be used to generate insights and infographics on how you're spending your free time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= f.input :category, label: false, selected: "Children", as: :select, collection: Habit::CATEGORIES %>
+
+    <%# TRIGGER %>
+    <div class="input-with-tooltip d-flex justify-content-between align-items-start">
+      <p>I will do this before/while/after:</p>
+      <div class="label-tooltip" data-controller="tooltip">
+        <button type="button" data-action="click->tooltip#open" data-tooltip-target="tticon">
+          <i class="tooltip-icon fa-solid fa-circle-info"></i>
+        </button>
+        <div class="d-none tooltip-back d-flex justify-content-center" data-tooltip-target="ttcard" data-action="click->tooltip#close">
+          <div class="tooltip-card col-9 col-md-7 col-lg-6 col-xl-5 align-self-center p-3">
+            <div class="tooltip-content">
+              <div class="tooltip-headline d-flex justify-content-between">
+              <h3><i class="fa-solid fa-user-graduate mb-3 me-2"></i>Habit Stacking</h3>
+              <h3><i class="fa-solid fa-xmark ms-1 mb-0" role="button" data-tooltip-target="ttcross" data-action="click->tooltip#cross"></i></h3>
+              </div>
+              <p>Habit Stacking is the process of linking new habits with existing habits, or "stacking" them.</p>
+              <p>The idea is simple. You already have loads of routines and habits, whether you think of them as habits or not.</p>
+              <p>When you want to start a new habit, it's helpful to stack the new habit alongisde something you already do.</p>
+              <p>The existing habit then acts as a <strong>trigger</strong> for the new habit. This means you're more likely to remember the new habit <em>and</em> embed it into your routines faster. Examples:</p>
+              <ul>
+                <li><em>before</em> having dinner, I will play piano for 15 minutes</li>
+                <li><em>after</em> brushing my teeth, I will do 10 push ups</li>
+                <li><em>while</em> having my morning coffee, I will check in with a friend</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= f.input :trigger, label: false, placeholder: "while commuting, after #{session[:user_data]["step2"]["nickname"].capitalize}'s bed time, before school run..." %>
+
+    <%# REWARD %>
+    <div class="input-with-tooltip d-flex justify-content-between align-items-start">
+      <p>My reward for this is:</p>
+      <div class="label-tooltip" data-controller="tooltip">
+        <button type="button" data-action="click->tooltip#open" data-tooltip-target="tticon">
+          <i class="tooltip-icon fa-solid fa-circle-info"></i>
+        </button>
+        <div class="d-none tooltip-back d-flex justify-content-center" data-tooltip-target="ttcard" data-action="click->tooltip#close">
+          <div class="tooltip-card col-9 col-md-7 col-lg-6 col-xl-5 align-self-center p-3">
+            <div class="tooltip-content">
+              <div class="tooltip-headline d-flex justify-content-between">
+              <h3><i class="fa-solid fa-user-graduate mb-0 me-2"></i>Rewards</h3>
+              <h3><i class="fa-solid fa-xmark mb-0 ms-1" role="button" data-tooltip-target="ttcross" data-action="click->tooltip#cross"></i></h3>
+              </div>
+              <p>If you give yourself a little treat after completing a habit repetition, you're more likely to stick with the habit.</p>
+              <p>Completed a 5k Park Run? Why not enjoy a cappucino on the way home?</p>
+              <p>Some habits generate the reward implicitly, like organising date night with your partner or taking your Grandma out for lunch. For these habits, you can leave this blank.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= f.input :reward, label: false, placeholder: "a glass of wine and TV..." %>
+
+    <%# PHOTOGRAPH %>
+    <%= f.input :photo, :label => 'Attach a photograph to this habit:', as: :file, input_html: { class: 'custom-file-input' }  %>
+    <%= f.submit %>
   <% end %>
