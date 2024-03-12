@@ -15,6 +15,7 @@ export default class extends Controller {
     console.log("Hello from tracker-menu controller!");
 
     this.screenWidth = this.daysTarget.offsetWidth;
+    this.todayDate = new Date();
     this.createMenu();
 
     this.timer = null;
@@ -22,16 +23,26 @@ export default class extends Controller {
   }
 
   createMenu() {
-    const currentDate = new Date();
+    let currentDate = new Date(this.todayDate);
+
+    if (this.hasSelectedTarget) {
+      console.log("YESS");
+      console.log(this.selectedTarget.dataset.date);
+      currentDate = new Date(this.selectedTarget.dataset.date);
+      console.log(currentDate);
+      this.resetMenu();
+    }
+
+    // Need a separate IF for the current date (probably replace that with this.todayDate as that can be used directly)
 
     this.prevMonth = this.getRelativeMonth(currentDate, -1);
-    this.buildMenuMonth(this.prevMonth, currentDate, 'afterbegin');
+    this.buildMenuMonth(this.prevMonth, this.todayDate, 'afterbegin');
 
     this.currMonth = this.getRelativeMonth(currentDate);
-    this.buildMenuMonth(this.currMonth, currentDate, 'beforeend')
+    this.buildMenuMonth(this.currMonth, this.todayDate, 'beforeend')
 
     this.nextMonth = this.getRelativeMonth(currentDate, 1);
-    this.buildMenuMonth(this.nextMonth, currentDate, 'beforeend');
+    this.buildMenuMonth(this.nextMonth, this.todayDate, 'beforeend');
 
     this.setMenuMargins();
     this.menuCenter();
@@ -108,12 +119,12 @@ export default class extends Controller {
     console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
     if (direction === 'left') {
       this.prevMonth = this.getRelativeMonth(this.prevMonth, -1);
-      this.buildMenuMonth(this.prevMonth, this.currMonth, 'afterbegin');
+      this.buildMenuMonth(this.prevMonth, this.todayDate, 'afterbegin');
       console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
       this.setMenuScroll(this.daysTarget.scrollLeft + (this.daysTarget.scrollWidth - this.daysMenuWidth));
     } else if (direction === 'right') {
       this.nextMonth = this.getRelativeMonth(this.nextMonth, +1);
-      this.buildMenuMonth(this.nextMonth, this.currMonth, 'beforeend');
+      this.buildMenuMonth(this.nextMonth, this.todayDate, 'beforeend');
     }
     console.log("EXPANDING - after");
     console.log(`Current width is: ${this.daysTarget.scrollWidth}`);
@@ -177,23 +188,14 @@ export default class extends Controller {
     e.currentTarget.setAttribute('data-tracker-menu-target', 'selected');
 
     this.menuCenter();
+    this.createMenu();
   }
 
-  updateMenu() {
-    
-    const selectedDate = new Date();
-
-    this.prevMonth = this.getRelativeMonth(selectedDate, -1);
-    this.buildMenuMonth(this.prevMonth, selectedDate, 'afterbegin');
-
-    this.currMonth = this.getRelativeMonth(selectedDate);
-    this.buildMenuMonth(this.currMonth, selectedDate, 'beforeend')
-
-    this.nextMonth = this.getRelativeMonth(selectedDate, 1);
-    this.buildMenuMonth(this.nextMonth, selectedDate, 'beforeend');
-
-    this.setMenuMargins();
-    this.menuCenter();
+  resetMenu() {
+    const allDays = this.daysTarget.querySelectorAll('.t-day');
+    allDays.forEach((day) => {
+      day.remove();
+    });
   }
 
   // Tried SWIPER below
