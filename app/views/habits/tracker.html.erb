@@ -1,12 +1,13 @@
 <div class="container col-11 col-md-6 col-lg-4 col-xl-4" data-controller="log-scroll">
   <div>
+    <%= render "logs", logs: @logs %>
+
     <% @habits.each do |habit| %>
-      <div>
-        <%= render 'habits/habit_card', habit: habit %>
-      </div>
     <% end %>
+
     <%= render 'habits/habit_button_card'%>
   </div>
+
   <div id="completion-message">
     <div id="logo-container">
       <div class="logo-line top"></div>
@@ -15,4 +16,5 @@
     </div>
     <div id="text-container"></div>
   </div>
+
 </div>

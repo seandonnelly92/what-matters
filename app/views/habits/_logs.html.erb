@@ -1,13 +1,13 @@
 
-<% Log.order(date_time: :asc).each_with_index do |log, index| %>
+<% logs.each_with_index do |log, index| %>
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
-                <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
+                <%= render partial: 'shared/category_chip', locals: { habit: log.habit } %>
                   <% if index > 0 %>
-                    <% previous_log = habit.logs.order(date_time: :asc)[index - 1] %>
-                    <% previous_log_2 = habit.logs.order(date_time: :asc)[index - 2] %>
-                    <% previous_log_3 = habit.logs.order(date_time: :asc)[index - 3] %>
+                    <% previous_log = logs[index - 1] %>
+                    <% previous_log_2 = logs[index - 2] %>
+                    <% previous_log_3 = logs[index - 3] %>
                     <% if log.completed && previous_log.completed && previous_log_2.completed && previous_log_3.completed  %>
                       <p class = "chip" id = "four-day-streak"> Huge Streak! </p>
                     <% elsif log.completed && previous_log.completed && previous_log_2.completed  %>

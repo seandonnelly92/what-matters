@@ -97,6 +97,10 @@ class HabitsController < ApplicationController
   # @asc_habits.each_with_index do |index, habit|
   # @user_habits = current_user.habits.logs.order(date_time: :asc)
 
+    @habits = current_user.habits
+    @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
+  end
+
   def show
     puts "connected"
   end
