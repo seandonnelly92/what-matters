@@ -82,6 +82,3 @@ end
 
 gem "cloudinary"
 gem 'chartkick'
-
-# For Bootstrap tool tips
-gem 'popper_js'
