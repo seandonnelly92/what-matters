@@ -28,7 +28,7 @@ class HabitsController < ApplicationController
     @habit.user = current_user
     @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
     if @habit.save
-      redirect_to habits_path, notice: "Habit was successfully created!"
+
 
       next_90_days = []
       current_day = DateTime.now
@@ -50,14 +50,14 @@ class HabitsController < ApplicationController
         log_timestamp = day.change(hour: log_hour, min: log_minute)
 
         p 'creating log'
-        Log.create!(
-          habit_id: @habit.id,
+        log = Log.new(
           date_time: log_timestamp,
           completed: false
         )
+        log.habit = @habit
+        log.save
       end
-
-      # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
+      redirect_to habits_path, notice: "Habit was successfully created!"
 
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
@@ -68,22 +68,22 @@ class HabitsController < ApplicationController
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
-    @global_streak = global_streak
+    # @global_streak = global_streak
   end
 
-  def global_streak
-    increment = 0
-    @user_habits = current_user.habits
-    if @user_habits.count > 1
-      p "too many for now"
-    else
-      logs = Log.where(habit_id: @user_habits.first.id)
-      logs.order!(date_time: :asc)
-      increment += iterate_logs(logs)
-      # raise
-    end
-    increment
-  end
+  # def global_streak
+  #   increment = 0
+  #   @user_habits = current_user.habits
+  #   if @user_habits.count > 1
+  #     p "too many for now"
+  #   else
+  #     logs = Log.where(habit_id: @user_habits.first.id)
+  #     logs.order!(date_time: :asc)
+  #     increment += iterate_logs(logs)
+  #     # raise
+  #   end
+  #   increment
+  # end
 
   def show
     puts "connected"
