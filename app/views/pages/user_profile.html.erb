@@ -111,7 +111,7 @@
     </div>
   <% end %>
   </div>
-
+<%# Cancel account %>
 <div class="mt-4 mb-4">
   <h4>Unhappy?</h4>
   <button class="tertiary-btn"><%= button_to "Cancel my account", registration_path(:user), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></button>
