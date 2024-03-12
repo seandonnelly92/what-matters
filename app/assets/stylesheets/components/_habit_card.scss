@@ -176,12 +176,14 @@
   content: var(--date-start-content, 'Today'); // Variable is changed in tracker-menu stimulus controller
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50vw);
+  width: 100vw;
   height: fit-content;
 
   color: $green;
   font-weight: bold;
   text-align: end;
   border-top: 2px dashed $green;
+  padding: 0 4px;
 }
