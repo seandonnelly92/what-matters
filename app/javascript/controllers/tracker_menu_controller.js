@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   createMenu() {
-    let currentDate = new Date(this.todayDate);
+    let currentDate = new Date(this.todayDate); // Default value is today
 
     if (this.hasSelectedTarget) {
       console.log("YESS");
@@ -33,18 +33,18 @@ export default class extends Controller {
       this.resetMenu();
     }
 
-    // Need a separate IF for the current date (probably replace that with this.todayDate as that can be used directly)
     // Maybe also catch the createMenu when the month is the same is the currently selected month (to avoid unneccesssary update)
     // Also need to move to closest log in the dates
 
+
     this.prevMonth = this.getRelativeMonth(currentDate, -1);
-    this.buildMenuMonth(this.prevMonth, this.todayDate, 'afterbegin');
+    this.buildMenuMonth(this.prevMonth, currentDate, 'afterbegin');
 
     this.currMonth = this.getRelativeMonth(currentDate);
-    this.buildMenuMonth(this.currMonth, this.todayDate, 'beforeend')
+    this.buildMenuMonth(this.currMonth, currentDate, 'beforeend')
 
     this.nextMonth = this.getRelativeMonth(currentDate, 1);
-    this.buildMenuMonth(this.nextMonth, this.todayDate, 'beforeend');
+    this.buildMenuMonth(this.nextMonth, currentDate, 'beforeend');
 
     this.setMenuMargins();
     this.menuCenter();
@@ -58,9 +58,10 @@ export default class extends Controller {
     return relativeMonth;
   }
 
-  buildMenuMonth(date, today, position) {
+  buildMenuMonth(date, currentDate, position) {
     date = new Date(date); // Esnures the original date is not updated
-    const todayStr = today.toLocaleDateString();
+    const todayStr = this.todayDate.toLocaleDateString();
+    const selectedStr = currentDate.toLocaleDateString()
 
     const referenceMonth = date.getMonth();
     // After begin requires the month to be added from end to begin
@@ -71,11 +72,12 @@ export default class extends Controller {
     while (date.getMonth() === referenceMonth) {
       const dateStr = date.toLocaleDateString();
 
-      const todayClass = (dateStr === todayStr) ? 'today selected' : '';
+      const currentClass = (dateStr === selectedStr) ? 'selected' : '';
+      const todayClass = (dateStr === todayStr) ? 'today' : '';
       const todayTarget = (dateStr === todayStr) ? 'data-tracker-menu-target="selected"' : '';
       const todayValue = (dateStr === todayStr) ? 'Today' : date.getDate();
 
-      const dayHTML = `<div class="t-day ${todayClass}" data-action="click->tracker-menu#selectDay" ${todayTarget} data-date="${date.toDateString()}">${todayValue}</div>`
+      const dayHTML = `<div class="t-day ${currentClass} ${todayClass}" data-action="click->tracker-menu#selectDay" ${todayTarget} data-date="${date.toDateString()}">${todayValue}</div>`
       this.daysTarget.insertAdjacentHTML(position, dayHTML)
 
       position === 'afterbegin' ? date.setDate(date.getDate() + -1) : date.setDate(date.getDate() + 1); // Determines direction of iterating through month
@@ -119,14 +121,15 @@ export default class extends Controller {
     console.log("EXPANDING - before");
     console.log(`Scroll width is: ${this.daysTarget.scrollWidth}`);
     console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
+    const currentDate = new Date(this.selectedTarget.dataset.date);
     if (direction === 'left') {
       this.prevMonth = this.getRelativeMonth(this.prevMonth, -1);
-      this.buildMenuMonth(this.prevMonth, this.todayDate, 'afterbegin');
+      this.buildMenuMonth(this.prevMonth, currentDate, 'afterbegin');
       console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
       this.setMenuScroll(this.daysTarget.scrollLeft + (this.daysTarget.scrollWidth - this.daysMenuWidth));
     } else if (direction === 'right') {
       this.nextMonth = this.getRelativeMonth(this.nextMonth, +1);
-      this.buildMenuMonth(this.nextMonth, this.todayDate, 'beforeend');
+      this.buildMenuMonth(this.nextMonth, currentDate, 'beforeend');
     }
     console.log("EXPANDING - after");
     console.log(`Current width is: ${this.daysTarget.scrollWidth}`);
@@ -184,13 +187,23 @@ export default class extends Controller {
 
   selectDay(e) {
     this.selectedTarget.classList.remove('selected');
+    const prevDate = new Date(this.selectedTarget.dataset.date);
+    const prevMonth = prevDate.getMonth();
+    console.log(`Previous selected month is: ${prevMonth}`);
     this.selectedTarget.removeAttribute('data-tracker-menu-target');
 
     e.currentTarget.classList.add('selected');
     e.currentTarget.setAttribute('data-tracker-menu-target', 'selected');
+    const newDate = new Date(this.selectedTarget.dataset.date);
+    const newMonth = newDate.getMonth();
+    console.log(`New selected month is: ${newMonth}`);
 
-    this.menuCenter();
-    this.createMenu();
+    if (prevMonth !== newMonth) {
+      console.log('Different so re-creating menu');
+      this.createMenu();
+    } else {
+      this.menuCenter();
+    }
   }
 
   resetMenu() {
