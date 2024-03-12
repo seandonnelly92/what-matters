@@ -15,7 +15,15 @@
 }
 
 .habit-content {
+  position: relative;
   padding: 33px 21px;
+}
+
+.edit-button {
+  position: absolute;
+  right: 21px;
+  bottom: 33px;
+  color: $blue;
 }
 
 .habit-image-title-area {
@@ -44,6 +52,10 @@
   vertical-align: middle;
   line-height: 30px;
   font-size: 5px
+}
+
+.days-of-week {
+  max-width: 300px;
 }
 
 .active-day {
