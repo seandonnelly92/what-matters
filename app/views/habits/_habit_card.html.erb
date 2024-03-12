@@ -1,5 +1,5 @@
 
-<% Log.order(date_time: :asc).each_with_index do |log, index| %>
+<% habit.logs.order(date_time: :asc).each_with_index do |log, index| %>
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
