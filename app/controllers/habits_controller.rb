@@ -74,6 +74,12 @@ class HabitsController < ApplicationController
     redirect_to habits_path
   end
 
+  def destroy
+    @habit = Habit.find(params[:id])
+    @habit.destroy
+    redirect_to habits_path, status: :see_other
+  end
+
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
