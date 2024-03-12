@@ -18,12 +18,12 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
+  position: relative;
 }
 
 // Hover state and Active state (hold down on mobile)
-
-// This doesn't seem to be imp
-.primary-btn:hover .primary-btn:active {
-  background-color: red !important;
+.primary-btn:hover, .primary-btn:active {
+  background-color: rgba($color: $blue, $alpha: 0.9);
   color: white;
 }

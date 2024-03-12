@@ -2,14 +2,14 @@
   <div class="habit-show-card mb-4">
     <% if habit.photo.present? %>
       <div class="habit-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path habit.photo.key, crop: :fill, gravity: :face %>')">
-      <div class="habit-image-title-area"><h2><%= habit.title.titleize %></h2></div>
+      <div class="habit-image-title-area"><h3><%= habit.title.titleize %></h3></div>
       </div>
     <% end %>
 
     <div class="habit-content">
       <% if habit.photo.present? %>
       <% else %>
-      <h2 class="habit-title"><%= habit.title.titleize %></h2>
+      <h3 class="habit-title"><%= habit.title.titleize %></h3>
       <% end %>
       <%# Category Chip (Render) %>
       <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
@@ -24,19 +24,24 @@
       <%# Time and duration %>
       <p><i class="fa-regular fa-clock me-1"></i><%= habit.start_time.strftime("%H:%M") %> for <%= habit.duration_in_minutes %> minutes
       <% if habit.week_recurrence == 1 %>
-      every week.
+        every week.
+      <% elsif habit.week_recurrence == nil || habit.week_recurrence < 1 %>
+
       <% else %>
-      every <%= habit.week_recurrence %> weeks.
+        every <%= habit.week_recurrence %> weeks.
       <% end %>
       </p>
 
       <%# Days of the Week %>
       <%= render partial: 'shared/habit_days', locals: { habit: habit } %>
 
-
+      <%# Identity Goal quote %>
       <p class="mt-4 mb-3"><i class="fa-solid fa-quote-left"></i> I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
       <p><strong>Current Streak: </strong><%= habit.current_streak %></p>
       <p><strong>Best Streak: </strong><%= habit.best_streak %></p>
     </div>
+    <%= link_to edit_habit_path(habit) do %>
+      <h4><i class="fa-regular fa-pen-to-square edit-button"></i></h4>
+    <% end %>
   </div>
 <% end %>

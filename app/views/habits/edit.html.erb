@@ -1,5 +1,5 @@
 <div id="add-habit-form" class="col-11 col-md-6 col-lg-4 col-xl-4">
-  <h3>Add a habit</h3>
+  <h3>Edit this habit</h3>
     <%# IF RELATIONSHIP DATA IS PRESENT... %>
     <% unless session[:user_data] == nil %>
       <%# FORM IF WE HAVE DATA ON A PARENT RELATION %>
@@ -156,4 +156,5 @@
         <%= f.submit %>
       <% end %>
   <% end %>
+  <%= link_to "Delete this Habit", habit_path(@habit), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: 'btn btn-light w-100' %>
 </div>

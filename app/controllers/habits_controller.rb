@@ -27,10 +27,14 @@ class HabitsController < ApplicationController
     @habit = Habit.new(habit_params)
     @habit.user = current_user
     @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
+
+
     if @habit.save
 
       next_90_days = []
       current_day = DateTime.now
+
+
 
       90.times do
         current_day += 1
@@ -39,49 +43,61 @@ class HabitsController < ApplicationController
 
       habit_days = @habit.days_of_week.map(&:downcase)
 
+      p next_90_days
+
+      daily_counter = 1
+      week_recurrance = @habit.week_recurrence
       next_90_days.each do |day|
-        next unless habit_days.include?(day.strftime("%A").downcase)
+        if habit_days.include?(day.strftime("%A").downcase)
+          if daily_counter <= 7
+            log_hour = @habit.start_time.hour
+            log_minute = @habit.start_time.min
+            log_timestamp = day.change(hour: log_hour, min: log_minute)
 
-        # if Date.new(day) == Date.today &&
+            p 'creating log'
 
-        log_hour = @habit.start_time.hour
-        log_minute = @habit.start_time.min
-        log_timestamp = day.change(hour: log_hour, min: log_minute)
+            log = Log.new(
+              date_time: log_timestamp,
+              completed: false
+              )
+            log.habit = @habit
+            log.save
+          elsif daily_counter >= week_recurrance * 7
+            daily_counter = 0
+          end
+        end
+        daily_counter += 1
 
-        p 'creating log'
-        Log.create!(
-          habit_id: @habit.id,
-          date_time: log_timestamp,
-          completed: false
-        )
       end
-
+      
       redirect_to habits_path, notice: "Habit was successfully created!"
-      # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
+
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
     end
   end
 
+  def edit
+    @habit = Habit.find(params[:id])
+  end
+
+  def update
+    @habit = Habit.find(params[:id])
+    @habit.update(habit_params)
+    redirect_to habits_path
+  end
+
+  def destroy
+    @habit = Habit.find(params[:id])
+    @habit.destroy
+    redirect_to habits_path, status: :see_other
+  end
+
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
-    # @global_streak = global_streak
-  end
-
-  def global_streak
-    increment = 0
-    @user_habits = current_user.habits
-    if @user_habits.count > 1
-      p "too many for now"
-    else
-      logs = Log.where(habit_id: @user_habits.first.id)
-      logs.order!(date_time: :asc)
-      increment += iterate_logs(logs)
-      # raise
-    end
-    increment
+    @global_streak = global_streak
   end
 
   def show
@@ -90,12 +106,29 @@ class HabitsController < ApplicationController
 
   private
 
+  def global_streak
+    totals = []
+    @user_habits = current_user.habits
+    if @user_habits.count > 1
+      @user_habits.each do |habit|
+        logs = habit.logs.order!(date_time: :asc)
+        habit.current_streak = iterate_logs(logs)
+        totals << habit.current_streak
+      end
+    else
+      logs = @user_habits.last.logs.order!(date_time: :asc)
+      @user_habits.last.current_streak = iterate_logs(logs)
+      totals << @user_habits.last.current_streak
+    end
+    totals.include?(0) ? 0 : totals.sum
+  end
+
   def iterate_logs(logs)
     increment = 0
     logs.each do |log|
-      increment += 1 while log.completed?
-      return increment
+      increment += 1 if log[:completed]
     end
+    increment
   end
 
   def habit_params
