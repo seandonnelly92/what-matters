@@ -36,6 +36,9 @@
 
 <div class="container col-11 col-md-6 col-lg-4 col-xl-4" data-controller="log-scroll">
   <div>
+
+    <%= render 'habits/habit_first_card'%>
+
     <%= render "logs", logs: @logs %>
 
     <%= render 'habits/habit_button_card'%>

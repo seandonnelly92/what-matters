@@ -12,6 +12,19 @@
   transform: translate(-50%, -50%);
 }
 
+.first-line {
+  position: absolute;
+  bottom: 0; /* Start the line from the top of the card */
+  left: 50%; /* Position the line horizontally in the center of the circle */
+  transform: translateX(-50%);
+  height: 50%; /* Full height of the card */
+  width: 2px; /* Width of the line */
+  background: solid;
+  background-color: #E67E22 /* Color of the line */
+
+}
+
+
 
 .last-line {
   position: absolute;

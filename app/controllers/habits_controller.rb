@@ -27,10 +27,14 @@ class HabitsController < ApplicationController
     @habit = Habit.new(habit_params)
     @habit.user = current_user
     @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
+
+
     if @habit.save
 
       next_90_days = []
       current_day = DateTime.now
+
+
 
       90.times do
         current_day += 1
@@ -39,25 +43,35 @@ class HabitsController < ApplicationController
 
       habit_days = @habit.days_of_week.map(&:downcase)
 
+      p next_90_days
+
+      daily_counter = 1
+      week_recurrance = @habit.week_recurrence
       next_90_days.each do |day|
-        next unless habit_days.include?(day.strftime("%A").downcase)
+        if habit_days.include?(day.strftime("%A").downcase)
+          if daily_counter <= 7
+            log_hour = @habit.start_time.hour
+            log_minute = @habit.start_time.min
+            log_timestamp = day.change(hour: log_hour, min: log_minute)
 
-        # if Date.new(day) == Date.today &&
+            p 'creating log'
 
-        log_hour = @habit.start_time.hour
-        log_minute = @habit.start_time.min
-        log_timestamp = day.change(hour: log_hour, min: log_minute)
+            log = Log.new(
+              date_time: log_timestamp,
+              completed: false
+              )
+            log.habit = @habit
+            log.save
+          elsif daily_counter >= week_recurrance * 7
+            daily_counter = 0
+          end
+        end
+        daily_counter += 1
 
-        p 'creating log'
-        Log.create!(
-          habit_id: @habit.id,
-          date_time: log_timestamp,
-          completed: false
-        )
       end
-
+      
       redirect_to habits_path, notice: "Habit was successfully created!"
-      # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
+
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
@@ -84,7 +98,6 @@ class HabitsController < ApplicationController
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
     @global_streak = global_streak
-    raise
   end
 
   def show
