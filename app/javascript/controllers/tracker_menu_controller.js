@@ -27,7 +27,7 @@ export default class extends Controller {
 
     window.addEventListener('scroll', this.pageScroll);
 
-    this.scrollToSelected();
+    // this.scrollToSelected();
   }
 
   createMenu() {
@@ -169,13 +169,15 @@ export default class extends Controller {
     // Centers the menu on the this.selectedTarget
     const scrollElement = this.daysTarget;
     const selectElement = this.selectedTarget;
-    console.log("(5) In menu center the selectElement is:");
-    console.log(selectElement);
 
     if (scrollElement && selectElement) {
       const leftScrollPosition = selectElement.offsetLeft + (selectElement.offsetWidth / 2) - (scrollElement.offsetWidth / 2);
       this.setMenuScroll(leftScrollPosition, smooth);
     }
+
+    setTimeout(() => {
+      this.scrollToSelected();
+    }, 500);
   }
 
   setMenuScroll(scrollPosition, smooth = true) {
@@ -298,14 +300,17 @@ export default class extends Controller {
     selectedLog.classList.remove('date-start');
     console.log(selectedLog);
 
+
+    const today = this.dateToString(selectedDate) === this.dateToString(this.todayDate);
+    console.log(`Today variable is: ${today}`);
+    console.log(`because today date is: ${this.dateToString(this.todayDate)}`);
+
     let prevLog = this.logTarget; // Sets initial log
     let selectLog = null;
-    let today = false;
     for (const log of this.logTargets) {
       const logDate = new Date(log.dataset.date)
       if (selectedDate.getTime() === logDate.getTime()) {
         selectLog = log;
-        today = true;
       } else if (selectedDate < logDate) {
         selectLog = prevLog;
       }
@@ -320,6 +325,7 @@ export default class extends Controller {
           const dateFormat = this.dateToFormat(selectLog.dataset.date);
           selectLog.style.setProperty('--date-start-content', `"${dateFormat}"`);
         }
+        console.log('Scrolling into view!');
         selectLog.scrollIntoView({
           behavior: 'smooth',
           block: 'center'
