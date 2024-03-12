@@ -104,17 +104,19 @@
   text-decoration: none;
   color: $blue;
   font-weight: 500;
-  margin: 4px 0;
+  margin: 3px 0;
 
   &.active {
     font-weight: 600;
     font-size: 16px;
   }
-
 }
 
 .input-menu i {
   color: $blue;
+  width: 100%;
+  text-align: center;
+  margin: 0px;
 }
 
 .input-scroll {

@@ -246,11 +246,26 @@ export default class extends Controller {
       setTimeout(() => {
         clickedMenu.classList.remove('visible')
       }, 300); // Set timeout equal to the transition of the menu
+      if (type === 'year') this.yearInputScroll(clickedMenu, 'remove');
+
     } else {
       this.inputMenuActive(clickedMenu, type);
 
       clickedMenu.classList.add('visible')
       clickedMenu.classList.add('show')
+
+      if (type == 'year') this.yearInputScroll(clickedMenu, 'add');
+    }
+  }
+
+  yearInputScroll(clickedMenu, action) {
+    const scrollUp = clickedMenu.querySelector('.input-menu .up');
+    console.log(scrollUp);
+    const scrollDown = clickedMenu.querySelector('.input-menu .down');
+    console.log(scrollDown);
+
+    if (action == 'add') {
+
     }
   }
 
