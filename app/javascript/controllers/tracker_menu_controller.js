@@ -41,7 +41,7 @@ export default class extends Controller {
     this.buildMenuMonth(this.nextMonth, currentDate, 'beforeend');
 
     this.setMenuMargins();
-    this.menuCenter();
+    this.menuCenter(false);
   }
 
   getRelativeMonth(inputDate, delta = 0) {
