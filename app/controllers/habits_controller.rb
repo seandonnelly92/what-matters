@@ -70,6 +70,7 @@ class HabitsController < ApplicationController
 
   def tracker
     @habits = current_user.habits
+    @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
   end
 
   def show
