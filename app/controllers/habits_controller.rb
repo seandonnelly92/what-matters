@@ -28,7 +28,6 @@ class HabitsController < ApplicationController
     @habit.user = current_user
     @habit.start_time = Time.parse("#{params["habit"]["start_time(4i)"]}:#{params["habit"]["start_time(5i)"]}")
     if @habit.save
-      redirect_to habits_path, notice: "Habit was successfully created!"
 
       next_90_days = []
       current_day = DateTime.now
@@ -57,8 +56,8 @@ class HabitsController < ApplicationController
         )
       end
 
+      redirect_to habits_path, notice: "Habit was successfully created!"
       # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
-
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
