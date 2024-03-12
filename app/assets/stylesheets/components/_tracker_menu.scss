@@ -1,0 +1,123 @@
+#tracker-menu {
+  position: sticky;
+  top: 95px;
+  left: 0;
+  z-index: 5;
+  padding: 0;
+
+  background-color: $light-gray;
+  border-top: 1px solid $blue;
+  border-bottom: 1px solid $blue;
+}
+
+#tracker-input {
+  display: flex;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#tracker-days {
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Ensures items are in a single line */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+#tracker-days .t-day {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: $light-gray;
+  color: $blue;
+  border: 1px solid whitesmoke;
+
+  text-align: center;
+  cursor: pointer;
+
+  &.today {
+    padding: 0 4px;
+    width: fit-content;
+  }
+
+  &.selected {
+    background-color: $blue;
+    color: white;
+    font-weight: 600;
+  }
+}
+
+// Format for month and year dropdown menus
+.input-container {
+  position: relative;
+}
+
+.input-button {
+  position: relative;
+  width: fit-content;
+  margin: 4px 8px;
+  z-index: 5; // To be placed above the menu when it pops out
+}
+
+.input-menu {
+  position: absolute;
+  top: 100%;
+  &.month {
+    right: 0;
+  }
+  &.year {
+    left: 0;
+  }
+  z-index: 4; // To be placed below the sortby button when it pops out
+
+  visibility: hidden;
+  transform: scale(0);
+  &.month {
+    transform-origin: top right;
+  }
+  &.year {
+    transform-origin: top left;
+  }
+  transition: transform 0.3s ease-out;
+
+  white-space: nowrap; // Avoids wrapping the text of the links
+  padding: 8px 12px;
+
+  background-color: $gray;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.147);
+
+
+  &.visible {
+    visibility: visible;
+  }
+
+  &.show {
+    transform: scale(1);
+  }
+}
+
+.input-menu a {
+  display: block;
+  text-decoration: none;
+  color: $blue;
+  font-weight: 500;
+  margin: 4px 0;
+
+  &.active {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+}
+
+.input-menu i {
+  color: $blue;
+}
+
+.input-scroll {
+  display: flex;
+  justify-content: center;
+}

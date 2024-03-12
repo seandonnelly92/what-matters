@@ -1,27 +1,29 @@
 class Log < ApplicationRecord
+  attr_reader :completed
+
   belongs_to :habit
 
   validates :date_time, presence: true
-  validates :completed, inclusion: [true, false]
+  # validates :completed, inclusion: { in: [true, false] }
 
   def format_message
     day = date_time.strftime("%d").to_i
 
     def ordinal_suffix(day)
-        if (11..13).include?(day % 100)
-          "th"
+      if (11..13).include?(day % 100)
+        "th"
+      else
+        case day % 10
+        when 1
+          "st"
+        when 2
+          "nd"
+        when 3
+          "rd"
         else
-          case day % 10
-          when 1
-            "st"
-          when 2
-            "nd"
-          when 3
-            "rd"
-          else
-            "th"
-          end
+          "th"
         end
+      end
     end
 
     formatted_date = "#{day}#{ordinal_suffix(day)} #{date_time.strftime("%B")}"
@@ -34,6 +36,4 @@ class Log < ApplicationRecord
       "#{habit.title.capitalize} on #{formatted_date}"
     end
   end
-
-
 end
