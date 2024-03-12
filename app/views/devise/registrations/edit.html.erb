@@ -1,48 +1,52 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
-          <div class="d-flex">
-            <div class="row justify-content-between">
-              <div class="col-6">
-                <%= f.input :first_name,
-                            required: false,
-                            autofocus: true,
-                            input_html: { autocomplete: "first-name" } %>
-              </div>
-              <div class="col-6">
-                <%= f.input :last_name,
-                            required: false,
-                            autofocus: true,
-                            input_html: { autocomplete: "last-name" } %>
-              </div>
-            </div>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+    <div class="form-inputs">
+      <div class="d-flex">
+        <div class="row justify-content-between">
+          <div class="col-6">
+            <%= f.input :first_name,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "first-name" } %>
           </div>
+          <div class="col-6">
+            <%= f.input :last_name,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "last-name" } %>
+          </div>
+        </div>
+      </div>
+      <%= f.input :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" } %>
+      <%= f.input :password,
+                  required: true,
+                  hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: true,
+                  input_html: { autocomplete: "new-password" } %>
       <%= f.input :date_of_birth,
-                    label: "Date of birth",
-                    as: :string,
-                    input_html: { data: { controller: "datepicker" }} %>
-
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
+                    label: "What is your date of birth?",
+                    as: :string %>
+      <%= f.input :work_days_per_week,
+                  collection: 0..7,
+                  label: "How many days on average do you work per week?" %>
+      <%= f.input :work_hours_per_day,
+                  collection: 0..24,
+                  label: "On an average work day, how many hours do you spend working and commuting?" %>
+      <%= f.input :sleep_hours_per_day,
+                  collection: 0..24,
+                  label: "How much sleep do you ideally get per day?" %>
+    </div>
+    <div class="form-actions">
+      <%= f.button :submit, "Sign up" %>
+    </div>
+  <% end %>
 
 <h3>Cancel my account</h3>
 
