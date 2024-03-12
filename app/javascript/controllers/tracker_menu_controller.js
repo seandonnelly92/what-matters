@@ -23,6 +23,8 @@ export default class extends Controller {
 
     this.timer = null;
     this.scrollWait = 500;
+
+    window.addEventListener('scroll', this.pageScroll);
   }
 
   createMenu() {
@@ -280,4 +282,7 @@ export default class extends Controller {
     }
   }
 
+  pageScroll(e) {
+    console.log(e);
+  }
 }

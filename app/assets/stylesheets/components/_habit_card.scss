@@ -1,7 +1,7 @@
 
 .habit-card {
+  position: relative;
   min-height: 100px;
-
 
   .row {
     width: 100%;
@@ -170,4 +170,18 @@
     font-size: 16px;
     margin: 0;
   }
+}
+
+.habit-card.today-start::after {
+  content: 'Today';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+
+  color: grey;
+  font-weight: bold;
+  text-align: end;
+  border-top: 1px dashed lightgrey;
 }
