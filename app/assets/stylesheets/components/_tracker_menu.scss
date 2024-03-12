@@ -74,7 +74,12 @@
 
   visibility: hidden;
   transform: scale(0);
-  transform-origin: top right;
+  &.month {
+    transform-origin: top right;
+  }
+  &.year {
+    transform-origin: top left;
+  }
   transition: transform 0.3s ease-out;
 
   white-space: nowrap; // Avoids wrapping the text of the links
@@ -82,7 +87,7 @@
 
   background-color: $gray;
   border-radius: 5px;
-  box-shadow: 0 2px 8px 0 lightgray;
+  box-shadow: 0 2px 8px 0 rgba(50, 50, 50, 0.147);
 
 
   &.visible {
@@ -105,6 +110,11 @@
     font-weight: 600;
     font-size: 16px;
   }
+
+}
+
+.input-menu i {
+  color: $blue;
 }
 
 .input-scroll {
