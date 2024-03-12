@@ -84,7 +84,14 @@ class HabitsController < ApplicationController
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
     @global_streak = global_streak
+    raise
   end
+
+  def show
+    puts "connected"
+  end
+
+  private
 
   def global_streak
     totals = []
@@ -97,18 +104,11 @@ class HabitsController < ApplicationController
       end
     else
       logs = @user_habits.last.logs.order!(date_time: :asc)
-      # logs.order!(date_time: :asc)
       @user_habits.last.current_streak = iterate_logs(logs)
       totals << @user_habits.last.current_streak
     end
-    totals.flatten
+    totals.include?(0) ? 0 : totals.sum
   end
-
-  def show
-    puts "connected"
-  end
-
-  private
 
   def iterate_logs(logs)
     increment = 0
