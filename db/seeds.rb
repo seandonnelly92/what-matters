@@ -20,7 +20,7 @@ puts 'destroying all Habits'
 Habit.destroy_all
 
 puts 'destroying all Users...'
-# User.destroy_all
+User.destroy_all
 
 puts 'destroying all Encouragements...'
 Encouragement.destroy_all
@@ -138,7 +138,7 @@ scare_crow_habit_past_dates = [
 
 scare_crow_habit_future_dates = [
 
-"2024-03-11 06:00:00",
+  "2024-03-11 06:00:00",
   "2024-03-13 06:00:00",
   "2024-03-15 06:00:00",
   "2024-03-18 06:00:00",

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   get 'habits/tracker', to: 'habits#tracker'
-  resources :habits
+  resources :habits, except: [:show]
   resources :logs, only: [:update]
   resources :relationships, only: %i[new create delete]
 

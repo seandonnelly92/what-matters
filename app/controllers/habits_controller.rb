@@ -31,7 +31,6 @@ class HabitsController < ApplicationController
 
     if @habit.save
 
-
       next_90_days = []
       current_day = DateTime.now
 
@@ -46,7 +45,6 @@ class HabitsController < ApplicationController
 
       p next_90_days
 
-      #NEW CODE: weekly counter & week_recurre ce
       daily_counter = 1
       week_recurrance = @habit.week_recurrence
       next_90_days.each do |day|
@@ -71,33 +69,36 @@ class HabitsController < ApplicationController
         daily_counter += 1
 
       end
+      
       redirect_to habits_path, notice: "Habit was successfully created!"
+
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
       # Not sure what to do here. Reload page but keep values?
     end
   end
 
+  def edit
+    @habit = Habit.find(params[:id])
+  end
+
+  def update
+    @habit = Habit.find(params[:id])
+    @habit.update(habit_params)
+    redirect_to habits_path
+  end
+
+  def destroy
+    @habit = Habit.find(params[:id])
+    @habit.destroy
+    redirect_to habits_path, status: :see_other
+  end
 
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
-    # @global_streak = global_streak
+    @global_streak = global_streak
   end
-
-  # def global_streak
-  #   increment = 0
-  #   @user_habits = current_user.habits
-  #   if @user_habits.count > 1
-  #     p "too many for now"
-  #   else
-  #     logs = Log.where(habit_id: @user_habits.first.id)
-  #     logs.order!(date_time: :asc)
-  #     increment += iterate_logs(logs)
-  #     # raise
-  #   end
-  #   increment
-  # end
 
   def show
     puts "connected"
@@ -105,13 +106,30 @@ class HabitsController < ApplicationController
 
   private
 
-    def iterate_logs(logs)
-      increment = 0
-      logs.each do |log|
-        increment += 1 while log.completed?
-        return increment
-        end
+  def global_streak
+    totals = []
+    @user_habits = current_user.habits
+    if @user_habits.count > 1
+      @user_habits.each do |habit|
+        logs = habit.logs.order!(date_time: :asc)
+        habit.current_streak = iterate_logs(logs)
+        totals << habit.current_streak
+      end
+    else
+      logs = @user_habits.last.logs.order!(date_time: :asc)
+      @user_habits.last.current_streak = iterate_logs(logs)
+      totals << @user_habits.last.current_streak
     end
+    totals.include?(0) ? 0 : totals.sum
+  end
+
+  def iterate_logs(logs)
+    increment = 0
+    logs.each do |log|
+      increment += 1 if log[:completed]
+    end
+    increment
+  end
 
   def habit_params
     params.require(:habit).permit(:title,
