@@ -69,7 +69,7 @@ class HabitsController < ApplicationController
         daily_counter += 1
 
       end
-      
+
       redirect_to habits_path, notice: "Habit was successfully created!"
 
     else
@@ -98,6 +98,7 @@ class HabitsController < ApplicationController
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
     @global_streak = global_streak
+    # raise
   end
 
   def show
@@ -112,12 +113,14 @@ class HabitsController < ApplicationController
     if @user_habits.count > 1
       @user_habits.each do |habit|
         logs = habit.logs.order!(date_time: :asc)
-        habit.current_streak = iterate_logs(logs)
+        habit.update(current_streak: iterate_logs(logs))
+        compare(habit)
         totals << habit.current_streak
       end
     else
       logs = @user_habits.last.logs.order!(date_time: :asc)
       @user_habits.last.current_streak = iterate_logs(logs)
+      compare(@user_habits.last)
       totals << @user_habits.last.current_streak
     end
     totals.include?(0) ? 0 : totals.sum
@@ -131,17 +134,23 @@ class HabitsController < ApplicationController
     increment
   end
 
+  def compare(habit)
+    habit.update(best_streak: habit.current_streak) if habit.best_streak.nil? || habit.current_streak > habit.best_streak
+  end
+
   def habit_params
     params.require(:habit).permit(:title,
-      :category,
-      :identity_goal,
-      :trigger,
-      :reward,
-      :duration_in_minutes,
-      :week_recurrence,
-      :start_time,
-      :photo,
-      days_of_week: [])
+                                  :category,
+                                  :identity_goal,
+                                  :trigger,
+                                  :reward,
+                                  :duration_in_minutes,
+                                  :week_recurrence,
+                                  :current_streak,
+                                  :best_streak,
+                                  :start_time,
+                                  :photo,
+                                  days_of_week: [])
   end
 end
 #   def combine_start_time_params
