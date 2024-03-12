@@ -1,18 +1,20 @@
-<div data-controller="multistage-step1">
+<div class="col-11 col-md-6 col-lg-4 col-xl-4" data-controller="multistage-step1">
   <div class="status-bar">
     <div class="status" role="statusbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-multistage-step1-target="status"></div>
   </div>
+  
   <div class="container step1 mt-3">
     <h3 data-multistage-step1-target="title">Here is your whole life in years if you live until 90 years old:</h3>
+
     <table data-multistage-step1-target="table"></table>
 
-    <%= simple_form_for :step1_data, url: step1_submit_multistages_path, html: { data: { action: "submit->multistage-step1#submitForm", "multistage-step1-target": "form" } } do |f| %>
+    <%= simple_form_for :step1_data, url: step1_submit_multistages_path, html: { data: { action: "submit->multistage-step1#submitForm", "multistage-step1-target": "form" }, class: "w-100" } do |f| %>
       <%= f.input :date_of_birth,
         label: "What is your date of birth?", # Reflects custom label
         as: :string,
         input_html: { data: { controller: "datepicker", "multistage-step1-target": "dateOfBirth" } } %>
       <%= f.button :submit, "Next",
-        class: "primary-btn",
+        class: "primary-btn w-100",
         data: { "multistage-step1-target": "submitBtn" } %>
     <% end %>
 
