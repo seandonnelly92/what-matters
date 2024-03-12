@@ -1,3 +1,39 @@
+<div id="tracker-menu" data-controller="tracker-menu">
+  <div id="tracker-input">
+    <div class="input-container">
+      <div class="input-button" data-action="click->tracker-menu#openInputMenu" data-tracker-menu-target="month"><%= Date.today.strftime("%B") %> <i class="fa-solid fa-caret-down"></i></div>
+      <div class="input-menu month" data-action="click->tracker-menu#setMenuMonth" data-tracker-menu-target="monthMenu">
+        <a href="#">January</a>
+        <a href="#">February</a>
+        <a href="#">March</a>
+        <a href="#">April</a>
+        <a href="#">May</a>
+        <a href="#">June</a>
+        <a href="#">July</a>
+        <a href="#">August</a>
+        <a href="#">September</a>
+        <a href="#">October</a>
+        <a href="#">November</a>
+        <a href="#">December</a>
+        </div>
+    </div>
+    <div class="input-container">
+      <div class="input-button" data-action="click->tracker-menu#openInputMenu" data-tracker-menu-target="year"><%= Date.today.year %> <i class="fa-solid fa-caret-down"></i></div>
+      <div class="input-menu year" data-action="click->tracker-menu#setMenuYear" data-tracker-menu-target="yearMenu">
+        <div class="input-scroll"><i class="fa-solid fa-caret-up"></i></div>
+          <% first_year = 2024 %>
+          <% last_year = first_year + 5 %>
+          <% (first_year...last_year).each do |year| %>
+            <a href="#"><%= year %></a>
+          <% end %>
+        <div class="input-scroll"><i class="fa-solid fa-caret-down"></i></div>
+      </div>
+    </div>
+  </div>
+  <div id="tracker-days" data-tracker-menu-target="days" data-action="scroll->tracker-menu#menuScroll">
+  </div>
+</div>
+
 <div class="container col-11 col-md-6 col-lg-4 col-xl-4" data-controller="log-scroll">
   <div>
     <%= render "logs", logs: @logs %>

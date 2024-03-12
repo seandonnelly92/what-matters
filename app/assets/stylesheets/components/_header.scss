@@ -1,9 +1,10 @@
 #header {
   height: 95px;
   background-color: $light-gray;
+  position: -webkit-sticky;
   position: sticky;
-  width: 100%;
   top: 0;
+  width: 100%;
   margin-bottom: 39px;
   z-index: 8;
 }
