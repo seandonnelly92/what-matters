@@ -4,6 +4,7 @@ import flatpickr from "flatpickr"
 // Connects to data-controller="multistage-step1"
 export default class extends Controller {
   static targets = [
+    "status",
     "title",
     "table",
     "form",
@@ -14,6 +15,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage step1 controller!");
+    console.log(`Status at connect: ${this.statusTarget.style.width}`);
+
+    // Set status bar from previous step +3.3% (animation increment for each step)
+    this.updateStatusBar(3.3);
 
     this.validForm = false;
 
@@ -64,7 +69,10 @@ export default class extends Controller {
   submitForm(e) {
     e.preventDefault();
 
-    if (this.validForm) window.location.href = '/multistages/step2_input';
+    if (this.validForm) {
+      this.updateStatusBar(15)
+      window.location.href = '/multistages/step2_input';
+    }
 
     const data = { user: { date_of_birth: this.dateOfBirthTarget.value } };
 
@@ -93,6 +101,8 @@ export default class extends Controller {
         this.colorCircles(yearsOld);
         this.backBtnTarget.classList.remove('d-none'); // Shows the back button to reset the form
         this.validForm = true;
+
+        this.updateStatusBar(15);
       }
     })
   }
@@ -169,9 +179,20 @@ export default class extends Controller {
     this.colorCircles(0); // Will set all the circles to white
     this.backBtnTarget.classList.add('d-none');
     this.validForm = false;
+
+    this.updateStatusBar(0, true);
   }
 
   resetScrollPosition() {
     window.scrollTo(0, 0);
+  }
+
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '3%';
+
+    console.log(`Status update start: ${this.statusTarget.style.width}`);
+    const currentWidth = parseFloat(this.statusTarget.style.width);
+    this.statusTarget.style.width = `${currentWidth + progress}%`;
+    console.log(`Status update end: ${this.statusTarget.style.width}`);
   }
 }

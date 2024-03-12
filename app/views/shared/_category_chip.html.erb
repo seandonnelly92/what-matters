@@ -34,3 +34,8 @@
 <% elsif habit.category.present? && habit.category == "Pets"  %>
   <p class="chip" id= "<%= habit.category.parameterize(separator: '_') %>"><i class="fa-solid fa-paw me-1"></i><%= habit.category %></p>
 <% end %>
+
+
+<%# STREAK ICONS %>
+
+<p class = "chip"> 3 day </p>

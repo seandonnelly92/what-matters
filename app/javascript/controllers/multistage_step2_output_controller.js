@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="multistage-step2-output"
 export default class extends Controller {
   static targets = [
+    "status",
     "title",
     "table",
     "nextBtn",
@@ -12,6 +13,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Hello from the multistage-step2-output controller!");
+    console.log(`Status at connect: ${this.statusTarget.style.width}`);
+
+    // Set status bar details
+    this.statusIncrements = 3;
 
     this.fetchSessionData();
 
@@ -32,7 +37,14 @@ export default class extends Controller {
       .catch(error => console.error("Error fetching session data:", error));
   }
 
-  firstStepOutput() {
+  firstStepOutput(e) {
+    // Update status bar
+    if (e) {
+      e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
+    } else {
+      this.updateStatusBar(this.statusIncrements);
+    }
+
     this.nickname = this.sessionData.step2.nickname;
 
     if (this.hasDivStep3Target) this.divStep3Target.remove(); // Remove thirdStep div in case it exists
@@ -49,9 +61,12 @@ export default class extends Controller {
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#backToInput');
   }
 
-  secondStepOutput() {
+  secondStepOutput(e) {
     // Colors the circles of the table based on the pastYrs together
     this.colorCircles(this.pastYrs);
+
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
 
     // Set the title of the page
     const percentage = Math.round((this.pastYrs / this.sharedYrs) * 100);
@@ -68,7 +83,10 @@ export default class extends Controller {
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#firstStepOutput');
   }
 
-  thirdStepOutput() {
+  thirdStepOutput(e) {
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
+
     // Set the title of the page
     const thirdTitle = `But wait. What about actual contact time with ${this.nickname}?`;
     this.setTitle(thirdTitle);
@@ -105,8 +123,11 @@ export default class extends Controller {
     this.backBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#firstStepOutput');
   }
 
-  fourthStepOutput() {
+  fourthStepOutput(e) {
     this.resetScrollPosition()
+
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
 
     // Clear the divStep3Target div (unless coming back from the fifthStep)
     if (this.hasDivStep3Target) this.divStep3Target.remove();
@@ -127,6 +148,9 @@ export default class extends Controller {
 
   fifthStepOutput(e) {
     this.resetScrollPosition()
+
+    // Update status bar
+    e.target === this.nextBtnTarget ? this.updateStatusBar(this.statusIncrements) : this.updateStatusBar(-this.statusIncrements);
 
     // Update next button if you want to skip and back button if you want to go back prior to animation finishing
     this.nextBtnTarget.setAttribute('data-action', 'click->multistage-step2-output#finalStep');
@@ -265,5 +289,14 @@ export default class extends Controller {
 
   backToInput() {
     window.location.href = '/multistages/step2_input';
+  }
+
+  updateStatusBar(progress, init=false) {
+    if (init) this.statusTarget.style.width = '52%';
+
+    console.log(`Status update start: ${this.statusTarget.style.width}`);
+    const currentWidth = parseFloat(this.statusTarget.style.width);
+    this.statusTarget.style.width = `${currentWidth + progress}%`;
+    console.log(`Status update end: ${this.statusTarget.style.width}`);
   }
 }

@@ -34,4 +34,6 @@ class Log < ApplicationRecord
       "#{habit.title.capitalize} on #{formatted_date}"
     end
   end
+
+
 end

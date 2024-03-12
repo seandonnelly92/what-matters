@@ -1,14 +1,86 @@
 <% raise %>
 <h1>Hi, <%= @user.first_name %>!</h1>
-<h4>Member for:<%= render 'devise/registrations/active_since', user: @user %></h4>
+<%# <% raise %>
 
-<h2>Account Details</h2>
-<p><strong>First Name:</strong> <%= @user.first_name %></p>
-<p><strong>Last Name:</strong> <%= @user.last_name %></p>
+<%# <% if @user.profile_picture.key %>
+  <%# <%= cl_image_tag owner.profile_picture.key, class: "avatar-profile" %>
+<%# <% else %>
+  <%# <%= image_tag 'default_avatar.png', class: "avatar-profile" %>
+<%# <% end %>
+
+<p>Member for:<%= render 'devise/registrations/active_since', user: @user %></p>
 <p><strong>Email:</strong> <%= @user.email %></p>
-<p><strong>DOB:</strong>  <%= @user.date_of_birth %></p>
 
-<h3>Unavoidables (Avg)</h3>
-<p><strong>Work Days:</strong> <%= @user.work_days_per_week %> per week</p>
-<p><strong>Work Hours:</strong> <%= @user.work_hours_per_day %> per day</p>
-<p><strong>Sleep Hours:</strong> <%= @user.sleep_hours_per_day %> per day</p>
+<div class="container display-content-center" data-controller="user-profile">
+  <div class="row">
+    <div class="d-flex justify-content-between">
+      <h2>Account Details</h2>
+      <button data-user-profile-target="editAcctBtn"
+              data-action="click->user-profile#showHide">
+              <i class="fa-solid fa-pen-to-square btn-primary mr-5"></i></button>
+    </div>
+    <div data-user-profile-target="accountInfo" class="">
+      <div class="col-6">
+        <p><strong>First Name:</strong> <%= @user.first_name %></p>
+        <p><strong>Last Name:</strong> <%= @user.last_name %></p>
+      </div>
+      <div class="col-6">
+        <p><strong>DOB:</strong>
+        <%= @user.date_of_birth.strftime("%Y/%m/%d") %>
+        </p>
+      </div>
+    </div>
+
+    <div data-user-profile-target="accountForm" class="d-none">
+      <%= simple_form_for(@user, as: :user, url: registration_path(:user), html: { method: :patch }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+          <div class="d-flex">
+            <div class="row justify-content-between">
+              <div class="col-6">
+                <%= f.input :first_name,
+                            required: false,
+                            autofocus: true,
+                            input_html: { autocomplete: "first-name" } %>
+              </div>
+              <div class="col-6">
+                <%= f.input :last_name,
+                            required: false,
+                            autofocus: true,
+                            input_html: { autocomplete: "last-name" } %>
+              </div>
+            </div>
+          </div>
+      <%= f.input :date_of_birth,
+                    label: "Date of birth",
+                    as: :string,
+                    input_html: { data: { controller: "datepicker" }} %>
+        <%= f.input :password,
+                    hint: "leave it blank if you don't want to change it",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :password_confirmation,
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :current_password,
+                    hint: "we need your current password to confirm your changes",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Update" %>
+      </div>
+      <% end %>
+    </div>
+
+  </div>
+  <div class="row mt-3">
+    <h3>Unavoidables (Avg)</h3>
+    <p><strong>Work Days:</strong> <%= @user.work_days_per_week %> per week</p>
+    <p><strong>Work Hours:</strong> <%= @user.work_hours_per_day %> per day</p>
+    <p><strong>Sleep Hours:</strong> <%= @user.sleep_hours_per_day %> per day</p>
+  </div>
+  </div>
+</div>

@@ -38,10 +38,22 @@ class HabitsController < ApplicationController
   def tracker
     @scare_crow = User.find_by(first_name: "Scare")
     @scare_crow_habits = Habit.where(user_id: @scare_crow.id)
+    @times_table_habit = @scare_crow_habits.find_by(title: "learn my times tables")
+    if @times_table_habit.present?
+      # Find the most recent log associated with the times_table habit
+      @latest_log = @times_table_habit.logs.order(id: :desc).first
+    else
+      # Handle case when times_table habit is not found
+      @latest_log = nil
+    end
+  end
+
+
+
 
     # @scare_crow_logs = Habit.Log.all
     # @scare_crow_habit.logs
-  end
+
 
   def show
     puts "connected"

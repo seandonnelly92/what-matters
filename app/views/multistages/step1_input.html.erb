@@ -1,19 +1,24 @@
-<div class="container step1 mt-3" data-controller="multistage-step1">
-  <h3 data-multistage-step1-target="title">Here is your whole life in years if you live until 90 years old:</h3>
-  <table data-multistage-step1-target="table"></table>
+<div data-controller="multistage-step1">
+  <div class="status-bar">
+    <div class="status" role="statusbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-multistage-step1-target="status"></div>
+  </div>
+  <div class="container step1 mt-3">
+    <h3 data-multistage-step1-target="title">Here is your whole life in years if you live until 90 years old:</h3>
+    <table data-multistage-step1-target="table"></table>
 
-  <%= simple_form_for :step1_data, url: step1_submit_multistages_path, html: { data: { action: "submit->multistage-step1#submitForm", "multistage-step1-target": "form" } } do |f| %>
-    <%= f.input :date_of_birth,
-      label: "What is your date of birth?", # Reflects custom label
-      as: :string,
-      input_html: { data: { controller: "datepicker", "multistage-step1-target": "dateOfBirth" } } %>
-    <%= f.button :submit, "Next",
-      class: "primary-btn",
-      data: { "multistage-step1-target": "submitBtn" } %>
-  <% end %>
+    <%= simple_form_for :step1_data, url: step1_submit_multistages_path, html: { data: { action: "submit->multistage-step1#submitForm", "multistage-step1-target": "form" } } do |f| %>
+      <%= f.input :date_of_birth,
+        label: "What is your date of birth?", # Reflects custom label
+        as: :string,
+        input_html: { data: { controller: "datepicker", "multistage-step1-target": "dateOfBirth" } } %>
+      <%= f.button :submit, "Next",
+        class: "primary-btn",
+        data: { "multistage-step1-target": "submitBtn" } %>
+    <% end %>
 
-  <button type="button"
-    class="secondary-btn d-none"
-    data-multistage-step1-target="backBtn"
-    data-action="click->multistage-step1#resetForm">Back</button>
+    <button type="button"
+      class="secondary-btn d-none"
+      data-multistage-step1-target="backBtn"
+      data-action="click->multistage-step1#resetForm">Back</button>
+  </div>
 </div>
