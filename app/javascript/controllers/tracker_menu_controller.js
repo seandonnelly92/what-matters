@@ -16,6 +16,7 @@ export default class extends Controller {
 
     this.screenWidth = this.daysTarget.offsetWidth;
     this.todayDate = new Date();
+
     this.createMenu();
 
     this.timer = null;
@@ -26,16 +27,9 @@ export default class extends Controller {
     let currentDate = new Date(this.todayDate); // Default value is today
 
     if (this.hasSelectedTarget) {
-      console.log("YESS");
-      console.log(this.selectedTarget.dataset.date);
       currentDate = new Date(this.selectedTarget.dataset.date);
-      console.log(currentDate);
       this.resetMenu();
     }
-
-    // Maybe also catch the createMenu when the month is the same is the currently selected month (to avoid unneccesssary update)
-    // Also need to move to closest log in the dates
-
 
     this.prevMonth = this.getRelativeMonth(currentDate, -1);
     this.buildMenuMonth(this.prevMonth, currentDate, 'afterbegin');
@@ -73,8 +67,8 @@ export default class extends Controller {
       const dateStr = date.toLocaleDateString();
 
       const currentClass = (dateStr === selectedStr) ? 'selected' : '';
+      const todayTarget = (dateStr === selectedStr) ? 'data-tracker-menu-target="selected"' : '';
       const todayClass = (dateStr === todayStr) ? 'today' : '';
-      const todayTarget = (dateStr === todayStr) ? 'data-tracker-menu-target="selected"' : '';
       const todayValue = (dateStr === todayStr) ? 'Today' : date.getDate();
 
       const dayHTML = `<div class="t-day ${currentClass} ${todayClass}" data-action="click->tracker-menu#selectDay" ${todayTarget} data-date="${date.toDateString()}">${todayValue}</div>`
@@ -88,15 +82,13 @@ export default class extends Controller {
     this.daysMenuWidth = this.daysTarget.scrollWidth; // Total container width after adding the three months
 
     this.scrollMarginLeft = this.screenWidth * margin;
-    console.log(`Scroll margin left is: ${this.scrollMarginLeft}`);
+    // console.log(`Scroll margin left is: ${this.scrollMarginLeft}`);
     this.scrollMarginRight = (this.daysMenuWidth - this.screenWidth) - (this.screenWidth * margin);
-    console.log(`Scroll margin right is: ${this.scrollMarginRight}`);
+    // console.log(`Scroll margin right is: ${this.scrollMarginRight}`);
   }
 
   menuScroll() {
-    if (this.timer !== null) {
-      clearTimeout(this.timer);
-    }
+    this.resetTimer();
 
     this.menuFindCenter(); // This will be done contiuously on scrolling
 
@@ -105,35 +97,41 @@ export default class extends Controller {
     }, this.scrollWait);
   }
 
+  resetTimer() {
+    if (this.timer !== null) {
+      clearTimeout(this.timer);
+    }
+  }
+
   onScrollStop() {
     const scrollLeft = this.daysTarget.scrollLeft;
 
     if (scrollLeft < this.scrollMarginLeft) {
-      console.log("Too far to the left");
+      console.log("Expanding on the left");
       this.menuExpand('left');
     } else if (scrollLeft > this.scrollMarginRight) {
-      console.log("Too far to the right");
+      console.log("Expanding on the right");
       this.menuExpand('right')
     }
   }
 
   menuExpand(direction) {
-    console.log("EXPANDING - before");
-    console.log(`Scroll width is: ${this.daysTarget.scrollWidth}`);
-    console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
+    // console.log("EXPANDING - before");
+    // console.log(`Scroll width is: ${this.daysTarget.scrollWidth}`);
+    // console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
     const currentDate = new Date(this.selectedTarget.dataset.date);
     if (direction === 'left') {
       this.prevMonth = this.getRelativeMonth(this.prevMonth, -1);
       this.buildMenuMonth(this.prevMonth, currentDate, 'afterbegin');
-      console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
-      this.setMenuScroll(this.daysTarget.scrollLeft + (this.daysTarget.scrollWidth - this.daysMenuWidth));
+      // console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
+      this.setMenuScroll(this.daysTarget.scrollLeft + (this.daysTarget.scrollWidth - this.daysMenuWidth), false);
     } else if (direction === 'right') {
       this.nextMonth = this.getRelativeMonth(this.nextMonth, +1);
       this.buildMenuMonth(this.nextMonth, currentDate, 'beforeend');
     }
-    console.log("EXPANDING - after");
-    console.log(`Current width is: ${this.daysTarget.scrollWidth}`);
-    console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
+    // console.log("EXPANDING - after");
+    // console.log(`Current width is: ${this.daysTarget.scrollWidth}`);
+    // console.log(`Left scroll is: ${this.daysTarget.scrollLeft}`);
     this.setMenuMargins();
   }
 
@@ -160,20 +158,28 @@ export default class extends Controller {
     this.setTrackerInput(calcDay);
   }
 
-  menuCenter() {
+  menuCenter(smooth = true) {
     // Centers the menu on the this.selectedTarget
     const scrollElement = this.daysTarget;
     const selectElement = this.selectedTarget;
+    console.log("(5) In menu center the selectElement is:");
+    console.log(selectElement);
 
     if (scrollElement && selectElement) {
       const leftScrollPosition = selectElement.offsetLeft + (selectElement.offsetWidth / 2) - (scrollElement.offsetWidth / 2);
-      // scrollElement.scrollLeft = leftScrollPosition;
-      this.setMenuScroll(leftScrollPosition);
+      this.setMenuScroll(leftScrollPosition, smooth);
     }
   }
 
-  setMenuScroll(scrollPosition) {
-    this.daysTarget.scrollLeft = scrollPosition;
+  setMenuScroll(scrollPosition, smooth = true) {
+    if (smooth) {
+      this.daysTarget.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+    } else {
+      this.daysTarget.scrollLeft = scrollPosition;
+    }
   }
 
   setTrackerInput(day) {
@@ -189,20 +195,21 @@ export default class extends Controller {
     this.selectedTarget.classList.remove('selected');
     const prevDate = new Date(this.selectedTarget.dataset.date);
     const prevMonth = prevDate.getMonth();
-    console.log(`Previous selected month is: ${prevMonth}`);
+    // console.log(`Previous selected month is: ${prevMonth}`);
     this.selectedTarget.removeAttribute('data-tracker-menu-target');
 
     e.currentTarget.classList.add('selected');
     e.currentTarget.setAttribute('data-tracker-menu-target', 'selected');
     const newDate = new Date(this.selectedTarget.dataset.date);
     const newMonth = newDate.getMonth();
-    console.log(`New selected month is: ${newMonth}`);
+
+    // console.log(`New selected month is: ${newMonth}`);
 
     if (prevMonth !== newMonth) {
-      console.log('Different so re-creating menu');
+      this.menuCenter(false);
       this.createMenu();
     } else {
-      this.menuCenter();
+      this.menuCenter(true);
     }
   }
 
