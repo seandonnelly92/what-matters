@@ -34,6 +34,8 @@ export default class extends Controller {
     }
 
     // Need a separate IF for the current date (probably replace that with this.todayDate as that can be used directly)
+    // Maybe also catch the createMenu when the month is the same is the currently selected month (to avoid unneccesssary update)
+    // Also need to move to closest log in the dates
 
     this.prevMonth = this.getRelativeMonth(currentDate, -1);
     this.buildMenuMonth(this.prevMonth, this.todayDate, 'afterbegin');
