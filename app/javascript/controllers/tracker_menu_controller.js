@@ -6,7 +6,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [
     "month",
+    "monthMenu",
     "year",
+    "yearMenu",
     "days",
     "selected"
   ]
@@ -220,21 +222,62 @@ export default class extends Controller {
     });
   }
 
-  // Tried SWIPER below
+  openInputMenu(e) {
+    let clickedMenu = e.currentTarget;
+    let type;
+    if (clickedMenu === this.monthTarget) {
+      console.log("Month");
+      clickedMenu = this.monthMenuTarget;
+      type = 'month';
+    } else if (clickedMenu === this.yearTarget) {
+      console.log("Year");
+      clickedMenu = this.yearMenuTarget;
+      type = 'year';
+    }
+    console.log("Clicked menu is:");
+    console.log(clickedMenu);
+    if (clickedMenu.classList.contains('show')) {
+      clickedMenu.classList.remove('show')
+      setTimeout(() => {
+        clickedMenu.classList.remove('visible')
+      }, 300); // Set timeout equal to the transition of the menu
+    } else {
+      this.inputMenuActive(clickedMenu, type);
 
-  // initCarousel() {
-  //   console.log(document.querySelector('.swiper-container'));
-  //   this.swiper = new Swiper('.swiper-container', {
-  //     slidesPerView: 7,
-  //     centeredSlides: true,
-  //     initialSlide: 4,
-  //     // initialSlide: this.indexOfToday(),
-  //   });
+      clickedMenu.classList.add('visible')
+      clickedMenu.classList.add('show')
+    }
+  }
 
-  //   console.log(this.swiper);
+  inputMenuActive(clickedMenu, type) {
+    const activeDate = new Date(this.selectedTarget.dataset.date)
+    if (type === 'month') {
+      const activeMonth = activeDate.toLocaleDateString('en-US', { month: 'long' });
+      console.log(`Active month: ${activeMonth}`);
+      const links = clickedMenu.querySelectorAll('a');
+      links.forEach((l) => {
+        console.log(l);
+        console.log(`Link month: ${l.innerHTML}`);
+        if (l.innerHTML === activeMonth) {
+          l.classList.add('active')
+        } else {
+          l.classList.remove('active')
+        }
+      });
+    } else if (type === 'year') {
+      const activeYear = `${activeDate.getFullYear()}`;
+      console.log(`Active year: ${activeYear}`);
+      const links = clickedMenu.querySelectorAll('a');
+      links.forEach((l) => {
+        console.log(l);
+        console.log(`Link year: ${l.innerHTML}`);
+        if (l.innerHTML === activeYear) {
+          l.classList.add('active')
+        } else {
+          l.classList.remove('active')
+        }
+      });
+    }
+  }
 
-  //   this.swiper.on('slideChange', () => {
-  //     this.updateDaysBasedOnCarousel();
-  //   });
-  // }
 }
