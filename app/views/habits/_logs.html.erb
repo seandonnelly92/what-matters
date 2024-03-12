@@ -8,7 +8,7 @@
     <% today_done = true %>
   <% end %>
 
-  <div class="habit-card d-flex <%= add_class %>" data-date="<%=log.date_time.strftime("%Y-%m-%d") %>" data-tracker-menu-target="log" data-log-click-completed-value="<% log.completed  %>">
+  <div class="habit-card d-flex <%= add_class %>" data-controller="log-click" data-date="<%=log.date_time.strftime("%Y-%m-%d") %>" data-tracker-menu-target="log" data-log-click-completed-value="<% log.completed  %>">
 
     <div class="row">
       <div class="col-6 left">
