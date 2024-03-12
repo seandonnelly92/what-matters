@@ -25,9 +25,7 @@ export default class extends Controller {
     this.timer = null;
     this.scrollWait = 500;
 
-    window.addEventListener('scroll', this.pageScroll);
-
-    // this.scrollToSelected();
+    window.addEventListener('scroll', this.pageScroll.bind(this)); // Binding controller instance
   }
 
   createMenu() {
@@ -287,10 +285,6 @@ export default class extends Controller {
     }
   }
 
-  pageScroll(e) {
-    console.log(e);
-  }
-
   scrollToSelected() {
     // const selectedDate = this.dateToString(this.selectedTarget.dataset.date);
     const selectedDate = new Date(this.selectedTarget.dataset.date);
@@ -339,6 +333,31 @@ export default class extends Controller {
     }
   }
 
+  pageScroll(e) {
+    this.resetTimer();
+
+    this.timer = setTimeout(() => {
+      this.onPageScrollStop(e);
+    }, this.scrollWait);
+  }
+
+  onPageScrollStop(e) {
+    console.log(e);
+  }
+
+  checkVisibility(element, viewAdjustment) {
+    // viewAdjustment can be used to account for any items fixed at the top
+    const rect = element.getBoundingClientRect();
+    const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+
+    const isInView = (rect.top >= viewAdjustment) && rect.left >= 0 &&
+                    (rect.bottom <= windowHeight) && rect.right <= windowWidth;
+    return isInView;
+  }
+
+
+  // Date helper methods
   dateToString(dateInput) {
     const date = new Date(dateInput);
 
