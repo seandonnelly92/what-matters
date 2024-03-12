@@ -264,9 +264,39 @@ export default class extends Controller {
     const scrollDown = clickedMenu.querySelector('.input-menu .down');
     console.log(scrollDown);
 
-    if (action == 'add') {
-
+    if (action === 'add') {
+      scrollUp.addEventListener('click', this.yearInputMoveEvent.bind(this));
+      scrollDown.addEventListener('click', this.yearInputMoveEvent.bind(this));
+    } else if (action === 'remove') {
+      scrollUp.removeEventListener('click', this.yearInputMoveEvent.bind(this))
+      scrollDown.removeEventListener('click', this.yearInputMoveEvent.bind(this))
     }
+  }
+
+  yearInputMoveEvent(e) {
+    const years = this.yearMenuTarget.querySelectorAll('a');
+    const selectedDate = new Date(this.selectedTarget.dataset.date);
+    const activeYear = selectedDate.getFullYear().toString();
+
+    let direction;
+    if (e.currentTarget.classList.contains('up')) {
+      direction = -1;
+    } else if (e.currentTarget.classList.contains('down')) {
+      direction = 1;
+    }
+    years.forEach((year) => {
+      year.innerHTML = parseInt(year.innerHTML, 10) + direction;
+      if (year.innerHTML === activeYear) {
+        year.classList.add('active');
+      } else {
+        year.classList.remove('active');
+      }
+    });
+  }
+
+  yearInputMoveDown(e) {
+    console.log(e);
+    console.log(e.currentTarget);
   }
 
   inputMenuActive(clickedMenu, type) {
