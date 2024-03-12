@@ -175,7 +175,7 @@ export default class extends Controller {
 
     setTimeout(() => {
       this.scrollToSelected();
-    }, 500);
+    }, this.scrollWait + 200);
   }
 
   setMenuScroll(scrollPosition, smooth = true) {
@@ -288,14 +288,15 @@ export default class extends Controller {
   scrollToSelected() {
     // const selectedDate = this.dateToString(this.selectedTarget.dataset.date);
     const selectedDate = new Date(this.selectedTarget.dataset.date);
-    console.log(`Selected date: ${selectedDate}`);
+    const selectedDateStr = this.dateToString(selectedDate);
+    console.log(`Selected date: ${selectedDateStr}`);
 
     const selectedLog = document.querySelector('.date-start');
     selectedLog.classList.remove('date-start');
     console.log(selectedLog);
 
 
-    const today = this.dateToString(selectedDate) === this.dateToString(this.todayDate);
+    const today = selectedDateStr === this.dateToString(this.todayDate);
     console.log(`Today variable is: ${today}`);
     console.log(`because today date is: ${this.dateToString(this.todayDate)}`);
 
@@ -303,7 +304,8 @@ export default class extends Controller {
     let selectLog = null;
     for (const log of this.logTargets) {
       const logDate = new Date(log.dataset.date)
-      if (selectedDate.getTime() === logDate.getTime()) {
+      const logDateStr = this.dateToString(logDate);
+      if (selectedDateStr === logDateStr) {
         selectLog = log;
       } else if (selectedDate < logDate) {
         selectLog = prevLog;
@@ -345,7 +347,7 @@ export default class extends Controller {
     console.log("Checking for center log");
 
     const centerLog = this.findCenterElement(this.logTargets);
-    console.log(centerLog);
+    this.matchMenuScroll(centerLog);
   }
 
   findCenterElement(elements) {
@@ -369,6 +371,79 @@ export default class extends Controller {
       }
     }
     return closestElement;
+  }
+
+  matchMenuScroll(log) {
+    console.log("Matching menu scroll to:");
+    console.log(log);
+    const logDate = new Date(log.dataset.date);
+    const logDateStr = this.dateToString(logDate);
+    console.log(`Date string of log is: ${logDateStr}`);
+
+    let menuDays = document.querySelectorAll('.t-day');
+    let totalDays = menuDays.length;
+    console.log(`Total days is: ${totalDays}`);
+    let findingMatch = true;
+    let dayCounter = 0;
+    // let searcher = 1;
+    let day = menuDays[dayCounter];
+    console.log(`Counter is: ${dayCounter}`);
+    console.log("Day is:");
+    console.log(day);
+    let loopBreak = 0;
+    while (findingMatch) {
+      const dayDate = new Date(day.dataset.date);
+      const datesDelta = this.datesDifferenceInDays(logDate, dayDate);
+      const dayDateStr = this.dateToString(dayDate);
+      console.log(`logDateStr: ${logDateStr}`);
+      console.log(`dayDateStr: ${dayDateStr}`);
+
+      if (logDateStr === dayDateStr) {
+        console.log("Matched!");
+        findingMatch = false;
+      } else if (logDate < dayDate) {
+        console.log("Checking to the left");
+        dayCounter = Math.max(0, dayCounter + datesDelta); // Avoids being less than 0 on the index
+
+        if (dayCounter === 0 ) {
+          this.menuExpand('left');
+          menuDays = document.querySelectorAll('.t-day');
+          totalDays = menuDays.length;
+          console.log(`Menu expanded to the left with totalDays now: ${totalDays}`);
+        }
+      } else if (logDate > dayDate) {
+        console.log("Checking to the right");
+        dayCounter = Math.min(totalDays - 1, dayCounter + datesDelta); // Avoids being >= than length on the index
+        if (dayCounter === totalDays -1) {
+          this.menuExpand('right');
+          menuDays = document.querySelectorAll('.t-day');
+          totalDays = menuDays.length;
+          console.log(`Menu expanded to the right with totalDays now: ${totalDays}`);
+        }
+      } else {
+        if (loopBreak > 15) break;
+        loopBreak += 1;
+      }
+
+      console.log(`Counter is: ${dayCounter}`);
+      day = menuDays[dayCounter];
+      console.log("Day is:");
+      console.log(day);
+    }
+    this.matchMenuScrollExecute(day);
+  }
+
+  matchMenuScrollExecute(menuDay) {
+    console.log("!!! Executing Scroll !!!");
+    console.log(menuDay);
+    const leftScrollPosition = menuDay.offsetLeft + (menuDay.offsetWidth / 2) - (this.daysTarget.offsetWidth / 2);
+    this.setMenuScroll(leftScrollPosition);
+  }
+
+  datesDifferenceInDays(date1, date2) {
+    const differenceInMilliseconds = date1 - date2;
+    const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+    return differenceInDays;
   }
 
   // Date helper methods
