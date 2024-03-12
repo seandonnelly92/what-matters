@@ -57,10 +57,7 @@ class HabitsController < ApplicationController
         )
       end
 
-
       # next_90_day_names = next_90_days.map {|day| day.strftime("%A").downcase}
-
-
 
     else
       render :new, status: :unprocessable_entity, notice: "Failed"
@@ -69,6 +66,37 @@ class HabitsController < ApplicationController
   end
 
   def tracker
+    # @scare_crow = User.find_by(first_name: "Scare")
+    # @scare_crow_habits = Habit.where(user_id: @scare_crow.id)
+    # @times_table_habit = @scare_crow_habits.find_by(title: "learn my times tables")
+    @habits = current_user.habits
+    @global_sreak = global_streak
+    # if @times_table_habit.present?
+    #   # Find the most recent log associated with the times_table habit
+    #   @latest_log = @times_table_habit.logs.order(id: :desc).first
+    # else
+    #   # Handle case when times_table habit is not found
+    #   @latest_log = nil
+    # end
+  end
+
+  def global_streak
+    increment = 0
+    @user_habits = current_user.habits
+    if @user_habits.count > 1
+      p "too many for now"
+    else
+      logs = Log.where(habit_id: @user_habits.first.id)
+      logs.order!(date_time: :asc)
+      increment += iterate_logs(logs)
+      # raise
+    end
+    increment
+  end
+  # @logs = Log.where(habit_id: current_user)
+  # @asc_habits.each_with_index do |index, habit|
+  # @user_habits = current_user.habits.logs.order(date_time: :asc)
+
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
   end
@@ -78,6 +106,14 @@ class HabitsController < ApplicationController
   end
 
   private
+
+  def iterate_logs(logs)
+    increment = 0
+    logs.each do |log|
+      increment += 1 while log.completed?
+      return increment
+    end
+  end
 
   def habit_params
     params.require(:habit).permit(:title,

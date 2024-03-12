@@ -20,7 +20,7 @@ puts 'destroying all Habits'
 Habit.destroy_all
 
 puts 'destroying all Users...'
-User.destroy_all
+# User.destroy_all
 
 puts 'destroying all Encouragements...'
 Encouragement.destroy_all
