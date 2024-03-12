@@ -67,21 +67,25 @@ class HabitsController < ApplicationController
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
-    # @global_streak = global_streak
+    @global_streak = global_streak
   end
 
   def global_streak
-    increment = 0
+    totals = []
     @user_habits = current_user.habits
     if @user_habits.count > 1
-      p "too many for now"
+      @user_habits.each do |habit|
+        logs = habit.logs.order!(date_time: :asc)
+        habit.current_streak = iterate_logs(logs)
+        totals << habit.current_streak
+      end
     else
-      logs = Log.where(habit_id: @user_habits.first.id)
-      logs.order!(date_time: :asc)
-      increment += iterate_logs(logs)
-      # raise
+      logs = @user_habits.last.logs.order!(date_time: :asc)
+      # logs.order!(date_time: :asc)
+      @user_habits.last.current_streak = iterate_logs(logs)
+      totals << @user_habits.last.current_streak
     end
-    increment
+    totals.flatten
   end
 
   def show
@@ -93,9 +97,9 @@ class HabitsController < ApplicationController
   def iterate_logs(logs)
     increment = 0
     logs.each do |log|
-      increment += 1 while log.completed?
-      return increment
+      increment += 1 if log[:completed]
     end
+    increment
   end
 
   def habit_params
