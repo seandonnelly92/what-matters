@@ -10,7 +10,8 @@ export default class extends Controller {
     "year",
     "yearMenu",
     "days",
-    "selected"
+    "selected",
+    "log"
   ]
 
   connect() {
@@ -25,6 +26,8 @@ export default class extends Controller {
     this.scrollWait = 500;
 
     window.addEventListener('scroll', this.pageScroll);
+
+    this.scrollToSelected();
   }
 
   createMenu() {
@@ -284,5 +287,69 @@ export default class extends Controller {
 
   pageScroll(e) {
     console.log(e);
+  }
+
+  scrollToSelected() {
+    // const selectedDate = this.dateToString(this.selectedTarget.dataset.date);
+    const selectedDate = new Date(this.selectedTarget.dataset.date);
+    console.log(`Selected date: ${selectedDate}`);
+
+    const selectedLog = document.querySelector('.date-start');
+    selectedLog.classList.remove('date-start');
+    console.log(selectedLog);
+
+    let prevLog = this.logTarget; // Sets initial log
+    let selectLog = null;
+    let today = false;
+    for (const log of this.logTargets) {
+      const logDate = new Date(log.dataset.date)
+      if (selectedDate.getTime() === logDate.getTime()) {
+        selectLog = log;
+        today = true;
+      } else if (selectedDate < logDate) {
+        selectLog = prevLog;
+      }
+
+      if (selectLog) {
+        console.log("Entering select log");
+        selectLog.classList.add('date-start');
+        if (today) {
+          console.log("It is today");
+          selectLog.style.setProperty('--date-start-content', '"Today"');
+        } else {
+          const dateFormat = this.dateToFormat(selectLog.dataset.date);
+          selectLog.style.setProperty('--date-start-content', `"${dateFormat}"`);
+        }
+        selectLog.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+        console.log("Select log at end is:");
+        console.log(selectLog);
+        break;
+      } else {
+        prevLog = log;
+      }
+    }
+  }
+
+  dateToString(dateInput) {
+    const date = new Date(dateInput);
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  dateToFormat(dateInput) {
+    const date = new Date(dateInput);
+
+    return date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   }
 }

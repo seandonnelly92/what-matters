@@ -172,16 +172,16 @@
   }
 }
 
-.habit-card.today-start::after {
-  content: 'Today';
+.habit-card.date-start::after {
+  content: var(--date-start-content, 'Today'); // Variable is changed in tracker-menu stimulus controller
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: fit-content;
 
-  color: grey;
+  color: $green;
   font-weight: bold;
   text-align: end;
-  border-top: 1px dashed lightgrey;
+  border-top: 2px dashed $green;
 }
