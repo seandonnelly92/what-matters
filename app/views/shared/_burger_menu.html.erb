@@ -24,6 +24,7 @@
     <div id="menu-bottom">
       <ul class="menu-options">
         <% if user_signed_in? %>
+          <li> <%= link_to profile_path do %></li>Profile<% end %>
           <li> <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %></li>Log Out<% end %>
         <% else %>
           <li> <%= link_to new_user_registration_path do %></li>Sign Up<% end %>

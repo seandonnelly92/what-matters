@@ -6,8 +6,10 @@
 <%# <% else %>
   <%# <%= image_tag 'default_avatar.png', class: "avatar-profile" %>
 <%# <% end %>
-
-<p>Member for:<%= render 'devise/registrations/active_since', user: @user %></p>
+<ul class="list-inline">
+  <li class="list-inline-item"><strong>Member for: </strong></li>
+  <li class="list-inline-item"><%= render 'devise/registrations/active_since', user: @user %></li>
+</ul>
 <p><strong>Email:</strong> <%= @user.email %></p>
 
 <div class="container display-content-center" data-controller="user-profile">
@@ -73,13 +75,40 @@
       </div>
       <% end %>
     </div>
+  </div>
 
-  </div>
   <div class="row mt-3">
-    <h3>Unavoidables (Avg)</h3>
-    <p><strong>Work Days:</strong> <%= @user.work_days_per_week %> per week</p>
-    <p><strong>Work Hours:</strong> <%= @user.work_hours_per_day %> per day</p>
-    <p><strong>Sleep Hours:</strong> <%= @user.sleep_hours_per_day %> per day</p>
+        <div class="d-flex justify-content-between">
+          <h2>Unavoidables</h2>
+          <button data-user-profile-target="editDaysBtn"
+                  data-action="click->user-profile#showHideDay">
+                  <i class="fa-solid fa-pen-to-square btn-primary mr-5"></i></button>
+        </div>
+      <div data-user-profile-target="dayInfo" class="">
+        <p><strong>Work Days:</strong> <%= @user.work_days_per_week %> per week</p>
+        <p><strong>Work Hours:</strong> <%= @user.work_hours_per_day %> per day</p>
+        <p><strong>Sleep Hours:</strong> <%= @user.sleep_hours_per_day %> per day</p>
+      </div>
   </div>
+  <div data-user-profile-target="dayForm" class="d-none">
+    <%= simple_form_for(@user, as: :user, url: registration_path(:user), html: { method: :patch }) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :work_days_per_week,
+                collection: 0..7,
+                label: "How many days on average do you work per week?" %>
+    <%= f.input :work_hours_per_day,
+                collection: 0..24,
+                label: "On an average work day, how many hours do you spend working and commuting?" %>
+    <%= f.input :sleep_hours_per_day,
+                collection: 0..24,
+                label: "How much sleep do you ideally get per day?" %>
+    <%= f.input :current_password,
+                hint: "we need your current password to confirm your changes",
+                required: true,
+                input_html: { autocomplete: "current-password" } %>
+    <div class="form-actions">
+      <%= f.button :submit, "Update" %>
+    </div>
+  <% end %>
   </div>
 </div>
