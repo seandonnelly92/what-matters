@@ -15,6 +15,7 @@ export default class extends Controller {
 
       let logDate = new Date(Date.parse(log.dataset.logClickDateValue)).setHours(0,0,0,0)
 
+
       // console.log(logDate)
       if (logDate < this.today) {
         log.scrollIntoView()
