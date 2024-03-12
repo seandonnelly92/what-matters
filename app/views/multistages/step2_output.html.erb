@@ -1,20 +1,21 @@
-<div data-controller="multistage-step2-output">
+<div class="col-11 col-md-6 col-lg-4 col-xl-4 justify-content-center mt-3" data-controller="multistage-step2-output">
+
   <div class="status-bar">
-    <div class="status" role="statusbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100" data-multistage-step2-output-target="status"></div>
+    <div class="status" role="statusbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100" data-multistage-step2-output-target="status">
+    </div>
   </div>
 
-  <h3 data-multistage-step2-output-target="title"></h3>
-  <div class="d-flex justify-content-center">
-    <table data-multistage-step2-output-target="table"></table>
-  </div>
-  <div class="d-flex justify-content-center">
+    <h3 data-multistage-step2-output-target="title"></h3>
+    <div class="d-flex justify-content-center mb-4">
+      <table data-multistage-step2-output-target="table"></table>
+    </div>
     <button type="button"
-      class="primary-btn"
+      class="primary-btn ps-0 pe-0"
       data-action="click->multistage-step2-output#secondStepOutput"
       data-multistage-step2-output-target="nextBtn">Next</button>
-  </div>
-  <button type="button"
-    class="secondary-btn"
-    data-multistage-step2-output-target="backBtn"
-    data-action="click->multistage-step2-output#backToInput">Back</button>
+    <button type="button"
+      class="secondary-btn"
+      data-multistage-step2-output-target="backBtn"
+      data-action="click->multistage-step2-output#backToInput">Back</button>
+
 </div>
