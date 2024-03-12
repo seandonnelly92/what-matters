@@ -341,21 +341,35 @@ export default class extends Controller {
     }, this.scrollWait);
   }
 
-  onPageScrollStop(e) {
-    console.log(e);
+  onPageScrollStop() {
+    console.log("Checking for center log");
+
+    const centerLog = this.findCenterElement(this.logTargets);
+    console.log(centerLog);
   }
 
-  checkVisibility(element, viewAdjustment) {
-    // viewAdjustment can be used to account for any items fixed at the top
-    const rect = element.getBoundingClientRect();
-    const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
-    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+  findCenterElement(elements) {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const viewportCenter = viewportHeight / 2;
 
-    const isInView = (rect.top >= viewAdjustment) && rect.left >= 0 &&
-                    (rect.bottom <= windowHeight) && rect.right <= windowWidth;
-    return isInView;
+    let closestElement = null;
+    let closestDistance = Infinity;
+
+    for (const element of elements ) {
+      const rect = element.getBoundingClientRect();
+      const elementCenter = rect.top + (rect.height / 2);
+
+      const distanceFromCenter = Math.abs(viewportCenter - elementCenter);
+
+      if (distanceFromCenter > closestDistance) {
+        break;
+      } else {
+        closestDistance = distanceFromCenter;
+        closestElement = element;
+      }
+    }
+    return closestElement;
   }
-
 
   // Date helper methods
   dateToString(dateInput) {
