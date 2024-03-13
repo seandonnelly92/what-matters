@@ -4,8 +4,8 @@
     <div class="row">
       <div class="col-6 left">
         <%= render partial: 'shared/category_chip', locals: { habit: log.habit } %>
-        <h1 class = "text" data-log-click-target='message'><%= log.format_message %></h1>
-        <h1 class = "text" data-log-click-target='date' ><%= log.format_date_message %></h1>
+        <h2 class = "text" data-log-click-target='message'><b><%= log.format_message %></b></h2>
+        <p class = "text" data-log-click-target='date' ><%= log.format_date_message %></p>
         <p data-log-scroll-target="today"></p>
       </div>
       <div class="col-6 right">
