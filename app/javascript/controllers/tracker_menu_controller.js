@@ -11,7 +11,9 @@ export default class extends Controller {
     "yearMenu",
     "days",
     "selected",
-    "log"
+    "log",
+    "sideMenu",
+    "sideMenuSelector"
   ]
 
   connect() {
@@ -539,13 +541,46 @@ export default class extends Controller {
     this.setMenuScroll(leftScrollPosition);
   }
 
+  // Actions related to tracker side-menu
+  openSideMenu(e) {
+    if (this.sideMenuTarget.classList.contains('show')) {
+      this.activateSideMenu('close');
+    } else {
+      this.activateSideMenu('open');
+    }
+  }
+
+  activateSideMenu(action) {
+    if (action === 'open') {
+      this.sideMenuTarget.classList.add('show');
+      this.sideMenuSelectorTarget.innerHTML = '<i class="fa-solid fa-caret-right"></i>';
+    } else if (action === 'close') {
+      this.sideMenuTarget.classList.remove('show');
+      this.sideMenuSelectorTarget.innerHTML = '<i class="fa-solid fa-caret-left"></i>';
+    }
+  }
+
+
+  goToToday() {
+    const dayToday = this.daysTarget.querySelector('.t-day.today');
+    if (dayToday) {
+      dayToday.click();
+      console.log(dayToday);
+    } else {
+      console.log(this.today);
+
+      // Need to basically call the matchScrollSelected based on this.dateToday which is on the other branch
+      // Needs to be merger first
+    }
+  }
+
+  // Date helper methods
   datesDifferenceInDays(date1, date2) {
     const differenceInMilliseconds = date1 - date2;
     const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     return differenceInDays;
   }
 
-  // Date helper methods
   dateToString(dateInput) {
     const date = new Date(dateInput);
 

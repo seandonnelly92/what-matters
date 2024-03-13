@@ -1,0 +1,49 @@
+#tracker-side-menu {
+  position: fixed;
+  bottom: 25px;
+  right: 0;
+  height: 45px;
+
+  display: flex;
+  justify-content: end;
+}
+
+#side-menu-selector {
+  color: $blue;
+  font-size: 20px;
+  padding: 0 4px;
+
+  display: flex;
+  align-items: center;
+  // height: auto;
+  // max-height: 44px;
+
+  background-color: $green;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#side-menu-options {
+  display: flex;
+  padding: 0;
+  background-color: whitesmoke;
+  border: 1px solid $green;
+
+  transform: scale(0);
+  transform-origin: right;
+  width: 0;
+
+  transition: transform 0.3 linear, width 0.3 linear;
+
+  &.show {
+    transform: scale(1);
+    width: auto;
+    padding: 0 8px;
+  }
+}
+
+.side-menu-btn {
+  width: fit-content;
+  padding: 4px 8px;
+  margin: 6px 8px;
+}
