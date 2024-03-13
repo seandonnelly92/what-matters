@@ -246,6 +246,14 @@ export default class extends Controller {
     console.log("Clicked menu is:");
     console.log(clickedMenu);
     if (clickedMenu.classList.contains('show')) {
+      this.activateInputMenu(clickedMenu, type, 'close');
+    } else {
+      this.activateInputMenu(clickedMenu, type, 'open');
+    }
+  }
+
+  activateInputMenu(clickedMenu, type, action) {
+    if (action === 'close') {
       clickedMenu.classList.remove('show')
       setTimeout(() => {
         clickedMenu.classList.remove('visible')
@@ -253,7 +261,7 @@ export default class extends Controller {
 
       if (type === 'year') this.yearInputScroll(clickedMenu, 'remove');
       this.menuInputChange(type, 'remove')
-    } else {
+    } else if (action === 'open') {
       this.inputMenuActive(clickedMenu, type);
 
       clickedMenu.classList.add('visible')
@@ -326,23 +334,19 @@ export default class extends Controller {
 
   menuInputChangeMonth(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(e.currentTarget);
-    console.log(this.selectedTarget.dataset.date);
     const referenceDate = new Date(this.selectedTarget.dataset.date);
     const selectedMonth = this.dateMonthNumber(e.currentTarget.innerHTML);
     referenceDate.setMonth(selectedMonth);
     this.matchMenuScroll(null, false, referenceDate);
+    this.activateInputMenu(this.monthMenuTarget, 'month', 'close');
   }
 
   menuInputChangeYear(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(e.currentTarget);
-    console.log(this.selectedTarget.dataset.date);
     const referenceDate = new Date(this.selectedTarget.dataset.date);
     referenceDate.setFullYear(e.currentTarget.innerHTML);
     this.matchMenuScroll(null, false, referenceDate);
+    this.activateInputMenu(this.yearMenuTarget, 'year', 'close');
   }
 
   inputMenuActive(clickedMenu, type) {
@@ -409,7 +413,7 @@ export default class extends Controller {
       }
     }
     if (!selectLog) selectLog = this.logTargets[this.logTargets.length - 1]; // Set equal to last log
-    
+
     console.log("Entering select log");
     selectLog.classList.add('date-start');
     if (today) {
