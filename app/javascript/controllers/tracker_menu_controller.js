@@ -606,6 +606,7 @@ export default class extends Controller {
     } else if (action === 'close') {
       this.sideMenuTarget.classList.remove('show');
       this.sideMenuSelectorTarget.innerHTML = '<i class="fa-solid fa-caret-left"></i>';
+      this.activateHabitsFilter(action);
     }
   }
 
@@ -621,6 +622,7 @@ export default class extends Controller {
         dayToday.click();
       }, 300);
     }
+    this.activateSideMenu('close');
   }
 
   openHabitsFilter(e) {
