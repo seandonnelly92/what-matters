@@ -32,32 +32,61 @@ export default class extends Controller {
 
     window.addEventListener('scroll', this.pageScroll); // Binding controller instance
 
-    this.setLogLines();
+    this.setAllLogLines();
   }
 
   disconnect() {
     window.removeEventListener('scroll', this.pageScroll);
   }
 
-  setLogLines() {
+  setAllLogLines() {
     const logs = this.logTargets;
     console.log(logs);
     let prevLog = null;
     logs.forEach((log) => {
-      const lineTop = log.querySelector('.line.top');
-      console.log(lineTop);
-      const lineBottom = log.querySelector('.line.bottom');
-      console.log(lineBottom);
-
       if (logs.indexOf(log) === 0) {
-        lineTop.classList.add('blank');
+        const lineTop = log.querySelector('.line.top');
+        if(lineTop) lineTop.classList.add('blank');
+
+      } else if (prevLog) {
+        this.setLogLine(log, prevLog);
       }
-
+      prevLog = log; // Set previous log equal to current for next loop iteration
     });
-
-
   }
 
+  setLogLine(log, prevLog) {
+    const prevDot = prevLog.querySelector('.dot');
+    const currentDot = log.querySelector('.dot');
+    const lineStart = prevLog.querySelector('.line.bottom');
+    const lineEnd = log.querySelector('.line.top');
+
+    let lineClass;
+    if (prevDot.classList.contains('completed') && currentDot.classList.contains('completed')) {
+      lineClass = 'completed';
+    } else {
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday) {
+        const prevDate = new Date(prevLog.dataset.date);
+        const prevIsToday = this.dateToString(prevDate) === this.dateToString(this.todayDate);
+
+        if (prevIsToday) {
+          lineClass = 'pending';
+        } else {
+          lineClass = 'missed';
+        }
+      } else if (currentDate > this.todayDate) {
+        // This means they are future (pending) logs
+        lineClass = 'pending';
+      } else {
+        lineClass = 'missed'
+      }
+    }
+    lineStart.classList.add(lineClass);
+    lineEnd.classList.add(lineClass);
+  }
 
   createMenu() {
     let currentDate = new Date(this.todayDate); // Default value is today
