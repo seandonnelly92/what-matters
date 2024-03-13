@@ -621,3 +621,34 @@ rowan = User.new(
 rowan.save
 
 # Adding reviews
+Review.create(
+  user: sean,
+  content: "Just joined What Matters, looks very promising!!",
+  rating: 4,
+  created_at: DateTime.new(2024, 3, 12),
+  updated_at: DateTime.new(2024, 3, 12)
+)
+
+Review.create(
+  user: tom,
+  content: "App does seem to have some glitches. Hoping this will be fixed soon @DWM team!",
+  rating: 2,
+  created_at: DateTime.new(2024, 1, 15),
+  updated_at: DateTime.new(2024, 1, 15)
+)
+
+Review.create(
+  user: tom,
+  content: "Thanks for the recent updates. Loving the app and how it has helped me follow through with what matters.",
+  rating: 5,
+  created_at: DateTime.new(2024, 2, 27),
+  updated_at: DateTime.new(2024, 2, 27)
+)
+
+Review.create(
+  user: rowan,
+  content: "Awesome app! Much better than the Atoms app released last month..",
+  rating: 5,
+  created_at: DateTime.new(2024, 3, 5),
+  updated_at: DateTime.new(2024, 3, 5)
+)
