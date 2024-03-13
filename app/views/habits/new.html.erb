@@ -1,7 +1,7 @@
 <div id="add-habit-form" class="col-11 col-md-6 col-lg-4 col-xl-4">
   <h3>Add a habit</h3>
     <%# IF RELATIONSHIP DATA IS PRESENT... %>
-    <% unless session[:user_data] == nil %>
+    <% unless session[:user_data]["step2"]["relation_to"] == nil %>
       <%# FORM IF WE HAVE DATA ON A PARENT RELATION %>
       <% if session[:user_data]["step2"]["relation_to"] == "Parent" %>
         <%= render partial: 'habits/form_parent' %>
