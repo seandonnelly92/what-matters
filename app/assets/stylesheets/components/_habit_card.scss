@@ -168,7 +168,7 @@
 }
 
 #completion-message {
-  visibility: visible;
+  visibility: hidden;
   opacity: 0;
   display: flex;
   flex-direction: column;
@@ -190,7 +190,6 @@
 
   transform-origin: center;
   transition: transform 0.3s linear;
-  overflow: visible;
 
   &.display-message {
     visibility: visible;
