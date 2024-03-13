@@ -403,27 +403,29 @@ export default class extends Controller {
       }
 
       if (selectLog) {
-        console.log("Entering select log");
-        selectLog.classList.add('date-start');
-        if (today) {
-          console.log("It is today");
-          selectLog.style.setProperty('--date-start-content', '"Today"');
-        } else {
-          const dateFormat = this.dateToFormat(selectLog.dataset.date);
-          selectLog.style.setProperty('--date-start-content', `"${dateFormat}"`);
-        }
-        console.log('Scrolling into view!');
-        selectLog.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
-        });
-        console.log("Select log at end is:");
-        console.log(selectLog);
         break;
       } else {
         prevLog = log;
       }
     }
+    if (!selectLog) selectLog = this.logTargets[this.logTargets.length - 1]; // Set equal to last log
+    
+    console.log("Entering select log");
+    selectLog.classList.add('date-start');
+    if (today) {
+      console.log("It is today");
+      selectLog.style.setProperty('--date-start-content', '"Today"');
+    } else {
+      const dateFormat = this.dateToFormat(selectLog.dataset.date);
+      selectLog.style.setProperty('--date-start-content', `"${dateFormat}"`);
+    }
+    console.log('Scrolling into view!');
+    selectLog.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+    console.log("Select log at end is:");
+    console.log(selectLog);
   }
 
   pageScroll(e) {
