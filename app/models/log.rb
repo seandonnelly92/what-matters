@@ -1,6 +1,4 @@
 class Log < ApplicationRecord
-  attr_reader :completed
-
   belongs_to :habit
 
   validates :date_time, presence: true
