@@ -12,11 +12,11 @@
     <div class="row">
       <div class="col-7 left">
         <%= render partial: 'shared/category_chip', locals: { habit: log.habit } %>
-        <h2 class = "text" data-log-click-target='message'><b><%= log.format_message %></b></h2>
+        <h2 class = "text" data-log-click-target='message'><%= log.format_message %></h2>
         <p class = "text" data-log-click-target='date' ><%= log.format_date_message %></p>
         <p data-log-scroll-target="today"></p>
       </div>
-      <div class="col-5 right">
+      <div class="col-5 right habit-connection">
         <div class="line top"></div>
         <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle"></span>
         <div class="line bottom"></div>

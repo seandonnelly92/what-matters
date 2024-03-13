@@ -26,6 +26,17 @@
       height: 50%;
     }
   }
+
+  &.hide-log {
+    display: none !important;
+  }
+}
+
+.habit-connection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
 .dot {
@@ -34,7 +45,7 @@
   width: 70px;
   background-color: $light-gray;
   border-style: dotted;
-  border-color: $primary;
+  border-color: $green;
   border-width: thick;
   border-width: 0.25em;
   border-radius: 50%;
@@ -44,30 +55,38 @@
   z-index: 2;
 
   &.completed {
+    border: none;
     background-color: #045436;
     // border-style: dotted;
   }
 }
 
 .line {
-  position: absolute;
-  left: 50%; /* Position the line horizontally in the center of the circle */
-  transform: translateX(-50%);
+  // position: absolute;
+  // left: 50%; /* Position the line horizontally in the center of the circle */
+  // transform: translateX(-50%);
   height: 50%; /* Full height of the card */
   width: 2px; /* Width of the line */
-  background-color: $primary; /* Color of the line */
+  border-right: 3px solid $green;
+  // background-color: $green; /* Color of the line */
 
-  &.top {
-    top: 0;
+  width: 50%;
+  // Determines absolute positioning of the top and bottom lines
+
+  // Determines formats of the lines for different clasess (i.e. habit stages)
+  &.missed {
+    // background-color: transparent;
+    border-right: none;
   }
 
-  &.bottom {
-    bottom: 0;
+  &.pending {
+    // background-color: gray;
+    border-right: 3px dashed $green;
   }
 
   &.completed {
-    border: none;
-    border-top: 1px dotted black;
+    // background-color: $blue;
+    border-right: 3px solid $blue;
   }
 }
 
