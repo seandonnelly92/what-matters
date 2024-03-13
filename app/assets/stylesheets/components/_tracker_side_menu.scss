@@ -6,6 +6,8 @@
 
   display: flex;
   justify-content: end;
+
+  z-index: 3;
 }
 
 #side-menu-selector {
@@ -33,7 +35,7 @@
   transform-origin: right;
   width: 0;
 
-  transition: transform 0.3 linear, width 0.3 linear;
+  // transition: transform 0.3s ease-out, width 0.3s ease-out;
 
   &.show {
     transform: scale(1);
@@ -46,4 +48,42 @@
   width: fit-content;
   padding: 4px 8px;
   margin: 6px 8px;
+}
+
+#side-menu-habits {
+  position: absolute;
+  bottom: 100%;
+  right: 16px;
+
+  background-color: whitesmoke;
+  border: 1px solid $green;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  width: fit-content;
+  padding: 8px 12px;
+
+  transform: scale(0);
+  transform-origin: bottom;
+  height: 0;
+
+  // transition: transform 0.3s ease-out, height 0.3s ease-out;
+
+  &.show {
+    transform: scale(1);
+    height: auto;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+  }
+}
+
+.side-menu-habit {
+  color: rgb(128, 128, 128);
+
+  &.included {
+    color: $blue;
+  }
 }

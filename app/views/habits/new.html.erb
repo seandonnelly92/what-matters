@@ -15,7 +15,7 @@
     <%# FORM IF WE HAVE DATA ON ANY OTHER RELATIONSHIP (DEFAULT) %>
     <% else %>
       <%= simple_form_for(@habit) do |f| %>
-        <%= f.input :title, :label => 'I will:', placeholder: "volunteer, arrange date night, do something nice for...", input_html: { "data-tooltip" => true, :class => "has-tip", :title => "Bla bla bla" } %>
+        <%= f.input :title, :label => 'I will:', placeholder: "volunteer, arrange date night, do something nice for..." %>
         <div class="week-recurrence">
           <p>I will do this every </p>
           <%= f.input :week_recurrence, label: false, placeholder: "2" %>

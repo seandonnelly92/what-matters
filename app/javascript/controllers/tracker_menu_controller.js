@@ -13,7 +13,9 @@ export default class extends Controller {
     "selected",
     "log",
     "sideMenu",
-    "sideMenuSelector"
+    "sideMenuSelector",
+    "habitsList",
+    "habitsButton"
   ]
 
   connect() {
@@ -27,14 +29,70 @@ export default class extends Controller {
     this.timer = null;
     this.scrollWait = 500;
 
-    this.pageSCroll = this.pageScroll.bind(this);
+    this.pageScroll = this.pageScroll.bind(this);
     this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
+    this.boundMenuInputChangeMonth = this.menuInputChangeMonth.bind(this);
+    this.boundChangeHabitsSelection = this.changeHabitsSelection.bind(this);
 
-    window.addEventListener('scroll', this.pageScroll.bind(this)); // Binding controller instance
+    window.addEventListener('scroll', this.pageScroll); // Binding controller instance
+
+    this.setAllLogLines();
   }
 
   disconnect() {
-    window.removeEventListener('scroll', this.pageScroll.bind(this));
+    window.removeEventListener('scroll', this.pageScroll);
+  }
+
+  setAllLogLines() {
+    const logs = this.logTargets;
+
+    let prevLog = null;
+    let logCount = 0;
+    for (const log of logs) {
+      if (log.classList.contains('hide-log')) continue;
+
+      if (logCount === 0) {
+        const lineTop = log.querySelector('.line.top');
+        if(lineTop) lineTop.classList.add('missed');
+      } else if (prevLog) {
+        this.setLogLine(log, prevLog);
+      }
+      prevLog = log; // Set previous log equal to current for next loop iteration
+      logCount += 1;
+    }
+  }
+
+  setLogLine(log, prevLog) {
+    const prevDot = prevLog.querySelector('.dot');
+    const currentDot = log.querySelector('.dot');
+    const lineStart = prevLog.querySelector('.line.bottom');
+    const lineEnd = log.querySelector('.line.top');
+
+    let lineClass;
+    if (prevDot.classList.contains('completed') && currentDot.classList.contains('completed')) {
+      lineClass = 'completed';
+    } else {
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday) {
+        const prevDate = new Date(prevLog.dataset.date);
+        const prevIsToday = this.dateToString(prevDate) === this.dateToString(this.todayDate);
+
+        if (prevIsToday) {
+          lineClass = 'pending';
+        } else {
+          lineClass = 'missed';
+        }
+      } else if (currentDate > this.todayDate) {
+        // This means they are future (pending) logs
+        lineClass = 'pending';
+      } else {
+        lineClass = 'missed'
+      }
+    }
+    lineStart.classList.add(lineClass);
+    lineEnd.classList.add(lineClass);
   }
 
   createMenu() {
@@ -318,9 +376,9 @@ export default class extends Controller {
       const items = menu.querySelectorAll('a');
       items.forEach((item) => {
         if (action === 'add') {
-          item.addEventListener('click', this.menuInputChangeMonth.bind(this));
+          item.addEventListener('click', this.boundMenuInputChangeMonth);
         } else if (action === 'remove') {
-          item.removeEventListener('click', this.menuInputChangeMonth.bind(this));
+          item.removeEventListener('click', this.boundMenuInputChangeMonth);
         }
       });
     } else if (type === 'year') {
@@ -387,7 +445,6 @@ export default class extends Controller {
     const selectedLog = document.querySelector('.date-start');
     selectedLog.classList.remove('date-start');
     console.log(selectedLog);
-
 
     const today = selectedDateStr === this.dateToString(this.todayDate);
     console.log(`Today variable is: ${today}`);
@@ -553,9 +610,9 @@ export default class extends Controller {
     } else if (action === 'close') {
       this.sideMenuTarget.classList.remove('show');
       this.sideMenuSelectorTarget.innerHTML = '<i class="fa-solid fa-caret-left"></i>';
+      this.activateHabitsFilter(action);
     }
   }
-
 
   goToToday() {
     const dayToday = this.daysTarget.querySelector('.t-day.today');
@@ -569,6 +626,61 @@ export default class extends Controller {
         dayToday.click();
       }, 300);
     }
+    this.activateSideMenu('close');
+  }
+
+  openHabitsFilter(e) {
+    if (this.habitsListTarget.classList.contains('show')) {
+      this.activateHabitsFilter('close');
+    } else {
+      this.activateHabitsFilter('open');
+    }
+  }
+
+  activateHabitsFilter(action) {
+    if (action === 'open') {
+      this.habitsListTarget.classList.add('show');
+      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-down"></i>';
+
+      this.changeHabitsFilter('add');
+    } else if (action === 'close') {
+      this.changeHabitsFilter('remove');
+
+      this.habitsListTarget.classList.remove('show');
+      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-up"></i>';
+    }
+  }
+
+  changeHabitsFilter(action) {
+    const items = this.habitsListTarget.querySelectorAll('a');
+    items.forEach((item) => {
+      if (action === 'add') {
+        item.addEventListener('click', this.boundChangeHabitsSelection);
+      } else if (action === 'remove') {
+        item.removeEventListener('click', this.boundChangeHabitsSelection);
+      }
+    });
+  }
+
+  changeHabitsSelection(e) {
+    e.preventDefault();
+
+    const innerHTML = e.currentTarget.innerHTML;
+    const habitTitle = innerHTML.split('</i> ')[1];
+
+    this.updateLogsDisplay(habitTitle);
+  }
+
+  updateLogsDisplay(habitTitle) {
+    const logs = this.logTargets;
+    console.log(logs);
+    logs.forEach((log) => {
+      const logHabit = log.querySelector('h2');
+      if (habitTitle === logHabit.innerText) {
+        log.classList.toggle('hide-log');
+      }
+    });
+    this.setAllLogLines();
   }
 
   // Date helper methods
