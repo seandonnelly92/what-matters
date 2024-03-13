@@ -13,7 +13,9 @@ export default class extends Controller {
     "selected",
     "log",
     "sideMenu",
-    "sideMenuSelector"
+    "sideMenuSelector",
+    "habitsList",
+    "habitsButton"
   ]
 
   connect() {
@@ -41,7 +43,7 @@ export default class extends Controller {
 
   setAllLogLines() {
     const logs = this.logTargets;
-    console.log(logs);
+
     let prevLog = null;
     logs.forEach((log) => {
       if (logs.indexOf(log) === 0) {
@@ -607,7 +609,6 @@ export default class extends Controller {
     }
   }
 
-
   goToToday() {
     const dayToday = this.daysTarget.querySelector('.t-day.today');
     if (dayToday) {
@@ -619,6 +620,24 @@ export default class extends Controller {
         const dayToday = this.daysTarget.querySelector('.t-day.today');
         dayToday.click();
       }, 300);
+    }
+  }
+
+  openHabitsFilter(e) {
+    if (this.habitsListTarget.classList.contains('show')) {
+      this.activateHabitsFilter('close');
+    } else {
+      this.activateHabitsFilter('open');
+    }
+  }
+
+  activateHabitsFilter(action) {
+    if (action === 'open') {
+      this.habitsListTarget.classList.add('show');
+      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-down"></i>';
+    } else if (action === 'close') {
+      this.habitsListTarget.classList.remove('show');
+      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-up"></i>';
     }
   }
 
