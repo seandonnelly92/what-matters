@@ -95,6 +95,13 @@ export default class extends Controller {
     lineEnd.classList.add(lineClass);
   }
 
+  setLogEvent(e) {
+    console.log("Hello from the other controller");
+    console.log(e);
+
+
+  }
+
   createMenu() {
     let currentDate = new Date(this.todayDate); // Default value is today
 
@@ -675,7 +682,7 @@ export default class extends Controller {
     const logs = this.logTargets;
     console.log(logs);
     logs.forEach((log) => {
-      const logHabit = log.querySelector('h2');
+      const logHabit = log.querySelector('log-habit-title');
       if (habitTitle === logHabit.innerText) {
         log.classList.toggle('hide-log');
       }

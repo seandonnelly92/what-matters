@@ -15,6 +15,8 @@ export default class extends Controller {
     this.timer = null;
     this.pressTime = 1000 ; // Time user needs to press the habit circle for completion (in milliseconds)
     this.circleTarget.style.setProperty('--transition-duration', `${this.pressTime / 1000}s`);
+
+    this.todayDate = new Date();
   }
 
   connect() {
@@ -84,6 +86,8 @@ export default class extends Controller {
     .then((data) => {
       this.messageTarget.innerHTML = `${data.message}`;
       this.circleTarget.classList.remove("completed");
+      this.updateLogLines('previous');
+      this.updateLogLines('next');
 
       this.completionListener();
     })
@@ -121,9 +125,82 @@ export default class extends Controller {
 
       this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
+      this.updateLogLines('previous');
+      this.updateLogLines('next');
+
       this.completeMessage();
       this.resetListener();
     })
+  }
+
+  updateLogLines(direction) {
+    console.log("Trigger tracker event");
+    console.log(this.circleTarget);
+    const currentLog = this.circleTarget.closest('.habit-card');
+    let searching = true;
+    let neighborLog = null;
+    while (searching) {
+      if (direction === 'previous') {
+        neighborLog = currentLog.previousElementSibling;
+      } else if (direction === 'next') {
+        neighborLog = currentLog.nextElementSibling;
+      }
+      if (!neighborLog || !neighborLog.classList.contains('hide-log')) {
+        searching = false;
+      }
+    }
+    if (neighborLog) {
+      if (direction === 'previous') {
+        this.setLogLine(currentLog, neighborLog);
+      } else if (direction === 'next') {
+        this.setLogLine(neighborLog, currentLog);
+      }
+    }
+  }
+
+  setLogLine(log, prevLog) {
+    const prevDot = prevLog.querySelector('.dot');
+    const currentDot = log.querySelector('.dot');
+    const lineStart = prevLog.querySelector('.line.bottom');
+    const lineEnd = log.querySelector('.line.top');
+
+    this.clearLogLineClasses([lineStart, lineEnd]);
+
+    let lineClass;
+    if (prevDot.classList.contains('completed') && currentDot.classList.contains('completed')) {
+      console.log("Completed it is!");
+      lineClass = 'completed';
+    } else {
+      console.log("Not completed");
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday) {
+        const prevDate = new Date(prevLog.dataset.date);
+        const prevIsToday = this.dateToString(prevDate) === this.dateToString(this.todayDate);
+
+        if (prevIsToday) {
+          lineClass = 'pending';
+        } else {
+          lineClass = 'missed';
+        }
+      } else if (currentDate > this.todayDate) {
+        // This means they are future (pending) logs
+        lineClass = 'pending';
+      } else {
+        lineClass = 'missed';
+      }
+    }
+    lineStart.classList.add(lineClass);
+    lineEnd.classList.add(lineClass);
+  }
+
+  clearLogLineClasses(logLines) {
+    logLines.forEach((logLine) => {
+      logLine.classList.remove('missed');
+      logLine.classList.remove('pending');
+      logLine.classList.remove('completed');
+    });
   }
 
   completeMessage() {
@@ -178,5 +255,16 @@ export default class extends Controller {
     components.forEach((component) => {
       component.style.setProperty('--logo-animation-duration', duration);
     });
+  }
+
+  // Date helper methods
+  dateToString(dateInput) {
+    const date = new Date(dateInput);
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 }
