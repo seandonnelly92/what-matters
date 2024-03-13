@@ -31,11 +31,33 @@ export default class extends Controller {
     this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
 
     window.addEventListener('scroll', this.pageScroll); // Binding controller instance
+
+    this.setLogLines();
   }
 
   disconnect() {
     window.removeEventListener('scroll', this.pageScroll);
   }
+
+  setLogLines() {
+    const logs = this.logTargets;
+    console.log(logs);
+    let prevLog = null;
+    logs.forEach((log) => {
+      const lineTop = log.querySelector('.line.top');
+      console.log(lineTop);
+      const lineBottom = log.querySelector('.line.bottom');
+      console.log(lineBottom);
+
+      if (logs.indexOf(log) === 0) {
+        log.classList.add('blank');
+      }
+      
+    });
+
+
+  }
+
 
   createMenu() {
     let currentDate = new Date(this.todayDate); // Default value is today
