@@ -26,6 +26,10 @@
       height: 50%;
     }
   }
+
+  &.hide-log {
+    display: none !important;
+  }
 }
 
 .habit-connection {

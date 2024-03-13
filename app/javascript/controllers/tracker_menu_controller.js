@@ -31,6 +31,8 @@ export default class extends Controller {
 
     this.pageScroll = this.pageScroll.bind(this);
     this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
+    this.boundMenuInputChangeMonth = this.menuInputChangeMonth.bind(this);
+    this.boundChangeHabitsSelection = this.changeHabitsSelection.bind(this);
 
     window.addEventListener('scroll', this.pageScroll); // Binding controller instance
 
@@ -45,16 +47,19 @@ export default class extends Controller {
     const logs = this.logTargets;
 
     let prevLog = null;
-    logs.forEach((log) => {
-      if (logs.indexOf(log) === 0) {
-        const lineTop = log.querySelector('.line.top');
-        if(lineTop) lineTop.classList.add('blank');
+    let logCount = 0;
+    for (const log of logs) {
+      if (log.classList.contains('hide-log')) continue;
 
+      if (logCount === 0) {
+        const lineTop = log.querySelector('.line.top');
+        if(lineTop) lineTop.classList.add('missed');
       } else if (prevLog) {
         this.setLogLine(log, prevLog);
       }
       prevLog = log; // Set previous log equal to current for next loop iteration
-    });
+      logCount += 1;
+    }
   }
 
   setLogLine(log, prevLog) {
@@ -371,9 +376,9 @@ export default class extends Controller {
       const items = menu.querySelectorAll('a');
       items.forEach((item) => {
         if (action === 'add') {
-          item.addEventListener('click', this.menuInputChangeMonth.bind(this));
+          item.addEventListener('click', this.boundMenuInputChangeMonth);
         } else if (action === 'remove') {
-          item.removeEventListener('click', this.menuInputChangeMonth.bind(this));
+          item.removeEventListener('click', this.boundMenuInputChangeMonth);
         }
       });
     } else if (type === 'year') {
@@ -440,7 +445,6 @@ export default class extends Controller {
     const selectedLog = document.querySelector('.date-start');
     selectedLog.classList.remove('date-start');
     console.log(selectedLog);
-
 
     const today = selectedDateStr === this.dateToString(this.todayDate);
     console.log(`Today variable is: ${today}`);
@@ -637,10 +641,46 @@ export default class extends Controller {
     if (action === 'open') {
       this.habitsListTarget.classList.add('show');
       this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-down"></i>';
+
+      this.changeHabitsFilter('add');
     } else if (action === 'close') {
+      this.changeHabitsFilter('remove');
+
       this.habitsListTarget.classList.remove('show');
       this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-up"></i>';
     }
+  }
+
+  changeHabitsFilter(action) {
+    const items = this.habitsListTarget.querySelectorAll('a');
+    items.forEach((item) => {
+      if (action === 'add') {
+        item.addEventListener('click', this.boundChangeHabitsSelection);
+      } else if (action === 'remove') {
+        item.removeEventListener('click', this.boundChangeHabitsSelection);
+      }
+    });
+  }
+
+  changeHabitsSelection(e) {
+    e.preventDefault();
+
+    const innerHTML = e.currentTarget.innerHTML;
+    const habitTitle = innerHTML.split('</i> ')[1];
+
+    this.updateLogsDisplay(habitTitle);
+  }
+
+  updateLogsDisplay(habitTitle) {
+    const logs = this.logTargets;
+    console.log(logs);
+    logs.forEach((log) => {
+      const logHabit = log.querySelector('h2');
+      if (habitTitle === logHabit.innerText) {
+        log.classList.toggle('hide-log');
+      }
+    });
+    this.setAllLogLines();
   }
 
   // Date helper methods

@@ -57,7 +57,7 @@
     <div id="side-menu-options" data-tracker-menu-target="sideMenu">
       <div id="side-menu-habits" data-tracker-menu-target="habitsList">
         <% @habits.order(:title).each do |habit| %>
-          <a href="#"><i class="fa-regular fa-square-check"></i> <%= habit.title %></a>
+          <a href="#" class="side-menu-habit included"><i class="fa-regular fa-square-check"></i> <%= habit.title %></a>
         <% end %>
       </div>
       <div class="primary-btn side-menu-btn" data-action="click->tracker-menu#goToToday">Go to today</div>

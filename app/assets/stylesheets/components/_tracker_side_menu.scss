@@ -79,3 +79,11 @@
     text-decoration: none;
   }
 }
+
+.side-menu-habit {
+  color: rgb(128, 128, 128);
+
+  &.included {
+    color: $blue;
+  }
+}
