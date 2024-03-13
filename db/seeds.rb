@@ -329,7 +329,7 @@ pushups = Habit.create(
   week_recurrence: 1,
   current_streak: 0,
   best_streak: 0,
-  days_of_week: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  days_of_week: ["monday", "tuesday", "wednesday", "thursday", "friday"],
   start_time: "2024-03-06 07:30:00.000000000 +0000"
 )
 
@@ -477,7 +477,7 @@ planning = Habit.create(
   week_recurrence: 1,
   current_streak: 0,
   best_streak: 0,
-  days_of_week: ["Saturday"],
+  days_of_week: ["saturday"],
   start_time: "2024-03-06 11:30:00.000000000 +0000"
 )
 
@@ -539,7 +539,7 @@ fam_visit = Habit.create(
   week_recurrence: 4,
   current_streak: 0,
   best_streak: 0,
-  days_of_week: ["Sunday"],
+  days_of_week: ["sunday"],
   start_time: "2024-03-06 10:00:00.000000000 +0000"
 )
 
