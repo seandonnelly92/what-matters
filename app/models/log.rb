@@ -3,9 +3,9 @@ class Log < ApplicationRecord
 
   validates :date_time, presence: true
 
-  def trigger_message
-    "#{habit.trigger}"
-  end
+  # def trigger_message
+  #   "#{habit.trigger}"
+  # end
 
   def format_message
     "#{habit.title.capitalize}"
