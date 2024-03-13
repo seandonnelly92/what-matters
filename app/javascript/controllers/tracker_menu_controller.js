@@ -28,6 +28,10 @@ export default class extends Controller {
     window.addEventListener('scroll', this.pageScroll.bind(this)); // Binding controller instance
   }
 
+  disconnect() {
+    window.removeEventListener('scroll', this.pageScroll.bind(this));
+  }
+
   createMenu() {
     let currentDate = new Date(this.todayDate); // Default value is today
 
@@ -242,16 +246,107 @@ export default class extends Controller {
     console.log("Clicked menu is:");
     console.log(clickedMenu);
     if (clickedMenu.classList.contains('show')) {
+      this.activateInputMenu(clickedMenu, type, 'close');
+    } else {
+      this.activateInputMenu(clickedMenu, type, 'open');
+    }
+  }
+
+  activateInputMenu(clickedMenu, type, action) {
+    if (action === 'close') {
       clickedMenu.classList.remove('show')
       setTimeout(() => {
         clickedMenu.classList.remove('visible')
       }, 300); // Set timeout equal to the transition of the menu
-    } else {
+
+      if (type === 'year') this.yearInputScroll(clickedMenu, 'remove');
+      this.menuInputChange(type, 'remove')
+    } else if (action === 'open') {
       this.inputMenuActive(clickedMenu, type);
 
       clickedMenu.classList.add('visible')
       clickedMenu.classList.add('show')
+
+      if (type == 'year') this.yearInputScroll(clickedMenu, 'add');
+      this.menuInputChange(type, 'add')
     }
+  }
+
+  yearInputScroll(clickedMenu, action) {
+    const scrollUp = clickedMenu.querySelector('.input-menu .up');
+    console.log(scrollUp);
+    const scrollDown = clickedMenu.querySelector('.input-menu .down');
+    console.log(scrollDown);
+
+    if (action === 'add') {
+      scrollUp.addEventListener('click', this.yearInputScrollEvent.bind(this));
+      scrollDown.addEventListener('click', this.yearInputScrollEvent.bind(this));
+    } else if (action === 'remove') {
+      scrollUp.removeEventListener('click', this.yearInputScrollEvent.bind(this))
+      scrollDown.removeEventListener('click', this.yearInputScrollEvent.bind(this))
+    }
+  }
+
+  yearInputScrollEvent(e) {
+    const years = this.yearMenuTarget.querySelectorAll('a');
+    const selectedDate = new Date(this.selectedTarget.dataset.date);
+    const activeYear = selectedDate.getFullYear().toString();
+
+    let direction;
+    if (e.currentTarget.classList.contains('up')) {
+      direction = -1;
+    } else if (e.currentTarget.classList.contains('down')) {
+      direction = 1;
+    }
+    years.forEach((year) => {
+      year.innerHTML = parseInt(year.innerHTML, 10) + direction;
+      if (year.innerHTML === activeYear) {
+        year.classList.add('active');
+      } else {
+        year.classList.remove('active');
+      }
+    });
+  }
+
+  menuInputChange(type, action) {
+    if (type === 'month') {
+      const menu = this.monthMenuTarget;
+      const items = menu.querySelectorAll('a');
+      items.forEach((item) => {
+        if (action === 'add') {
+          item.addEventListener('click', this.menuInputChangeMonth.bind(this));
+        } else if (action === 'remove') {
+          item.removeEventListener('click', this.menuInputChangeMonth.bind(this));
+        }
+      });
+    } else if (type === 'year') {
+      const menu = this.yearMenuTarget;
+      const items = menu.querySelectorAll('a');
+      items.forEach((item) => {
+        if (action === 'add') {
+          item.addEventListener('click', this.menuInputChangeYear.bind(this));
+        } else if (action === 'remove') {
+          item.removeEventListener('click', this.menuInputChangeYear.bind(this));
+        }
+      });
+    }
+  }
+
+  menuInputChangeMonth(e) {
+    e.preventDefault();
+    const referenceDate = new Date(this.selectedTarget.dataset.date);
+    const selectedMonth = this.dateMonthNumber(e.currentTarget.innerHTML);
+    referenceDate.setMonth(selectedMonth);
+    this.matchMenuScroll(null, false, referenceDate);
+    this.activateInputMenu(this.monthMenuTarget, 'month', 'close');
+  }
+
+  menuInputChangeYear(e) {
+    e.preventDefault();
+    const referenceDate = new Date(this.selectedTarget.dataset.date);
+    referenceDate.setFullYear(e.currentTarget.innerHTML);
+    this.matchMenuScroll(null, false, referenceDate);
+    this.activateInputMenu(this.yearMenuTarget, 'year', 'close');
   }
 
   inputMenuActive(clickedMenu, type) {
@@ -312,27 +407,29 @@ export default class extends Controller {
       }
 
       if (selectLog) {
-        console.log("Entering select log");
-        selectLog.classList.add('date-start');
-        if (today) {
-          console.log("It is today");
-          selectLog.style.setProperty('--date-start-content', '"Today"');
-        } else {
-          const dateFormat = this.dateToFormat(selectLog.dataset.date);
-          selectLog.style.setProperty('--date-start-content', `"${dateFormat}"`);
-        }
-        console.log('Scrolling into view!');
-        selectLog.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
-        });
-        console.log("Select log at end is:");
-        console.log(selectLog);
         break;
       } else {
         prevLog = log;
       }
     }
+    if (!selectLog) selectLog = this.logTargets[this.logTargets.length - 1]; // Set equal to last log
+
+    console.log("Entering select log");
+    selectLog.classList.add('date-start');
+    if (today) {
+      console.log("It is today");
+      selectLog.style.setProperty('--date-start-content', '"Today"');
+    } else {
+      const dateFormat = this.dateToFormat(selectLog.dataset.date);
+      selectLog.style.setProperty('--date-start-content', `"${dateFormat}"`);
+    }
+    console.log('Scrolling into view!');
+    selectLog.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+    console.log("Select log at end is:");
+    console.log(selectLog);
   }
 
   pageScroll(e) {
@@ -373,10 +470,12 @@ export default class extends Controller {
     return closestElement;
   }
 
-  matchMenuScroll(log) {
+  matchMenuScroll(log, isLog = true, inputDate = null) {
+    // Note: Can also be used with Date object if isLog set to false in argument
     console.log("Matching menu scroll to:");
     console.log(log);
-    const logDate = new Date(log.dataset.date);
+    const logDate = isLog ? new Date(log.dataset.date) : inputDate;
+    // const logDate = new Date(log.dataset.date);
     const logDateStr = this.dateToString(logDate);
     console.log(`Date string of log is: ${logDateStr}`);
 
@@ -465,5 +564,12 @@ export default class extends Controller {
       month: 'long',
       year: 'numeric'
     });
+  }
+
+  dateMonthNumber(monthString) {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const monthNumber = monthNames.indexOf(monthString);
+    return monthNumber;
   }
 }

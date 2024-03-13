@@ -3,7 +3,7 @@
     <div id="tracker-input">
       <div class="input-container">
         <div class="input-button" data-action="click->tracker-menu#openInputMenu" data-tracker-menu-target="month"><%= Date.today.strftime("%B") %> <i class="fa-solid fa-caret-down"></i></div>
-        <div class="input-menu month" data-action="click->tracker-menu#setMenuMonth" data-tracker-menu-target="monthMenu">
+        <div class="input-menu month" data-tracker-menu-target="monthMenu">
           <a href="#">January</a>
           <a href="#">February</a>
           <a href="#">March</a>
@@ -20,14 +20,14 @@
       </div>
       <div class="input-container">
         <div class="input-button" data-action="click->tracker-menu#openInputMenu" data-tracker-menu-target="year"><%= Date.today.year %> <i class="fa-solid fa-caret-down"></i></div>
-        <div class="input-menu year" data-action="click->tracker-menu#setMenuYear" data-tracker-menu-target="yearMenu">
-          <div class="input-scroll"><i class="fa-solid fa-caret-up"></i></div>
-            <% first_year = 2024 %>
-            <% last_year = first_year + 5 %>
+        <div class="input-menu year" data-tracker-menu-target="yearMenu">
+          <div class="input-scroll up"><i class="fa-solid fa-caret-up"></i></div>
+            <% first_year = Date.today.year - 1 %>
+            <% last_year = first_year + 3 %>
             <% (first_year...last_year).each do |year| %>
               <a href="#"><%= year %></a>
             <% end %>
-          <div class="input-scroll"><i class="fa-solid fa-caret-down"></i></div>
+          <div class="input-scroll down"><i class="fa-solid fa-caret-down"></i></div>
         </div>
       </div>
     </div>
