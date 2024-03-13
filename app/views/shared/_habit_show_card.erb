@@ -37,8 +37,18 @@
 
       <%# Identity Goal quote %>
       <p class="mt-4 mb-3"><i class="fa-solid fa-quote-left"></i> I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
-      <p><strong>Current Streak: </strong><%= habit.current_streak %></p>
-      <p><strong>Best Streak: </strong><%= habit.best_streak %></p>
+      <div class="d-flex justify-content-around">
+        <div class="row">
+          <div class="col-6 text-nowrap p-3 text-center">
+            <p><strong>Current Streak</strong></p>
+            <p class="chip" id="current"><i class="fa-solid fa-fire text-dark"></i>  <%= habit.current_streak %></p>
+          </div>
+          <div class="col-6 text-nowrap p-3 text-center">
+            <p><strong>Best Streak</strong></p>
+            <p class="chip" id="best"><i class="fa-solid fa-trophy text-warning"></i>  <%= habit.best_streak %></p>
+          </div>
+        </div>
+      </div>
     </div>
     <%= link_to edit_habit_path(habit) do %>
       <h4><i class="fa-regular fa-pen-to-square edit-button"></i></h4>
