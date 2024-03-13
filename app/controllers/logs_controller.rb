@@ -6,7 +6,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render json: { message: log.format_message, date: log.format_date_message, habit: log.habit.title, trigg:log.habit.trigger}
+        render json: { message: log.format_message, date: log.format_date_message, habit: log.habit.title}
       end
     end
   end

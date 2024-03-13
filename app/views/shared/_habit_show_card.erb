@@ -15,7 +15,7 @@
       <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
       <%# Trigger Chip %>
       <% if habit.trigger.present? %>
-        <p class="chip"><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
+        <p class="chip "><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
       <% end %>
       <%# Reward Chip %>
       <% if habit.reward.present? %>

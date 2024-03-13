@@ -20,6 +20,7 @@
     border-radius: 5%;
     padding-top: 15px;
     padding-bottom: 10px;
+    padding-right: 0px;
   }
 
   .right {
@@ -30,7 +31,9 @@
       height: 50%;
     }
   }
+
 }
+
 
 .dot {
   position: absolute;
@@ -52,6 +55,8 @@
     // border-style: dotted;
   }
 }
+
+
 
 .line {
   position: absolute;
@@ -75,7 +80,16 @@
   }
 }
 
-.text {
+
+.chip {
+  &.habit {
+    background-color: rgba(255, 255, 255, 0.701);
+    margin-bottom: 0;
+    opacity: 15;
+  }
+}
+
+.message {
   margin-bottom: 0px;
   margin-top: 5px;
 }

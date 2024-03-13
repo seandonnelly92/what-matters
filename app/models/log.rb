@@ -3,9 +3,21 @@ class Log < ApplicationRecord
 
   validates :date_time, presence: true
 
-  # def trigger_message
-  #   "#{habit.trigger}"
-  # end
+  def trigger_message
+    if !habit.trigger.empty?
+      "#{habit.trigger}"
+    else
+      ""
+    end
+  end
+
+  def reward_message
+    if !habit.reward.empty?
+      "#{habit.reward}"
+    else
+      ""
+    end
+  end
 
   def format_message
     "#{habit.title.capitalize}"
@@ -42,8 +54,4 @@ class Log < ApplicationRecord
       "on #{formatted_date} for #{habit.duration_in_minutes} minutes"
     end
   end
-
-
-
-
 end
