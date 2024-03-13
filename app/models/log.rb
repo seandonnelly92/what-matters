@@ -5,19 +5,19 @@ class Log < ApplicationRecord
 
   def format_message
 
-    if date_time.to_date < Time.now.to_date
-      completed ? "#{habit.title.capitalize}": "'#{habit.title.capitalize}"
-    elsif date_time.to_date == Time.now.to_date
-      completed ? "#{habit.title.capitalize}": " Remember to '#{habit.title.capitalize}' today!"
-    else date_time.to_date > Time.now.to_date
-    #   if habit.duration_in_minutes.present?
-    #     "#{habit.title.capitalize} for #{habit.duration_in_minutes}"
-    #   end
-    #   "#{habit.title.capitalize}"
-    # end
+    # if date_time.to_date < Time.now.to_date
+    #   completed ? "#{habit.title.capitalize}": "'#{habit.title.capitalize}"
+    # elsif date_time.to_date == Time.now.to_date
+    #   completed ? "#{habit.title.capitalize}": "#{habit.title.capitalize}"
+    # else date_time.to_date > Time.now.to_date
+    # #   if habit.duration_in_minutes.present?
+    # #     "#{habit.title.capitalize} for #{habit.duration_in_minutes}"
+    # #   end
+    # #   "#{habit.title.capitalize}"
+    # # end
 
     "#{habit.title.capitalize}"
-    end
+    # end
   end
 
   def format_date_message
@@ -39,12 +39,17 @@ class Log < ApplicationRecord
       end
     end
 
-
-
+    trigger_message = !habit.trigger.empty? ? " #{habit.id} Remember your trigger is '#{habit.trigger}'" : ""
     day = date_time.strftime("%d").to_i
     formatted_date = "#{day}#{ordinal_suffix(day)} #{date_time.strftime("%B")}"
 
-    "on #{formatted_date} for #{habit.duration_in_minutes} minutes"
+    if date_time.to_date < Time.now.to_date
+      completed ? "completed on #{formatted_date} for #{habit.duration_in_minutes} minutes" : "not completed on #{formatted_date} for #{habit.duration_in_minutes} minutes "
+    elsif date_time.to_date == Time.now.to_date
+      completed ? "Completed today! Well done!" : "for #{habit.duration_in_minutes} minutes today! #{trigger_message}"
+    else
+      "on #{formatted_date} for #{habit.duration_in_minutes} minutes"
+    end
   end
 
 
