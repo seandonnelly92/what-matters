@@ -1,0 +1,34 @@
+#tracker-side-menu {
+  position: fixed;
+  bottom: 25px;
+  right: 0;
+
+  display: flex;
+  justify-content: end;
+}
+
+#side-menu-selector {
+  color: $blue;
+  font-size: 20px;
+  padding: 0 4px;
+
+  display: flex;
+  align-items: center;
+
+  background-color: $green;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#side-menu-options {
+  display: flex;
+  padding: 0 8px;
+  background-color: whitesmoke;
+  border: 1px solid $green;
+}
+
+.side-menu-btn {
+  width: fit-content;
+  padding: 4px 8px;
+  margin: 6px 8px;
+}
