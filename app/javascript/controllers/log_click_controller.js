@@ -7,14 +7,14 @@ export default class extends Controller {
     completed: String
   }
 
-  static targets = ["circle", "message", "modalcross", "completionMessage"]
+  static targets = [
+    "circle",
+    "message"]
 
   initialize() {
     this.timer = null;
     this.pressTime = 1000 ; // Time user needs to press the habit circle for completion (in milliseconds)
     this.circleTarget.style.setProperty('--transition-duration', `${this.pressTime / 1000}s`);
-
-    this.displayTime = 3000; // Time to display the completion message (in milliseconds)
   }
 
   connect() {
@@ -131,7 +131,7 @@ export default class extends Controller {
     completionMessage.classList.add('display-message');
 
     const backgroundFilter = document.getElementById('background-filter')
-    backgroundFilter.classList.remove('d-none')
+    backgroundFilter.classList.add('display-message')
 
     this.displayLogo();
     this.displayText();
@@ -162,10 +162,6 @@ export default class extends Controller {
 
         text.insertAdjacentHTML('beforeend', `<h2 class="completion-title">Well done, ${userFirstName}!</h2>`);
         this.setEncouragement(text);
-
-        setTimeout(() => {
-          this.resetMessage();
-        }, this.displayTime);
       })
       .catch(error => console.error("Error fetching session data:", error));
   }
@@ -182,28 +178,5 @@ export default class extends Controller {
     components.forEach((component) => {
       component.style.setProperty('--logo-animation-duration', duration);
     });
-  }
-
-  closemodal(event) {
-    if (event.Target = this.modalcrossTarget) {
-
-      const logo = document.getElementById('logo-container')
-      const topLine = logo.querySelector('.logo-line.top');
-      const logoCircle = logo.querySelector('#logo-circle');
-      const bottomLine = logo.querySelector('.logo-line.bottom');
-      this.setLogoAnimationDuration([topLine, logoCircle, bottomLine], '0.5s');
-      topLine.classList.remove('show');
-      logoCircle.classList.remove('show');
-      bottomLine.classList.remove('show');
-
-
-      setTimeout(() => {
-        const text = document.getElementById('text-container');
-        text.innerHTML = '';
-        this.completionMessageTarget.classList.remove('display-message');
-        const backgroundFilter = document.getElementById('background-filter')
-        backgroundFilter.classList.add('d-none')
-      }, 500);
-    }
   }
 }

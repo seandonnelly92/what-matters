@@ -683,6 +683,34 @@ export default class extends Controller {
     this.setAllLogLines();
   }
 
+  // Method related to completion message
+  closeCompletionMessage(event) {
+    const logo = document.getElementById('logo-container')
+    const topLine = logo.querySelector('.logo-line.top');
+    const logoCircle = logo.querySelector('#logo-circle');
+    const bottomLine = logo.querySelector('.logo-line.bottom');
+
+    this.setLogoAnimationDuration([topLine, logoCircle, bottomLine], '0.5s');
+    topLine.classList.remove('show');
+    logoCircle.classList.remove('show');
+    bottomLine.classList.remove('show');
+
+    setTimeout(() => {
+      const text = document.getElementById('text-container');
+      text.innerHTML = '';
+      const completionMessage = document.getElementById('completion-message');
+      completionMessage.classList.remove('display-message');
+      const backgroundFilter = document.getElementById('background-filter')
+      backgroundFilter.classList.remove('display-message')
+    }, 500);
+  }
+
+  setLogoAnimationDuration(components, duration) {
+    components.forEach((component) => {
+      component.style.setProperty('--logo-animation-duration', duration);
+    });
+  }
+
   // Date helper methods
   datesDifferenceInDays(date1, date2) {
     const differenceInMilliseconds = date1 - date2;
