@@ -30,8 +30,8 @@
 
 .dot {
   position: absolute;
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: 70px;
   background-color: $light-gray;
   border-style: dotted;
   border-color: $primary;
@@ -41,6 +41,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
+
   &.completed {
     background-color: #045436;
     // border-style: dotted;
@@ -49,24 +51,29 @@
 
 .line {
   position: absolute;
-  top: 0; /* Start the line from the top of the card */
   left: 50%; /* Position the line horizontally in the center of the circle */
   transform: translateX(-50%);
-  height: 100%; /* Full height of the card */
+  height: 50%; /* Full height of the card */
   width: 2px; /* Width of the line */
   background-color: $primary; /* Color of the line */
-    &.completed {
-      border: none;
-      border-top: 1px dotted black;
-    }
+
+  &.top {
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+
+  &.completed {
+    border: none;
+    border-top: 1px dotted black;
+  }
 }
 
 .text {
   margin-bottom: 0px;
   margin-top: 5px;
-    &.completed {
-      // color: #045436;
-  }
 }
 
 #today-message {

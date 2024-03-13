@@ -2,15 +2,16 @@
 <% logs.each_with_index do |log, index| %>
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
-      <div class="col-6 left">
+      <div class="col-7 left">
         <%= render partial: 'shared/category_chip', locals: { habit: log.habit } %>
         <h2 class = "text" data-log-click-target='message'><b><%= log.format_message %></b></h2>
         <p class = "text" data-log-click-target='date' ><%= log.format_date_message %></p>
         <p data-log-scroll-target="today"></p>
       </div>
-      <div class="col-6 right">
-        <div class="line"></div>
+      <div class="col-5 right">
+        <div class="line top"></div>
         <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle"></span>
+        <div class="line bottom"></div>
       </div>
     </div>
   </div>

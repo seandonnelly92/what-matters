@@ -82,7 +82,7 @@ export default class extends Controller {
     })
     .then((resp) => resp.json())
     .then((data) => {
-      this.messageTarget.innerText = data.message;
+      this.messageTarget.innerHTML = `<b>${data.message}</b>`;
       this.circleTarget.classList.remove("completed");
 
       this.completionListener();
@@ -116,7 +116,7 @@ export default class extends Controller {
     .then((resp) => resp.json())
     .then((data) => {
       this.habitTitle = data.habit;
-      this.messageTarget.innerText = data.message;
+      this.messageTarget.innerHTML = `<b>${data.message}</b>`;
       this.dateTarget.innerText - data.date;
       this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
