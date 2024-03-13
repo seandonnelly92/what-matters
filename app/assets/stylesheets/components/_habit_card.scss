@@ -55,8 +55,9 @@
   transform: translateX(-50%);
   height: 50%; /* Full height of the card */
   width: 2px; /* Width of the line */
-  background-color: $primary; /* Color of the line */
+  background-color: $green; /* Color of the line */
 
+  // Determines absolute positioning of the top and bottom lines
   &.top {
     top: 0;
   }
@@ -65,9 +66,19 @@
     bottom: 0;
   }
 
+  // Determines formats of the lines for different clasess (i.e. habit stages)
+  &.missed {
+    background-color: transparent;
+  }
+
+  &.pending {
+    background-color: gray;
+  }
+
   &.completed {
-    border: none;
-    border-top: 1px dotted black;
+    background-color: $blue;
+    // border: none;
+    // border-top: 1px dotted black;
   }
 }
 

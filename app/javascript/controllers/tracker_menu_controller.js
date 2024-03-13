@@ -50,9 +50,9 @@ export default class extends Controller {
       console.log(lineBottom);
 
       if (logs.indexOf(log) === 0) {
-        log.classList.add('blank');
+        lineTop.classList.add('blank');
       }
-      
+
     });
 
 
