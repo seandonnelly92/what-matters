@@ -117,7 +117,8 @@ export default class extends Controller {
     .then((data) => {
       this.habitTitle = data.habit;
       this.messageTarget.innerHTML = `<b>${data.message}</b>`;
-      this.dateTarget.innerText - data.date;
+      // this.dateTarget.innerText - data.date;
+
       this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
 
