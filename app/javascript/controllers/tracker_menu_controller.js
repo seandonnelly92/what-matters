@@ -280,24 +280,18 @@ export default class extends Controller {
 
   yearInputScroll(clickedMenu, action) {
     const scrollUp = clickedMenu.querySelector('.input-menu .up');
-    console.log(scrollUp);
     const scrollDown = clickedMenu.querySelector('.input-menu .down');
-    console.log(scrollDown);
 
     if (action === 'add') {
-      console.log("yearInputScroll added");
       scrollUp.addEventListener('click', this.boundYearInputScrollEvent);
       scrollDown.addEventListener('click', this.boundYearInputScrollEvent);
     } else if (action === 'remove') {
-      console.log("yearInputScroll removed");
       scrollUp.removeEventListener('click', this.boundYearInputScrollEvent)
       scrollDown.removeEventListener('click', this.boundYearInputScrollEvent)
     }
   }
 
   yearInputScrollEvent(e) {
-    console.log("YEAR INPUT SCROLL EVENT !!!");
-    console.log(e);
     const years = this.yearMenuTarget.querySelectorAll('a');
     const selectedDate = new Date(this.selectedTarget.dataset.date);
     const activeYear = selectedDate.getFullYear().toString();
@@ -308,7 +302,6 @@ export default class extends Controller {
     } else if (e.currentTarget.classList.contains('down')) {
       direction = 1;
     }
-    console.log(`Direction is: ${direction}`);
     years.forEach((year) => {
       year.innerHTML = parseInt(year.innerHTML, 10) + direction;
       if (year.innerHTML === activeYear) {
@@ -364,11 +357,8 @@ export default class extends Controller {
     const activeDate = new Date(this.selectedTarget.dataset.date)
     if (type === 'month') {
       const activeMonth = activeDate.toLocaleDateString('en-US', { month: 'long' });
-      console.log(`Active month: ${activeMonth}`);
       const links = clickedMenu.querySelectorAll('a');
       links.forEach((l) => {
-        console.log(l);
-        console.log(`Link month: ${l.innerHTML}`);
         if (l.innerHTML === activeMonth) {
           l.classList.add('active')
         } else {
@@ -377,11 +367,8 @@ export default class extends Controller {
       });
     } else if (type === 'year') {
       const activeYear = `${activeDate.getFullYear()}`;
-      console.log(`Active year: ${activeYear}`);
       const links = clickedMenu.querySelectorAll('a');
       links.forEach((l) => {
-        console.log(l);
-        console.log(`Link year: ${l.innerHTML}`);
         if (l.innerHTML === activeYear) {
           l.classList.add('active')
         } else {
