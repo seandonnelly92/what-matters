@@ -41,16 +41,25 @@
       <%= render "logs", logs: @logs %>
       <%= render 'habits/habit_button_card'%>
     </div>
-
-    <div id="completion-message">
-      <div id="logo-container">
-        <div class="logo-line top"></div>
-        <div id="logo-circle"></div>
-        <div class="logo-line bottom"></div>
+    <%# <div id="background-filter" class="tooltip-back d-none"> %>
+    <%# Must put remove d-none class at the point of completion %>
+      <div id="completion-message">
+      <div id="logo-and-title" class="d-flex flex-row">
+        <div id="logo-container">
+          <div class="logo-line top"></div>
+          <div id="logo-circle"></div>
+          <div class="logo-line bottom"></div>
+        </div>
+          <div id="text-container"></div>
       </div>
-      <div id="text-container"></div>
+        <p>You’re doing great. Keep going! You’re doing great. Keep going! You’re doing great. Keep going! </p>
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+        <dotlottie-player src="https://lottie.host/5bb9495f-cf8a-4148-a6fe-34a7d70907ea/XWHFZiF5in.json" background="transparent" speed="1" id="lottie-animation" style="width: 300px; height: 500px" loop autoplay></dotlottie-player>
+        <h3 class="mb-2"><i class="fa-solid fa-xmark" role="button" data-tooltip-target="ttcross" data-action="click->tooltip#cross"></i></h3>
+
+      </div>
     </div>
-  </div>
+  <%# </div> %>
 
   <div id="tracker-side-menu">
     <div id="side-menu-selector" data-action="click->tracker-menu#openSideMenu" data-tracker-menu-target="sideMenuSelector"><i class="fa-solid fa-caret-left"></i></div>

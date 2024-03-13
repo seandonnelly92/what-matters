@@ -119,7 +119,6 @@ export default class extends Controller {
       this.messageTarget.innerText = data.message;
       this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
-
       this.completeMessage();
       this.resetListener();
     })
@@ -156,7 +155,7 @@ export default class extends Controller {
       .then(data => {
         const userFirstName = data.user_name;
 
-        text.insertAdjacentHTML('beforeend', `<h3 class="completion-title">Well done, ${userFirstName}!</h3>`);
+        text.insertAdjacentHTML('beforeend', `<h2 class="completion-title">Well done, ${userFirstName}!</h2>`);
         this.setEncouragement(text);
 
         setTimeout(() => {
@@ -186,13 +185,13 @@ export default class extends Controller {
     logoCircle.classList.remove('show');
     bottomLine.classList.remove('show');
 
-    setTimeout(() => {
-      const completionMessage = document.getElementById('completion-message');
-      completionMessage.classList.remove('display-message');
+    // setTimeout(() => {
+    //   const completionMessage = document.getElementById('completion-message');
+    //   completionMessage.classList.remove('display-message');
 
-      const text = document.getElementById('text-container');
-      text.innerHTML = '';
-    }, 1000);
+    //   const text = document.getElementById('text-container');
+    //   text.innerHTML = '';
+    // }, 1000);
   }
 
   setLogoAnimationDuration(components, duration) {
