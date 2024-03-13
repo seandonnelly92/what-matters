@@ -29,12 +29,12 @@
   top: 0;
   height: 100vh;
   width: 100vw;
-  background-color: rgba($color: #193b33, $alpha: 0.8);
+  background-color: rgba($color: #102517, $alpha: 0.9);
   backdrop-filter: blur(5px);
-  filter: brightness(50%);
 }
 
 .tooltip-card {
+  position: fixed;
   background-color: white;
   border-radius: 20px;
   overflow: auto;
