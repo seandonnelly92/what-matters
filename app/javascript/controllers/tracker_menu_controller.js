@@ -568,8 +568,10 @@ export default class extends Controller {
       console.log(dayToday);
     } else {
       this.matchMenuScroll(null, false, this.todayDate);
-      const dayToday = this.daysTarget.querySelector('.t-day.today');
-      dayToday.click();
+      setTimeout(() => {
+        const dayToday = this.daysTarget.querySelector('.t-day.today');
+        dayToday.click();
+      }, 300);
     }
   }
 
