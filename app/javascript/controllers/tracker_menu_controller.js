@@ -447,7 +447,10 @@ export default class extends Controller {
       dayToday.click();
       console.log(dayToday);
     } else {
-      // Need to basically call the rebuild based on this.dateToday to build with today's date included
+      console.log(this.today);
+
+      // Need to basically call the matchScrollSelected based on this.dateToday which is on the other branch
+      // Needs to be merger first
     }
   }
 

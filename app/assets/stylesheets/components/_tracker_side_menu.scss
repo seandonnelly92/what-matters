@@ -22,13 +22,26 @@
 
 #side-menu-options {
   display: flex;
-  padding: 0 8px;
+  padding: 0;
   background-color: whitesmoke;
   border: 1px solid $green;
+
+  transform: scale(0);
+  transform-origin: right;
+  width: 0;
+
+  transition: transform 0.3 ease-out, width 0.3 ease-out;
+
+  &.show {
+    transform: scale(0);
+    width: auto;
+    padding: 0 8px;
+  }
 }
 
 .side-menu-btn {
   width: fit-content;
   padding: 4px 8px;
   margin: 6px 8px;
+
 }
