@@ -3,21 +3,24 @@ class Log < ApplicationRecord
 
   validates :date_time, presence: true
 
+  def trigger_message
+    if !habit.trigger.empty?
+      "#{habit.trigger}"
+    else
+      ""
+    end
+  end
+
+  def reward_message
+    if !habit.reward.empty?
+      "#{habit.reward}"
+    else
+      ""
+    end
+  end
+
   def format_message
-
-    # if date_time.to_date < Time.now.to_date
-    #   completed ? "#{habit.title.capitalize}": "'#{habit.title.capitalize}"
-    # elsif date_time.to_date == Time.now.to_date
-    #   completed ? "#{habit.title.capitalize}": "#{habit.title.capitalize}"
-    # else date_time.to_date > Time.now.to_date
-    # #   if habit.duration_in_minutes.present?
-    # #     "#{habit.title.capitalize} for #{habit.duration_in_minutes}"
-    # #   end
-    # #   "#{habit.title.capitalize}"
-    # # end
-
     "#{habit.title.capitalize}"
-    # end
   end
 
   def format_date_message
@@ -51,6 +54,4 @@ class Log < ApplicationRecord
       "on #{formatted_date} for #{habit.duration_in_minutes} minutes"
     end
   end
-
-
 end
