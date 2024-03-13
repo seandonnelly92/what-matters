@@ -440,13 +440,24 @@ export default class extends Controller {
     this.setMenuScroll(leftScrollPosition);
   }
 
+  // Reflects action of side-menu to go to today as selected
+  goToToday() {
+    const dayToday = this.daysTarget.querySelector('.t-day.today');
+    if (dayToday) {
+      dayToday.click();
+      console.log(dayToday);
+    } else {
+      // Need to basically call the rebuild based on this.dateToday to build with today's date included
+    }
+  }
+
+  // Date helper methods
   datesDifferenceInDays(date1, date2) {
     const differenceInMilliseconds = date1 - date2;
     const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     return differenceInDays;
   }
 
-  // Date helper methods
   dateToString(dateInput) {
     const date = new Date(dateInput);
 
