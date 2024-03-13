@@ -34,6 +34,14 @@
   height: 50%; /* Full height of the card */
   width: 2px; /* Width of the line */
   background: solid;
-  background-color: #E67E22 /* Color of the line */
+  background-color: $blue /* Color of the line */
 
+}
+
+.sun {
+  position: absolute;
+  color: $primary;
+  left: 38%;
+  top: 40%;
+  background: $body-bg;
 }
