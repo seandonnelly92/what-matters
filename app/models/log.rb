@@ -4,20 +4,7 @@ class Log < ApplicationRecord
   validates :date_time, presence: true
 
   def format_message
-
-    # if date_time.to_date < Time.now.to_date
-    #   completed ? "#{habit.title.capitalize}": "'#{habit.title.capitalize}"
-    # elsif date_time.to_date == Time.now.to_date
-    #   completed ? "#{habit.title.capitalize}": "#{habit.title.capitalize}"
-    # else date_time.to_date > Time.now.to_date
-    # #   if habit.duration_in_minutes.present?
-    # #     "#{habit.title.capitalize} for #{habit.duration_in_minutes}"
-    # #   end
-    # #   "#{habit.title.capitalize}"
-    # # end
-
     "#{habit.title.capitalize}"
-    # end
   end
 
   def format_date_message

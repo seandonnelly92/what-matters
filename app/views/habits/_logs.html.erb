@@ -9,8 +9,9 @@
         <p data-log-scroll-target="today"></p>
       </div>
       <div class="col-6 right">
-        <div class="line"></div>
-        <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle"></span>
+        <div class="first-line"></div>
+        <div class="last-line"></div>
+        <span class="dot <%= log.completed ? "completed" : "" %>" data-id="<%= log.id %>" data-log-click-target="circle" data-line-tracker-target="circle"></span>
       </div>
     </div>
   </div>
