@@ -22,13 +22,16 @@
 }
 
 .tooltip-back {
+  overflow: visible;
   position: fixed;
   z-index: 20;
   left: 0;
   top: 0;
   height: 100vh;
   width: 100vw;
-  background-color: rgba($color: black, $alpha: 0.7);
+  background-color: rgba($color: #193b33, $alpha: 0.8);
+  backdrop-filter: blur(5px);
+  filter: brightness(50%);
 }
 
 .tooltip-card {

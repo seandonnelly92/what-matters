@@ -126,7 +126,6 @@
 #completion-message {
   visibility: visible;
   opacity: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -189,12 +188,4 @@
   text-align: end;
   border-top: 2px dashed $green;
   padding: 0 4px;
-}
-
-#lottie-animation {
-  display: none;
-  position: sticky;
-  bottom: 0;
-  right: 0;
-  z-index: 20;
 }

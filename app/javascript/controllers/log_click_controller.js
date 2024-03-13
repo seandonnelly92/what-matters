@@ -7,11 +7,11 @@ export default class extends Controller {
     completed: String
   }
 
-  static targets = ["circle", "message"]
+  static targets = ["circle", "message", "modalcross", "completionMessage"]
 
   initialize() {
     this.timer = null;
-    this.pressTime = 2000; // Time user needs to press the habit circle for completion (in milliseconds)
+    this.pressTime = 1000 ; // Time user needs to press the habit circle for completion (in milliseconds)
     this.circleTarget.style.setProperty('--transition-duration', `${this.pressTime / 1000}s`);
 
     this.displayTime = 3000; // Time to display the completion message (in milliseconds)
@@ -128,6 +128,9 @@ export default class extends Controller {
     const completionMessage = document.getElementById('completion-message');
     completionMessage.classList.add('display-message');
 
+    const backgroundFilter = document.getElementById('background-filter')
+    backgroundFilter.classList.remove('d-none')
+
     this.displayLogo();
     this.displayText();
   }
@@ -173,30 +176,32 @@ export default class extends Controller {
       })
   }
 
-  resetMessage() {
-    const logo = document.getElementById('logo-container')
-    const topLine = logo.querySelector('.logo-line.top');
-    const logoCircle = logo.querySelector('#logo-circle');
-    const bottomLine = logo.querySelector('.logo-line.bottom');
-
-    this.setLogoAnimationDuration([topLine, logoCircle, bottomLine], '0.5s');
-
-    topLine.classList.remove('show');
-    logoCircle.classList.remove('show');
-    bottomLine.classList.remove('show');
-
-    // setTimeout(() => {
-    //   const completionMessage = document.getElementById('completion-message');
-    //   completionMessage.classList.remove('display-message');
-
-    //   const text = document.getElementById('text-container');
-    //   text.innerHTML = '';
-    // }, 1000);
-  }
-
   setLogoAnimationDuration(components, duration) {
     components.forEach((component) => {
       component.style.setProperty('--logo-animation-duration', duration);
     });
+  }
+
+  closemodal(event) {
+    if (event.Target = this.modalcrossTarget) {
+
+      const logo = document.getElementById('logo-container')
+      const topLine = logo.querySelector('.logo-line.top');
+      const logoCircle = logo.querySelector('#logo-circle');
+      const bottomLine = logo.querySelector('.logo-line.bottom');
+      this.setLogoAnimationDuration([topLine, logoCircle, bottomLine], '0.5s');
+      topLine.classList.remove('show');
+      logoCircle.classList.remove('show');
+      bottomLine.classList.remove('show');
+
+
+      setTimeout(() => {
+        const text = document.getElementById('text-container');
+        text.innerHTML = '';
+        this.completionMessageTarget.classList.remove('display-message');
+        const backgroundFilter = document.getElementById('background-filter')
+        backgroundFilter.classList.add('d-none')
+      }, 500);
+    }
   }
 }
