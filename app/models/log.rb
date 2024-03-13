@@ -4,7 +4,26 @@ class Log < ApplicationRecord
   validates :date_time, presence: true
 
   def format_message
+
+    # if date_time.to_date < Time.now.to_date
+    #   completed ? "#{habit.title.capitalize} completed on ": "'#{habit.title.capitalize}' not completed for"
+    # elsif date_time.to_date == Time.now.to_date
+    #   completed ? "Well done for completing your habit, '#{habit.title.capitalize}' today!": " Remember to '#{habit.title.capitalize}' today!' You set your trigger to be '#{habit.trigger}'"
+    # else date_time.to_date > Time.now.to_date
+    #   if habit.duration_in_minutes.present?
+    #     "#{habit.title.capitalize} for #{habit.duration_in_minutes} minutes on #{formatted_date}"
+    #   else
+    #     "#{habit.title.capitalize} on #{formatted_date}"
+    #   end
+    # end
+
+    "#{habit.title.capitalize}"
+  end
+
+  def format_date_message
     day = date_time.strftime("%d").to_i
+    raise
+    formatted_date = "#{day}#{ordinal_suffix(day)} #{date_time.strftime("%B")}"
 
     def ordinal_suffix(day)
       if (11..13).include?(day % 100)
@@ -23,18 +42,18 @@ class Log < ApplicationRecord
       end
     end
 
-    formatted_date = "#{day}#{ordinal_suffix(day)} #{date_time.strftime("%B")}"
+    # if date_time.to_date < Time.now.to_date
+    #   completed ? " #{formatted_date}": "#{formatted_date}"
+    # elsif date_time.to_date == Time.now.to_date
+    #   completed ? "Well done for completing your habit, '#{habit.title.capitalize}' today!": " Remember to '#{habit.title.capitalize}' today!' You set your trigger to be '#{habit.trigger}'"
+    # else date_time.to_date > Time.now.to_date
+    #   if habit.duration_in_minutes.present?
+    #     "#{habit.title.capitalize} for #{habit.duration_in_minutes} minutes on #{formatted_date}"
+    #   else
+    #     "#{habit.title.capitalize} on #{formatted_date}"
 
-    if date_time.to_date < Time.now.to_date
-      completed ? "Well done! '#{habit.title.capitalize}' completed on  #{formatted_date}": "'#{habit.title.capitalize}' not completed for #{formatted_date}. Remember your trigger for this habit is '#{habit.trigger}!'"
-    elsif date_time.to_date == Time.now.to_date
-      completed ? "Well done for completing your habit, '#{habit.title.capitalize}' today!": " Remember to '#{habit.title.capitalize}' today!' You set your trigger to be '#{habit.trigger}'"
-    else date_time.to_date > Time.now.to_date
-      if habit.duration_in_minutes.present?
-        "#{habit.title.capitalize} for #{habit.duration_in_minutes} minutes on #{formatted_date}"
-      else
-        "#{habit.title.capitalize} on #{formatted_date}"
-      end
-    end
+    "#{formatted_date}"
   end
+
+
 end

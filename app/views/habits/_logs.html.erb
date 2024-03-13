@@ -1,19 +1,11 @@
-<% today_done = false %>
-<% today = Date.today.strftime("%Y-%m-%d") %>
 
 <% logs.each_with_index do |log, index| %>
-  <% log_date = log.date_time.strftime("%Y-%m-%d") %>
-  <% if today == log_date && !today_done %>
-    <% add_class = 'date-start' %>
-    <% today_done = true %>
-  <% end %>
-
-  <div class="habit-card d-flex <%= add_class %>" data-controller="log-click" data-date="<%=log.date_time.strftime("%Y-%m-%d") %>" data-tracker-menu-target="log" data-log-click-completed-value="<% log.completed  %>">
-
+  <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" data-log-click-completed-value="<% log.completed  %>">
     <div class="row">
       <div class="col-6 left">
         <%= render partial: 'shared/category_chip', locals: { habit: log.habit } %>
-        <h6 class = "text" data-log-click-target='message'><%= log.format_message %></h6>
+        <h1 class = "text" data-log-click-target='message'><%= log.format_message %></h1>
+        <h1 class = "text" data-log-click-target='date' ><%= log.format_date_message %></h1>
         <p data-log-scroll-target="today"></p>
       </div>
       <div class="col-6 right">
