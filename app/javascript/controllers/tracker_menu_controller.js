@@ -521,10 +521,10 @@ export default class extends Controller {
           totalDays = menuDays.length;
           console.log(`Menu expanded to the right with totalDays now: ${totalDays}`);
         }
-      } else {
-        if (loopBreak > 15) break;
-        loopBreak += 1;
       }
+      if (loopBreak > 5) break;
+      loopBreak += 1;
+
 
       console.log(`Counter is: ${dayCounter}`);
       day = menuDays[dayCounter];
@@ -567,10 +567,11 @@ export default class extends Controller {
       dayToday.click();
       console.log(dayToday);
     } else {
-      console.log(this.today);
-
-      // Need to basically call the matchScrollSelected based on this.dateToday which is on the other branch
-      // Needs to be merger first
+      this.matchMenuScroll(null, false, this.todayDate);
+      setTimeout(() => {
+        const dayToday = this.daysTarget.querySelector('.t-day.today');
+        dayToday.click();
+      }, 300);
     }
   }
 
