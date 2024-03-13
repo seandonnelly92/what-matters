@@ -19,6 +19,9 @@ Relationship.destroy_all
 puts 'destroying all Habits'
 Habit.destroy_all
 
+puts 'destroying all Reviews'
+Review.destroy_all
+
 puts 'destroying all Users...'
 User.destroy_all
 
@@ -74,7 +77,6 @@ puts 'seeding Relationships...'
 # )
 
 puts 'relationship (Tin Man to Lion) creates successfully.'
-
 
 puts 'seeding Habits...'
 scare_crow_habit = Habit.create!(
@@ -176,7 +178,6 @@ scare_crow_habit_future_dates.each do |datetime|
     updated_at: datetime
   )
 end
-
 
 tin_man_habit_dates = [
   "2023-12-20 11:00:00",
@@ -300,3 +301,354 @@ encouragements = [
 encouragements.each { |e| Encouragement.create(encouragement: e) }
 
 puts "Encouragements seeded successfully"
+
+# Adding Jasper as user
+jasper = User.new(
+  email: "jasper@lewagon.com",
+  password: "password",
+  first_name: "Jasper",
+  last_name: "Warmenhoven",
+  nickname: "Jap",
+  date_of_birth: DateTime.new(1995, 10, 18),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+jasper.save
+
+# Push ups habbit
+pushups = Habit.create(
+  user: jasper,
+  title: "Morning push-ups",
+  category: "Wellbeing",
+  identity_goal: "a productive morning person",
+  trigger: "before shower",
+  reward: "a coffee",
+  duration_in_minutes: 10,
+  week_recurrence: 1,
+  current_streak: 0,
+  best_streak: 0,
+  days_of_week: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  start_time: "2024-03-06 07:30:00.000000000 +0000"
+)
+
+pushup_past_dates = [
+  '2024-02-01',
+  '2024-02-02',
+  '2024-02-05',
+  '2024-02-06',
+  '2024-02-07',
+  '2024-02-08',
+  '2024-02-09',
+  '2024-02-12',
+  '2024-02-13',
+  '2024-02-14',
+  '2024-02-15',
+  '2024-02-16',
+  '2024-02-19',
+  '2024-02-20',
+  '2024-02-21',
+  '2024-02-22',
+  '2024-02-23',
+  '2024-02-26',
+  '2024-02-27',
+  '2024-02-28',
+  '2024-02-29',
+  '2024-03-01',
+  '2024-03-04',
+  '2024-03-05',
+  '2024-03-06',
+  '2024-03-07',
+  '2024-03-08',
+  '2024-03-11',
+  '2024-03-12'
+
+]
+
+pushup_past_dates.each do |date|
+  datetime = "#{date} 07:30:00"
+  Log.create(
+    habit: pushups,
+    date_time: datetime,
+    completed: rand <= 0.7
+  )
+end
+
+pushup_future_dates = [
+  '2024-03-13',
+  '2024-03-14',
+  '2024-03-15',
+  '2024-03-18',
+  '2024-03-19',
+  '2024-03-20',
+  '2024-03-21',
+  '2024-03-22',
+  '2024-03-25',
+  '2024-03-26',
+  '2024-03-27',
+  '2024-03-28',
+  '2024-03-29',
+  '2024-04-01',
+  '2024-04-02',
+  '2024-04-03',
+  '2024-04-04',
+  '2024-04-05',
+  '2024-04-08',
+  '2024-04-09',
+  '2024-04-10',
+  '2024-04-11',
+  '2024-04-12',
+  '2024-04-15',
+  '2024-04-16',
+  '2024-04-17',
+  '2024-04-18',
+  '2024-04-19',
+  '2024-04-22',
+  '2024-04-23',
+  '2024-04-24',
+  '2024-04-25',
+  '2024-04-26',
+  '2024-04-29',
+  '2024-04-30',
+  '2024-05-01',
+  '2024-05-02',
+  '2024-05-03',
+  '2024-05-06',
+  '2024-05-07',
+  '2024-05-08',
+  '2024-05-09',
+  '2024-05-10',
+  '2024-05-13',
+  '2024-05-14',
+  '2024-05-15',
+  '2024-05-16',
+  '2024-05-17',
+  '2024-05-20',
+  '2024-05-21',
+  '2024-05-22',
+  '2024-05-23',
+  '2024-05-24',
+  '2024-05-27',
+  '2024-05-28',
+  '2024-05-29',
+  '2024-05-30',
+  '2024-05-31',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05',
+  '2024-06-06',
+  '2024-06-07',
+  '2024-06-10',
+  '2024-06-11',
+  '2024-06-12',
+  '2024-06-13',
+  '2024-06-14',
+  '2024-06-17',
+  '2024-06-18',
+  '2024-06-19',
+  '2024-06-20',
+  '2024-06-21',
+  '2024-06-24',
+  '2024-06-25',
+  '2024-06-26',
+  '2024-06-27',
+  '2024-06-28'
+]
+
+pushup_future_dates.each do |date|
+  datetime = "#{date} 07:30:00"
+  Log.create(
+    habit: pushups,
+    date_time: datetime,
+    completed: false
+  )
+end
+
+# Planning habbit
+planning = Habit.create(
+  user: jasper,
+  title: "Weekly planning",
+  category: "Learning",
+  identity_goal: "more organised",
+  trigger: "before lunch",
+  reward: "watch Netflix over lunch",
+  duration_in_minutes: 30,
+  week_recurrence: 1,
+  current_streak: 0,
+  best_streak: 0,
+  days_of_week: ["Saturday"],
+  start_time: "2024-03-06 11:30:00.000000000 +0000"
+)
+
+planning_past_dates = [
+  "2024-02-03",
+  "2024-02-10",
+  "2024-02-17",
+  "2024-02-24",
+  "2024-03-02",
+  "2024-03-09"
+]
+
+planning_past_dates.each do |date|
+  datetime = "#{date} 11:30:00"
+  Log.create(
+    habit: planning,
+    date_time: datetime,
+    completed: true
+  )
+end
+
+planning_future_dates = [
+  "2024-03-16",
+  "2024-03-23",
+  "2024-03-30",
+  "2024-04-06",
+  "2024-04-13",
+  "2024-04-20",
+  "2024-04-27",
+  "2024-05-04",
+  "2024-05-11",
+  "2024-05-18",
+  "2024-05-25",
+  "2024-06-01",
+  "2024-06-08",
+  "2024-06-15",
+  "2024-06-22",
+  "2024-06-29",
+]
+
+planning_future_dates.each do |date|
+  datetime = "#{date} 11:30:00"
+  Log.create(
+    habit: planning,
+    date_time: datetime,
+    completed: false
+  )
+end
+
+# Family visit habbit
+fam_visit = Habit.create(
+  user: jasper,
+  title: "Visit family back home",
+  category: "Family",
+  identity_goal: "a good son/brother",
+  trigger: "",
+  reward: "",
+  duration_in_minutes: 60,
+  week_recurrence: 4,
+  current_streak: 0,
+  best_streak: 0,
+  days_of_week: ["Sunday"],
+  start_time: "2024-03-06 10:00:00.000000000 +0000"
+)
+
+fam_visit_past_dates = [
+  "2023-12-31",
+  "2024-01-28",
+  "2024-02-25"
+]
+
+fam_visit_past_dates.each do |date|
+  datetime = "#{date} 10:00:00"
+  Log.create(
+    habit: fam_visit,
+    date_time: datetime,
+    completed: rand <= 0.9
+  )
+end
+
+fam_visit_future_dates = [
+  "2024-03-24",
+  "2024-04-21",
+  "2024-05-19",
+  "2024-06-16",
+  "2024-07-14"
+]
+
+fam_visit_future_dates.each do |date|
+  datetime = "#{date} 10:00:00"
+  Log.create(
+    habit: fam_visit,
+    date_time: datetime,
+    completed: false
+  )
+end
+
+# Adding Sean as user
+sean = User.new(
+  email: "sean@lewagon.com",
+  password: "password",
+  first_name: "Sean",
+  last_name: "Donelly",
+  nickname: "S",
+  date_of_birth: DateTime.new(1995, 1, 1),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+sean.save
+
+# Adding Tom as user
+tom = User.new(
+  email: "tom@lewagon.com",
+  password: "password",
+  first_name: "Tom",
+  last_name: "Ellwod",
+  nickname: "T",
+  date_of_birth: DateTime.new(1995, 1, 1),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+tom.save
+
+# Adding Tom as user
+rowan = User.new(
+  email: "rowan@lewagon.com",
+  password: "password",
+  first_name: "Rowan",
+  last_name: "Heptinstall",
+  nickname: "R",
+  date_of_birth: DateTime.new(1995, 1, 1),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+rowan.save
+
+# Adding reviews
+Review.create(
+  user: sean,
+  content: "Just joined What Matters, looks very promising!!",
+  rating: 4,
+  created_at: DateTime.new(2024, 3, 12),
+  updated_at: DateTime.new(2024, 3, 12)
+)
+
+Review.create(
+  user: tom,
+  content: "App does seem to have some glitches. Hoping this will be fixed soon @DWM team!",
+  rating: 2,
+  created_at: DateTime.new(2024, 1, 15),
+  updated_at: DateTime.new(2024, 1, 15)
+)
+
+Review.create(
+  user: tom,
+  content: "Thanks for the recent updates. Loving the app and how it has helped me follow through with what matters.",
+  rating: 5,
+  created_at: DateTime.new(2024, 2, 27),
+  updated_at: DateTime.new(2024, 2, 27)
+)
+
+Review.create(
+  user: rowan,
+  content: "Awesome app! Much better than the Atoms app released last month..",
+  rating: 5,
+  created_at: DateTime.new(2024, 3, 5),
+  updated_at: DateTime.new(2024, 3, 5)
+)
