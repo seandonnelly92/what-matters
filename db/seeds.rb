@@ -19,6 +19,9 @@ Relationship.destroy_all
 puts 'destroying all Habits'
 Habit.destroy_all
 
+puts 'destroying all Reviews'
+Review.destroy_all
+
 puts 'destroying all Users...'
 User.destroy_all
 
@@ -301,11 +304,8 @@ puts "Encouragements seeded successfully"
 
 # Adding Jasper as user
 jasper = User.new(
-  email: "jasper@gmail.com",
-  encrypted_password: "password",
-  reset_password_token: "[reset_password_token_1]",
-  reset_password_sent_at: "[reset_password_sent_at_1]",
-  remember_created_at: "[remember_created_at_1]",
+  email: "jasper@lewagon.com",
+  password: "password",
   first_name: "Jasper",
   last_name: "Warmenhoven",
   nickname: "Jap",
@@ -461,7 +461,7 @@ pushup_future_dates.each do |date|
   Log.create(
     habit: pushups,
     date_time: datetime,
-    completed: rand <= 0.7
+    completed: false
   )
 end
 
@@ -493,7 +493,7 @@ planning_past_dates = [
 planning_past_dates.each do |date|
   datetime = "#{date} 11:30:00"
   Log.create(
-    habit: pushups,
+    habit: planning,
     date_time: datetime,
     completed: true
   )
@@ -521,7 +521,7 @@ planning_future_dates = [
 planning_future_dates.each do |date|
   datetime = "#{date} 11:30:00"
   Log.create(
-    habit: pushups,
+    habit: planning,
     date_time: datetime,
     completed: false
   )
@@ -534,7 +534,7 @@ fam_visit = Habit.create(
   category: "Family",
   identity_goal: "a good son/brother",
   trigger: "",
-  reward: "takeaway on return",
+  reward: "",
   duration_in_minutes: 60,
   week_recurrence: 4,
   current_streak: 0,
@@ -574,3 +574,50 @@ fam_visit_future_dates.each do |date|
     completed: false
   )
 end
+
+# Adding Sean as user
+sean = User.new(
+  email: "sean@lewagon.com",
+  password: "password",
+  first_name: "Sean",
+  last_name: "Donelly",
+  nickname: "S",
+  date_of_birth: DateTime.new(1995, 1, 1),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+sean.save
+
+# Adding Tom as user
+tom = User.new(
+  email: "tom@lewagon.com",
+  password: "password",
+  first_name: "Tom",
+  last_name: "Ellwod",
+  nickname: "T",
+  date_of_birth: DateTime.new(1995, 1, 1),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+tom.save
+
+# Adding Tom as user
+rowan = User.new(
+  email: "rowan@lewagon.com",
+  password: "password",
+  first_name: "Rowan",
+  last_name: "Heptinstall",
+  nickname: "R",
+  date_of_birth: DateTime.new(1995, 1, 1),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+rowan.save
+
+# Adding reviews
