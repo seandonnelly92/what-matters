@@ -68,3 +68,15 @@
   background-color: rgba($color: $pets, $alpha: 0.15);
   i {color: rgba($color: $pets, $alpha: 0.5)}
 }
+
+// HABIT SHOW PAGE (MY HABITS) - STREAK CHIPS
+
+#best {
+  background-color: rgba($color: $yellow, $alpha: 0.3);
+  color: $font-color;
+}
+
+#current {
+  background-color: rgba($color: $green, $alpha: 0.3);
+  color: $font-color;
+}

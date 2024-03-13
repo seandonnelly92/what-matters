@@ -97,7 +97,7 @@ class HabitsController < ApplicationController
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
-    @global_streak = global_streak
+    @global_streak = streak
     # raise
   end
 
@@ -107,7 +107,7 @@ class HabitsController < ApplicationController
 
   private
 
-  def global_streak
+  def streak
     totals = []
     @user_habits = current_user.habits
     if @user_habits.count > 1
