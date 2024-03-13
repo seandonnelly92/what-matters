@@ -27,14 +27,14 @@ export default class extends Controller {
     this.timer = null;
     this.scrollWait = 500;
 
-    this.pageSCroll = this.pageScroll.bind(this);
+    this.pageScroll = this.pageScroll.bind(this);
     this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
 
-    window.addEventListener('scroll', this.pageScroll.bind(this)); // Binding controller instance
+    window.addEventListener('scroll', this.pageScroll); // Binding controller instance
   }
 
   disconnect() {
-    window.removeEventListener('scroll', this.pageScroll.bind(this));
+    window.removeEventListener('scroll', this.pageScroll);
   }
 
   createMenu() {
