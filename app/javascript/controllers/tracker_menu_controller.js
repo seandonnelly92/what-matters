@@ -27,6 +27,9 @@ export default class extends Controller {
     this.timer = null;
     this.scrollWait = 500;
 
+    this.pageSCroll = this.pageScroll.bind(this);
+    this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
+
     window.addEventListener('scroll', this.pageScroll.bind(this)); // Binding controller instance
   }
 
@@ -256,13 +259,14 @@ export default class extends Controller {
 
   activateInputMenu(clickedMenu, type, action) {
     if (action === 'close') {
+      if (type === 'year') this.yearInputScroll(clickedMenu, 'remove');
+      this.menuInputChange(type, 'remove')
+
       clickedMenu.classList.remove('show')
       setTimeout(() => {
         clickedMenu.classList.remove('visible')
       }, 300); // Set timeout equal to the transition of the menu
 
-      if (type === 'year') this.yearInputScroll(clickedMenu, 'remove');
-      this.menuInputChange(type, 'remove')
     } else if (action === 'open') {
       this.inputMenuActive(clickedMenu, type);
 
@@ -276,16 +280,14 @@ export default class extends Controller {
 
   yearInputScroll(clickedMenu, action) {
     const scrollUp = clickedMenu.querySelector('.input-menu .up');
-    console.log(scrollUp);
     const scrollDown = clickedMenu.querySelector('.input-menu .down');
-    console.log(scrollDown);
 
     if (action === 'add') {
-      scrollUp.addEventListener('click', this.yearInputScrollEvent.bind(this));
-      scrollDown.addEventListener('click', this.yearInputScrollEvent.bind(this));
+      scrollUp.addEventListener('click', this.boundYearInputScrollEvent);
+      scrollDown.addEventListener('click', this.boundYearInputScrollEvent);
     } else if (action === 'remove') {
-      scrollUp.removeEventListener('click', this.yearInputScrollEvent.bind(this))
-      scrollDown.removeEventListener('click', this.yearInputScrollEvent.bind(this))
+      scrollUp.removeEventListener('click', this.boundYearInputScrollEvent)
+      scrollDown.removeEventListener('click', this.boundYearInputScrollEvent)
     }
   }
 
@@ -355,11 +357,8 @@ export default class extends Controller {
     const activeDate = new Date(this.selectedTarget.dataset.date)
     if (type === 'month') {
       const activeMonth = activeDate.toLocaleDateString('en-US', { month: 'long' });
-      console.log(`Active month: ${activeMonth}`);
       const links = clickedMenu.querySelectorAll('a');
       links.forEach((l) => {
-        console.log(l);
-        console.log(`Link month: ${l.innerHTML}`);
         if (l.innerHTML === activeMonth) {
           l.classList.add('active')
         } else {
@@ -368,11 +367,8 @@ export default class extends Controller {
       });
     } else if (type === 'year') {
       const activeYear = `${activeDate.getFullYear()}`;
-      console.log(`Active year: ${activeYear}`);
       const links = clickedMenu.querySelectorAll('a');
       links.forEach((l) => {
-        console.log(l);
-        console.log(`Link year: ${l.innerHTML}`);
         if (l.innerHTML === activeYear) {
           l.classList.add('active')
         } else {
