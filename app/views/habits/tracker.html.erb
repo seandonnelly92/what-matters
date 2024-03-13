@@ -53,8 +53,8 @@
   </div>
 
   <div id="tracker-side-menu">
-    <div id="side-menu-selector"><i class="fa-solid fa-caret-left"></i></div>
-    <div id="side-menu-options">
+    <div id="side-menu-selector" data-action="click->tracker-menu#openSideMenu" data-tracker-menu-target="sideMenuSelector"><i class="fa-solid fa-caret-left"></i></div>
+    <div id="side-menu-options" data-tracker-menu-target="sideMenu">
       <div class="primary-btn side-menu-btn" data-action="click->tracker-menu#goToToday">Go to today</div>
       <div class="primary-btn side-menu-btn">Habits <i class="fa-solid fa-caret-down"></i></div>
     </div>

@@ -11,7 +11,9 @@ export default class extends Controller {
     "yearMenu",
     "days",
     "selected",
-    "log"
+    "log",
+    "sideMenu",
+    "sideMenuSelector"
   ]
 
   connect() {
@@ -440,7 +442,26 @@ export default class extends Controller {
     this.setMenuScroll(leftScrollPosition);
   }
 
-  // Reflects action of side-menu to go to today as selected
+  // Actions related to tracker side-menu
+  openSideMenu(e) {
+    if (this.sideMenuTarget.classList.contains('show')) {
+      this.activateSideMenu('close');
+    } else {
+      this.activateSideMenu('open');
+    }
+  }
+
+  activateSideMenu(action) {
+    if (action === 'open') {
+      this.sideMenuTarget.classList.add('show');
+      this.sideMenuSelectorTarget.innerHTML = '<i class="fa-solid fa-caret-right"></i>';
+    } else if (action === 'close') {
+      this.sideMenuTarget.classList.remove('show');
+      this.sideMenuSelectorTarget.innerHTML = '<i class="fa-solid fa-caret-left"></i>';
+    }
+  }
+
+
   goToToday() {
     const dayToday = this.daysTarget.querySelector('.t-day.today');
     if (dayToday) {
