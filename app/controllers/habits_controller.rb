@@ -129,7 +129,6 @@ class HabitsController < ApplicationController
       @user_habits.last.update(best_streak: best_streak(logs))
       totals << @user_habits.last.current_streak
     end
-    totals.sum unless totals.include?(0)
   end
 
   def iterate_logs(logs)
