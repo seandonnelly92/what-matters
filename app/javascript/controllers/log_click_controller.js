@@ -168,10 +168,8 @@ export default class extends Controller {
 
     let lineClass;
     if (prevDot.classList.contains('completed') && currentDot.classList.contains('completed')) {
-      console.log("Completed it is!");
       lineClass = 'completed';
     } else {
-      console.log("Not completed");
       const currentDate = new Date(log.dataset.date);
       const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
 

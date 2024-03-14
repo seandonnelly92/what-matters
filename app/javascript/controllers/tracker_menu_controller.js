@@ -68,6 +68,8 @@ export default class extends Controller {
     const lineStart = prevLog.querySelector('.line.bottom');
     const lineEnd = log.querySelector('.line.top');
 
+    this.clearLogLineClasses([lineStart, lineEnd]);
+
     let lineClass;
     if (prevDot.classList.contains('completed') && currentDot.classList.contains('completed')) {
       lineClass = 'completed';
@@ -88,18 +90,19 @@ export default class extends Controller {
         // This means they are future (pending) logs
         lineClass = 'pending';
       } else {
-        lineClass = 'missed'
+        lineClass = 'missed';
       }
     }
     lineStart.classList.add(lineClass);
     lineEnd.classList.add(lineClass);
   }
 
-  setLogEvent(e) {
-    console.log("Hello from the other controller");
-    console.log(e);
-
-
+  clearLogLineClasses(logLines) {
+    logLines.forEach((logLine) => {
+      logLine.classList.remove('missed');
+      logLine.classList.remove('pending');
+      logLine.classList.remove('completed');
+    });
   }
 
   createMenu() {
@@ -675,14 +678,24 @@ export default class extends Controller {
     const innerHTML = e.currentTarget.innerHTML;
     const habitTitle = innerHTML.split('</i> ')[1];
 
+    this.updateHabitLabel(e.currentTarget, habitTitle);
+
     this.updateLogsDisplay(habitTitle);
+  }
+
+  updateHabitLabel(habit, habitTitle) {
+    if (habit.classList.contains('included')) {
+      habit.innerHTML = `<i class="fa-regular fa-square"></i> ${habitTitle}`;
+    } else {
+      habit.innerHTML = `<i class="fa-regular fa-square-check"></i> ${habitTitle}`;
+    }
+    habit.classList.toggle('included');
   }
 
   updateLogsDisplay(habitTitle) {
     const logs = this.logTargets;
-    console.log(logs);
     logs.forEach((log) => {
-      const logHabit = log.querySelector('log-habit-title');
+      const logHabit = log.querySelector('.log-habit-title');
       if (habitTitle === logHabit.innerText) {
         log.classList.toggle('hide-log');
       }
