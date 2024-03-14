@@ -89,6 +89,8 @@ export default class extends Controller {
       this.updateLogLines('previous');
       this.updateLogLines('next');
 
+      this.setGlobalStreak();
+
       this.completionListener();
     })
   }
@@ -121,7 +123,6 @@ export default class extends Controller {
     .then((data) => {
       this.habitTitle = data.habit;
       this.messageTarget.innerHTML = `${data.message}`;
-      // this.dateTarget.innerText - data.date;
 
       this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
@@ -210,6 +211,7 @@ export default class extends Controller {
 
     this.displayLogo();
     this.displayText();
+    this.updateStreak();
   }
 
   displayLogo () {
@@ -239,6 +241,62 @@ export default class extends Controller {
         this.setEncouragement(text);
       })
       .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  updateStreak() {
+    const messageStreak = document.getElementById('message-streak-container');
+    const streakText = messageStreak.querySelector('p');
+
+    const currentStreak = this.currentStreak();
+    streakText.innerText = currentStreak;
+
+    this.setGlobalStreak();
+
+    const updatedStreak = this.currentStreak();
+    setTimeout(() => {
+      streakText.classList.add('updating');
+      setTimeout(() => {
+        streakText.innerText = updatedStreak;
+        streakText.classList.remove('updating');
+      }, 800);
+    }, 500);
+  }
+
+  currentStreak() {
+    const fixedStreak = document.getElementById('fixed-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    return parseInt(streakText.innerText, 10);
+  }
+
+  // Set streak
+  setGlobalStreak() {
+    const logs = document.querySelectorAll('.habit-card');
+
+    let streak = 0;
+    for (const log of logs) {
+      if (log.classList.contains('hide-log')) continue;
+
+      const dot = log.querySelector('.dot');
+
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday) {
+        if (dot.classList.contains('completed')) streak += 1;
+      } else if (currentDate < this.todayDate) {
+        if (dot.classList.contains('completed')) {
+          streak += 1;
+        } else {
+          streak = 0;
+        }
+        console.log(`Current streak is: ${streak}`);
+      } else {
+        break;
+      }
+    }
+    const fixedStreak = document.getElementById('fixed-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    streakText.innerText = streak;
   }
 
   setEncouragement(container) {

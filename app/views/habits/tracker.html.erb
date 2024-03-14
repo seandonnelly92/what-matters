@@ -43,35 +43,37 @@
     </div>
 
 
-  <div id="tracker-side-menu">
-    <div id="side-menu-selector" data-action="click->tracker-menu#openSideMenu" data-tracker-menu-target="sideMenuSelector"><i class="fa-solid fa-caret-left"></i></div>
-    <div id="side-menu-options" data-tracker-menu-target="sideMenu">
-      <div id="side-menu-habits" data-tracker-menu-target="habitsList">
-        <% @habits.order(:title).each do |habit| %>
-          <a href="#" class="side-menu-habit included"><i class="fa-regular fa-square-check"></i> <%= habit.title %></a>
-        <% end %>
+    <div id="tracker-side-menu">
+      <div id="side-menu-selector" data-action="click->tracker-menu#openSideMenu" data-tracker-menu-target="sideMenuSelector"><i class="fa-solid fa-caret-left"></i></div>
+      <div id="side-menu-options" data-tracker-menu-target="sideMenu">
+        <div id="side-menu-habits" data-tracker-menu-target="habitsList">
+          <% @habits.order(:title).each do |habit| %>
+            <a href="#" class="side-menu-habit included"><i class="fa-regular fa-square-check"></i> <%= habit.title %></a>
+          <% end %>
+        </div>
+        <div class="primary-btn side-menu-btn" data-action="click->tracker-menu#goToToday">Go to today</div>
+        <div class="primary-btn side-menu-btn" data-action="click->tracker-menu#openHabitsFilter" data-tracker-menu-target="habitsButton">Select habits <i class="fa-solid fa-caret-down"></i></div>
       </div>
-      <div class="primary-btn side-menu-btn" data-action="click->tracker-menu#goToToday">Go to today</div>
-      <div class="primary-btn side-menu-btn" data-action="click->tracker-menu#openHabitsFilter" data-tracker-menu-target="habitsButton">Select habits <i class="fa-solid fa-caret-down"></i></div>
-    </div>
-  </div>
-
-  <%# COMPLETION MESSAGE %>
-  <div id="completion-message" class="col-10 col-md-4">
-    <div id="logo-and-title" class="d-flex flex-row">
-      <div id="logo-container">
-        <div class="logo-line top"></div>
-        <div id="logo-circle"></div>
-        <div class="logo-line bottom"></div>
-      </div>
-      <div id="text-container"></div>
     </div>
 
-    <%# Streak Container inside completion message %>
-    <%= render 'habits/streak_container'%>
+    <%# COMPLETION MESSAGE %>
+    <div id="completion-message" class="col-10 col-md-4">
+      <div id="logo-and-title" class="d-flex flex-row">
+        <div id="logo-container">
+          <div class="logo-line top"></div>
+          <div id="logo-circle"></div>
+          <div class="logo-line bottom"></div>
+        </div>
+        <div id="text-container"></div>
+      </div>
 
-    <%# Close Completion Message Cross %>
-    <h4 class="mb-2 mt-4"><i class="fa-solid fa-xmark ms-2" role="button" data-action="click->tracker-menu#closeCompletionMessage"></i></h4>
+      <%# Streak Container inside completion message %>
+      <div id="message-streak-container">
+        <%= render 'habits/streak_container'%>
+      </div>
+
+      <%# Close Completion Message Cross %>
+      <h4 class="mb-2 mt-4"><i class="fa-solid fa-xmark ms-2" role="button" data-action="click->tracker-menu#closeCompletionMessage"></i></h4>
     </div>
   </div>
 </div>

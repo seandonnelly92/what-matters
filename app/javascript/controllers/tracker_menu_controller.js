@@ -15,7 +15,7 @@ export default class extends Controller {
     "sideMenu",
     "sideMenuSelector",
     "habitsList",
-    "habitsButton"
+    "habitsButton",
   ]
 
   connect() {
@@ -60,6 +60,7 @@ export default class extends Controller {
       prevLog = log; // Set previous log equal to current for next loop iteration
       logCount += 1;
     }
+    this.setGlobalStreak();
   }
 
   setLogLine(log, prevLog) {
@@ -719,6 +720,43 @@ export default class extends Controller {
     this.setAllLogLines();
     this.scrollToSelected(true);
   }
+
+  // Set streak
+  setGlobalStreak() {
+    console.log("Updating the current streak!!!");
+    const logs = this.logTargets;
+
+    let streak = 0;
+    for (const log of logs) {
+      if (log.classList.contains('hide-log')) continue;
+
+      const dot = log.querySelector('.dot');
+
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday) {
+        if (dot.classList.contains('completed')) streak += 1;
+      } else if (currentDate < this.todayDate) {
+        if (dot.classList.contains('completed')) {
+          streak += 1;
+        } else {
+          streak = 0;
+        }
+        console.log(`Current streak is: ${streak}`);
+      } else {
+        break;
+      }
+    }
+
+    const fixedStreak = document.getElementById('fixed-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    console.log(streakText);
+    streakText.innerText = streak;
+    console.log("UPDATED THE STREAK");
+  }
+
+
 
   // Method related to completion message
   closeCompletionMessage(event) {
