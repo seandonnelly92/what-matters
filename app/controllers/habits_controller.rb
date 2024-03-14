@@ -1,4 +1,6 @@
 class HabitsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @habits = Habit.where(user: current_user).order(created_at: :desc)
     if @habits.blank?
