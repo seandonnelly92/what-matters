@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
+
+  # Define root path conditionally base don user authentication
+  authenticated :user do
+    root to: 'habits#index', as: :authenticated_root
+  end
+
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/application/fetch_user_name', to: 'application#fetch_user_name', as: :fetch_user_name
@@ -12,6 +18,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   get 'habits/tracker', to: 'habits#tracker'
+  get '/habits', to: 'habits#index'
   resources :habits, except: [:show]
   resources :logs, only: [:update]
   resources :relationships, only: %i[new create delete]
