@@ -244,7 +244,7 @@ export default class extends Controller {
   colorCircles(years, small = false) {
     const circles = this.tableTarget.querySelectorAll(`.${this.getCircleClass(small)}`);
     let delay = 0; // Initial delay in milliseconds
-    const delayIncrement = small ? 2 : 30; // Delay increment for each circle to create the animation effect
+    const delayIncrement = small ? 1 : 30; // Delay increment for each circle to create the animation effect
 
     circles.forEach(circle => {
       const circleYear = parseInt(circle.getAttribute('data-year'), 10);
