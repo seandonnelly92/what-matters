@@ -59,6 +59,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  // PREVENTING THE HIGHLIGHT ON IPHONE WHEN COMPLETING HABIT
+  -webkit-touch-callout: none; /* Disable touch callout */
+  -webkit-user-select: none; /* Disable user selection */
+  -khtml-user-select: none; /* Disable user selection for older versions of WebKit */
+  -moz-user-select: none; /* Disable user selection for Mozilla browsers */
+  -ms-user-select: none; /* Disable user selection for Internet Explorer */
+  user-select: none; /* Disable user selection for all browsers */
 
   &.completed {
     border: none;
