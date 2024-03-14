@@ -144,6 +144,7 @@ class HabitsController < ApplicationController
       closeness = past_dates.map { |array| Date.today - array.last.date_time.to_date } # Determines distance from today
       closest = closeness.each_with_index.min_by { |array, _| (array <=> 0).abs }[1] # finds index of the closest to today
       past_dates[closest].count # counts the current streak of completed true in that array
+      raise
     end
   end
 
