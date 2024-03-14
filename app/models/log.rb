@@ -5,7 +5,7 @@ class Log < ApplicationRecord
 
   def trigger_message
     if !habit.trigger.empty?
-      "#{habit.trigger}"
+      "#{habit.trigger.capitalize}"
     else
       ""
     end
@@ -13,7 +13,7 @@ class Log < ApplicationRecord
 
   def reward_message
     if !habit.reward.empty?
-      "#{habit.reward}"
+      "#{habit.reward.capitalize}"
     else
       ""
     end

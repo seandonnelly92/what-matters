@@ -12,10 +12,10 @@
     <div class="row">
       <div class="col-7 left">
         <%= render partial: 'shared/category_chip', locals: { habit: log.habit } %>
-        <p class = "chip bg-white opacity-75 <%= log.trigger_message.empty? ? 'd-none' : '' %>"><i class="fa-solid fa-bolt-lightning me-1"></i><%= log.trigger_message %></p>
+        <p class = "chip bg-white opacity-75 mt-1 <%= log.trigger_message.empty? ? 'd-none' : '' %>"><i class="fa-solid fa-bolt-lightning me-1"></i><%= log.trigger_message %></p>
         <h3 class = "message log-habit-title" data-log-click-target='message'><%= log.format_message %></h3>
         <p class = "message" data-log-click-target='date' ><%= log.format_date_message %></p>
-        <p class = "chip bg-white opacity-75 ><%=log.reward_message.empty? ? 'd-none' : '' %>"><i class="fa-solid fa-gift me-1"></i><%= log.reward_message %></p>
+        <p class = "chip bg-white opacity-75 mt-1 ><%=log.reward_message.empty? ? 'd-none' : '' %>"><i class="fa-solid fa-gift me-1"></i><%= log.reward_message %></p>
         <p data-log-scroll-target="today"></p>
       </div>
       <div class="col-5 right habit-connection">
