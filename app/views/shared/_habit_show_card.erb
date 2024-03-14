@@ -12,17 +12,17 @@
       <h3 class="habit-title"><%= habit.title.titleize %></h3>
       <% end %>
       <%# Category Chip (Render) %>
-      <%= render partial: 'shared/category_chip', locals: { habit: habit } %>
+      <div class="mb-2"><%= render partial: 'shared/category_chip', locals: { habit: habit } %></div>
       <%# Trigger Chip %>
       <% if habit.trigger.present? %>
-        <p class="chip "><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
+        <p class="chip mb-2"><i class="fa-solid fa-bolt-lightning me-1"></i><%= habit.trigger.capitalize %></p>
       <% end %>
       <%# Reward Chip %>
       <% if habit.reward.present? %>
-        <p class="chip"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
+        <p class="chip mb-2"><i class="fa-solid fa-gift me-1"></i><%= habit.reward.capitalize %></p>
       <% end %>
       <%# Time and duration %>
-      <p><i class="fa-regular fa-clock me-1"></i><%= habit.start_time.strftime("%H:%M") %> for <%= habit.duration_in_minutes %> minutes
+      <p><i class="fa-regular fa-clock me-1 mt-2"></i><%= habit.start_time.strftime("%H:%M") %> for <%= habit.duration_in_minutes %> minutes
       <% if habit.week_recurrence == 1 %>
         every week.
       <% elsif habit.week_recurrence == nil || habit.week_recurrence < 1 %>
