@@ -30,8 +30,6 @@ export default class extends Controller {
     this.timer = null;
     this.scrollWait = 500;
 
-    this.globalStreak = 0;
-
     this.pageScroll = this.pageScroll.bind(this);
     this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
     this.boundMenuInputChangeMonth = this.menuInputChangeMonth.bind(this);
@@ -749,16 +747,13 @@ export default class extends Controller {
         break;
       }
     }
-    this.globalStreak = streak;
+    // this.streakTarget.innerText = streak;
 
-    const elements = this.streakTargets;
-    console.log(elements);
-    elements.forEach((element) => {
-      console.log(element);
-      console.log(`Updating for streak: ${streak}`);
-      element.innerText = streak;
-    });
-    console.log(document.getElementById('fixed-streak-container'));
+    const fixedStreak = document.getElementById('fixed-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    console.log(streakText);
+    streakText.innerText = streak;
+    console.log("UPDATED THE STREAK");
   }
 
 
