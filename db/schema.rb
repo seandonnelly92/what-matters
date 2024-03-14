@@ -59,8 +59,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_133823) do
     t.string "reward"
     t.integer "duration_in_minutes"
     t.integer "week_recurrence"
-    t.integer "current_streak"
-    t.integer "best_streak"
+    t.integer "current_streak", default: 0
+    t.integer "best_streak", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.time "start_time"

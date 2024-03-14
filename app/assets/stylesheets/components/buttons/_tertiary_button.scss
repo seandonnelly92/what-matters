@@ -6,8 +6,21 @@ button {
 .tertiary-btn {
   justify-self: center;
   text-align: center;
-  text-decoration: underline;
   font-family: "lato", "sans serif";
   font-weight: 500;
   color: $blue;
+}
+
+.show-btn {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  p {
+    margin: 0;
+    text-decoration: underline;
+  }
+  i {
+    text-decoration: none;
+    margin: 0;
+  }
 }

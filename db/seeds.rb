@@ -31,7 +31,7 @@ Encouragement.destroy_all
 puts 'seeding Users...'
 scare_crow = User.create!(
   email: "scareyC@example.com",
-  encrypted_password: "password",
+  password: "password",
   reset_password_token: "[reset_password_token_1]",
   reset_password_sent_at: "[reset_password_sent_at_1]",
   remember_created_at: "[remember_created_at_1]",
