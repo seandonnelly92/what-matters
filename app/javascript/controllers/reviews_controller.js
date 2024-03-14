@@ -31,7 +31,7 @@ export default class extends Controller {
 
   hideForm(e) {
     this.formDisplayTarget.classList.remove('show')
-    e.target.innerText = 'Leave a review';
+    e.target.innerText = 'Leave a success story';
 
     e.target.addEventListener('click', this.showForm);
     e.target.removeEventListener('click', this.hideForm);
@@ -143,22 +143,22 @@ export default class extends Controller {
 
   recentSort(e) {
     if (e) e.preventDefault();
-    this.updateReviews('/reviews/sort_recent', 'Reviews - Recent');
+    this.updateReviews('/reviews/sort_recent', 'Success Stories - Recent');
   }
 
   ratingHighSort(e) {
     if (e) e.preventDefault();
-    this.updateReviews('/reviews/sort_rating_high', 'Reviews - High to low');
+    this.updateReviews('/reviews/sort_rating_high', 'Success Stories - High to low');
   }
 
   ratingLowSort(e) {
     if (e) e.preventDefault();
-    this.updateReviews('/reviews/sort_rating_low', 'Reviews - Low to high');
+    this.updateReviews('/reviews/sort_rating_low', 'Success Stories - Low to high');
   }
 
   myReviewsSort(e) {
     if (e) e.preventDefault();
-    this.updateReviews('/reviews/sort_my_reviews', 'Reviews - My reviews');
+    this.updateReviews('/reviews/sort_my_reviews', 'Success Stories - My Success Stories');
   }
 
   updateReviews(url, label) {

@@ -109,12 +109,6 @@ class HabitsController < ApplicationController
 
   private
 
-  def demo_global_streak
-      global_streak = 24
-      # When a user checks off a log.completed = true
-      global_streak += 1
-  end
-
   def streak
     totals = []
     @user_habits = current_user.habits
@@ -131,7 +125,7 @@ class HabitsController < ApplicationController
       @user_habits.last.update(best_streak: best_streak(logs))
       totals << @user_habits.last.current_streak
     end
-    totals.sum unless totals.include?(0)
+    # totals.sum unless totals.include?(0)
   end
 
   def iterate_logs(logs)

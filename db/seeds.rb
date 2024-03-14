@@ -633,7 +633,7 @@ reading = Habit.create(
   title: "Read 5 pages of a book every day",
   category: "Learning",
   identity_goal: "a book worm",
-  trigger: "before I go to bed",
+  trigger: "before bed",
   reward: "hot chocolate",
   duration_in_minutes: 60,
   week_recurrence: 1,
@@ -764,8 +764,8 @@ gym = Habit.create(
   title: "Go to the gym",
   category: "Wellbeing",
   identity_goal: "a healthy guy",
-  trigger: "before I get into work",
-  reward: "my favourite podcast",
+  trigger: "before work",
+  reward: "fav podcast",
   duration_in_minutes: 45,
   week_recurrence: 1,
   current_streak: 0,
@@ -878,8 +878,8 @@ wife_date = Habit.create(
   title: "Date night with wife",
   category: "Relationship",
   identity_goal: "a good husband",
-  trigger: "when we are both in the office",
-  reward: "a nice meal",
+  trigger: "both in office",
+  reward: "dessert",
   duration_in_minutes: 120,
   week_recurrence: 2,
   current_streak: 0,
@@ -976,13 +976,13 @@ Review.create(
 #   updated_at: DateTime.new(2024, 2, 27)
 # )
 
-Review.create(
-  user: rowan,
-  content: "I have become a grade 9 pianist since using What Matters!",
-  rating: 5,
-  created_at: DateTime.new(2024, 3, 5),
-  updated_at: DateTime.new(2024, 3, 5)
-)
+# Review.create(
+#   user: rowan,
+#   content: "I have become a grade 9 pianist since using What Matters!",
+#   rating: 5,
+#   created_at: DateTime.new(2024, 3, 5),
+#   updated_at: DateTime.new(2024, 3, 5)
+# )
 
 Review.create(
   user: jasper,
