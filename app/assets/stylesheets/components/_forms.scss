@@ -4,13 +4,13 @@
 
 .tip {
   display:inline-block;
-  background-color: rgba($color: $learning, $alpha: 0.20);
-  padding: 10px;
+  background-color: rgba($color: $green, $alpha: 0.40);
+  padding: 16px;
   border-radius: 5px;
 }
 
 .simple_form .tip {
-  color: rgba(58, 166, 144, 0.8);
+  color: rgba($color: #54685c, $alpha: 0.85);
 }
 
 // TOOLTIPS
