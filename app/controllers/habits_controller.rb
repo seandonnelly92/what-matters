@@ -140,8 +140,8 @@ class HabitsController < ApplicationController
       array.last.date_time.to_date <= Date.today # Selects all arrays with days on or before today
     end
     unless past_dates == []
-      past_dates.sort_by! { |array| array.last.date_time } # Sorts arrays into order based on last items date_time
-      closeness = past_dates.map { |array| Date.today - array.last.date_time.to_date } # Determines distance from today
+      past_sorted = past_dates.sort_by { |array| array.last.date_time } # Sorts arrays into order based on last items date_time
+      closeness = past_sorted.map { |array| Date.today - array.last.date_time.to_date } # Determines distance from today
       closest = closeness.each_with_index.min_by { |array, _| (array <=> 0).abs }[1] # finds index of the closest to today
       past_dates[closest].count # counts the current streak of completed true in that array
     end
@@ -158,7 +158,7 @@ class HabitsController < ApplicationController
       largest = past_dates.each.max_by(&:length)
       best_streak = largest.flatten.count
     end
-    best_streak
+    return best_streak
   end
 
   # def compare(habit)
