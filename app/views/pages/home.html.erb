@@ -4,7 +4,9 @@
       <h2>Life is short.<br>Prioritise What Matters.</h2>
       <p>We humans are bad at making time for the things that really matter. This app helps you identify those things and build sustainable habits to prioritise them.</p>
       <%= link_to 'Take the Quiz', step1_input_multistages_path, class: 'btn btn-primary me-1 border-none' %>
-      <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-light' %>
+      <% unless current_user %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-light' %>
+      <% end %>
       </div>
     </div>
 </div>
