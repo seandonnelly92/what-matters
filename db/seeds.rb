@@ -799,7 +799,7 @@ reading = Habit.create(
   week_recurrence: 1,
   current_streak: 0,
   best_streak: 0,
-  days_of_week: ["monday", "tuesday," "wednesday", "thursday", "friday"],
+  days_of_week: ["monday", "tuesday", "wednesday", "thursday", "friday"],
   start_time: "2024-01-01 21:00:00.000000000 +0000"
 )
 
@@ -916,7 +916,6 @@ reading_future_dates.each do |date|
     completed: false
   )
 end
-
 
 
 # Adding reviews
