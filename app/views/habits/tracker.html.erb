@@ -56,6 +56,7 @@
     </div>
   </div>
 
+  <%# COMPLETION MESSAGE %>
   <div id="completion-message" class="col-10 col-md-4">
     <div id="logo-and-title" class="d-flex flex-row">
       <div id="logo-container">
@@ -65,9 +66,19 @@
       </div>
       <div id="text-container"></div>
     </div>
-      <h4 class="mb-2 mt-3"><i class="fa-solid fa-xmark" role="button" data-action="click->tracker-menu#closeCompletionMessage"></i></h4>
+
+    <%# Streak Container inside completion message %>
+    <%= render 'habits/streak_container'%>
+
+    <%# Close Completion Message Cross %>
+    <h4 class="mb-2 mt-4"><i class="fa-solid fa-xmark ms-2" role="button" data-action="click->tracker-menu#closeCompletionMessage"></i></h4>
     </div>
   </div>
+</div>
+
+<%# Streak  %>
+<div id="fixed-streak-container">
+  <%= render 'habits/streak_container'%>
 </div>
 
 <%# Background Filter. FYI: the tooltip-back styling is in _forms.scss %>
