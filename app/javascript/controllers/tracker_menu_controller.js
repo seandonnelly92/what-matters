@@ -736,7 +736,7 @@ export default class extends Controller {
       const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
 
       if (currentIsToday) {
-        continue;
+        if (dot.classList.contains('completed')) streak += 1;
       } else if (currentDate < this.todayDate) {
         if (dot.classList.contains('completed')) {
           streak += 1;
