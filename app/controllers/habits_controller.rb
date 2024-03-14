@@ -1,4 +1,6 @@
 class HabitsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @habits = Habit.where(user: current_user).order(created_at: :desc)
     if @habits.blank?
@@ -106,6 +108,12 @@ class HabitsController < ApplicationController
   end
 
   private
+
+  def demo_global_streak
+      global_streak = 24
+      # When a user checks off a log.completed = true
+      global_streak += 1
+  end
 
   def streak
     totals = []
