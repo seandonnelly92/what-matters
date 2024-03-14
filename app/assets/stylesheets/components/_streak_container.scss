@@ -6,6 +6,20 @@
 
 .streak-container p {
   color: white;
+  width: 35px;
   margin: 0;
   font-size: 25px
+}
+
+#message-streak-container {
+  transform: scale(0.6);
+}
+
+.streak-number {
+  opacity: 1;
+  transition: opacity 0.8s ease-out;
+
+  &.updating {
+    opacity: 0;
+  }
 }

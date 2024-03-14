@@ -89,6 +89,8 @@ export default class extends Controller {
       this.updateLogLines('previous');
       this.updateLogLines('next');
 
+      this.setGlobalStreak();
+
       this.completionListener();
     })
   }
@@ -242,15 +244,22 @@ export default class extends Controller {
   }
 
   updateStreak() {
+    const messageStreak = document.getElementById('message-streak-container');
+    const streakText = messageStreak.querySelector('p');
+
     const currentStreak = this.currentStreak();
+    streakText.innerText = currentStreak;
 
     this.setGlobalStreak();
 
     const updatedStreak = this.currentStreak();
-
-    const messageStreak = document.getElementById('message-streak-container');
-    const streakText = fixedStreak.querySelector('p');
-    streakText.innerText = updatedStreak;
+    setTimeout(() => {
+      streakText.classList.add('updating');
+      setTimeout(() => {
+        streakText.innerText = updatedStreak;
+        streakText.classList.remove('updating');
+      }, 800);
+    }, 500);
   }
 
   currentStreak() {
@@ -272,7 +281,9 @@ export default class extends Controller {
       const currentDate = new Date(log.dataset.date);
       const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
 
-      if (currentIsToday || currentDate < this.todayDate) {
+      if (currentIsToday) {
+        if (dot.classList.contains('completed')) streak += 1;
+      } else if (currentDate < this.todayDate) {
         if (dot.classList.contains('completed')) {
           streak += 1;
         } else {
