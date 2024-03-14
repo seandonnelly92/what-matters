@@ -30,10 +30,10 @@
       <%= f.input :password_confirmation,
                   required: true,
                   input_html: { autocomplete: "new-password" } %>
-      <button class="tertiary-btn form-optional"
+      <button class="show-btn tertiary-btn form-optional"
               data-signup-form-target="showAllButton"
               data-action="click->signup-form#showHide">
-              See previous answers
+              <p>See previous answers</p> <i class="fa-solid fa-caret-right"></i>
       </button>
       <%= f.input :date_of_birth,
                     label: "What is your date of birth?",

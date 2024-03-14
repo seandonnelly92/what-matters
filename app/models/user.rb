@@ -57,4 +57,14 @@ class User < ApplicationRecord
     errors.add(:sleep_hours_per_day, "should be between 0 and 24") if sleep_hours_per_day.negative?
     errors.add(:sleep_hours_per_day, "should be between 0 and 24") if sleep_hours_per_day > 24
   end
+
+  # def global_streak
+  #   total = 0
+  #   logs.each do |l|
+  #     return 0 if l.current_streak.negative?
+
+  #     total += l.current_streak
+  #   end
+  #   return total
+  # end
 end

@@ -94,7 +94,7 @@ export default class extends Controller {
   }
 
   showAll() {
-    this.showAllButtonTarget.innerText = "Hide previous answers";
+    this.showAllButtonTarget.innerHTML = '<p>Hide previous answers</p><i class="fa-solid fa-caret-down"></i>';
     this.formTargets.forEach((target) => {
       if (target.classList.contains("form-optional")) {
         target.classList.remove("form-optional");
@@ -105,7 +105,7 @@ export default class extends Controller {
   }
 
   hideCompleted() {
-    this.showAllButtonTarget.innerText = "Show previous answers";
+    this.showAllButtonTarget.innerHTML = '<p>Show previous answers</p><i class="fa-solid fa-caret-right"></i>';
     this.formTargets.forEach((target) => {
       if (target.value != "") {
         target.classList.add("form-optional")
