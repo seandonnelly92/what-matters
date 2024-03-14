@@ -74,12 +74,13 @@
     <h4 class="mb-2 mt-4"><i class="fa-solid fa-xmark ms-2" role="button" data-action="click->tracker-menu#closeCompletionMessage"></i></h4>
     </div>
   </div>
+
+  <%# Streak  %>
+  <div id="fixed-streak-container">
+    <%= render 'habits/streak_container'%>
+  </div>
 </div>
 
-<%# Streak  %>
-<div id="fixed-streak-container">
-  <%= render 'habits/streak_container'%>
-</div>
 
 <%# Background Filter. FYI: the tooltip-back styling is in _forms.scss %>
 <div id="background-filter" class="tooltip-back">

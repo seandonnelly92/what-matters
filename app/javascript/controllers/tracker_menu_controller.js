@@ -15,7 +15,8 @@ export default class extends Controller {
     "sideMenu",
     "sideMenuSelector",
     "habitsList",
-    "habitsButton"
+    "habitsButton",
+    "streak"
   ]
 
   connect() {
@@ -28,6 +29,8 @@ export default class extends Controller {
 
     this.timer = null;
     this.scrollWait = 500;
+
+    this.globalStreak = 0;
 
     this.pageScroll = this.pageScroll.bind(this);
     this.boundYearInputScrollEvent = this.yearInputScrollEvent.bind(this);
@@ -60,6 +63,7 @@ export default class extends Controller {
       prevLog = log; // Set previous log equal to current for next loop iteration
       logCount += 1;
     }
+    this.setCurrentStreak();
   }
 
   setLogLine(log, prevLog) {
@@ -719,6 +723,39 @@ export default class extends Controller {
     this.setAllLogLines();
     this.scrollToSelected(true);
   }
+
+  // Set streak
+  setCurrentStreak() {
+    console.log("Updating the current streak!!!");
+    const logs = this.logTargets;
+
+    let streak = 0;
+    for (const log of logs) {
+      if (log.classList.contains('hide-log')) continue;
+
+      const dot = log.querySelector('.dot');
+
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday || currentDate < this.todayDate) {
+        if (dot.classList.contains('completed')) {
+          streak += 1;
+        } else {
+          streak = 0;
+        }
+        console.log(`Current streak is: ${streak}`);
+      } else {
+        break;
+      }
+    }
+    this.globalStreak = streak;
+
+    this.streakTarget.innerText = streak;
+    console.log(this.streakTarget);
+  }
+
+
 
   // Method related to completion message
   closeCompletionMessage(event) {
