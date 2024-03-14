@@ -109,7 +109,7 @@ class HabitsController < ApplicationController
 
   def demo_global_streak
       global_streak = 24
-      # When a user checks off a log.completed = true
+      # When a user checks off a log.completed = true;
       global_streak += 1
   end
 
