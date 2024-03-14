@@ -10,20 +10,20 @@ def update
   log = Log.find(params[:id])
   log.completed = !log.completed
   log.save
-  habit = log.habit
-  if log.completed
-    log_index = habit.logs.find_index(log)
-    prev_index = log_index - 1
-    if prev_index >= 0
-      if habit.logs[prev_index].completed
-        habit.current_streak += 1
-      else
-        habit.current_streak = 1
-      end
-      habit.best_streak = habit.current_streak if habit.current_streak > habit.best_streak
-      habit.save
-    end
-  end
+  # habit = log.habit
+  # if log.completed
+  #   log_index = habit.logs.find_index(log)
+  #   prev_index = log_index - 1
+  #   if prev_index >= 0
+  #     if habit.logs[prev_index].completed
+  #       habit.current_streak += 1
+  #     else
+  #       habit.current_streak = 1
+  #     end
+  #     habit.best_streak = habit.current_streak if habit.current_streak > habit.best_streak
+  #     habit.save
+  #   end
+  # end
 
   private
 

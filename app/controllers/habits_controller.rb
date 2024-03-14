@@ -4,6 +4,9 @@ class HabitsController < ApplicationController
     if @habits.blank?
       redirect_to new_habit_path
     end
+    unless current_user.habits.empty?
+      streak
+    end
   end
 
   def new
@@ -93,6 +96,10 @@ class HabitsController < ApplicationController
   def tracker
     @habits = current_user.habits
     @logs = @habits.map { |h| h.logs.to_a }.flatten.sort_by { |l| l.date_time}
+    unless @logs.empty?
+      @global_streak = streak
+    end
+    raise
   end
 
   def show
@@ -101,57 +108,60 @@ class HabitsController < ApplicationController
 
   private
 
-  # def streak
-  #   totals = []
-  #   @user_habits = current_user.habits
-  #   if @user_habits.count > 1
-  #     @user_habits.each do |habit|
-  #       logs = habit.logs.order!(date_time: :asc)
-  #       habit.update(current_streak: iterate_logs(logs))
-  #       compare(habit)
-  #       totals << habit.current_streak
-  #     end
-  #   else
-  #     logs = @user_habits.last.logs.order!(date_time: :asc)
-  #     @user_habits.last.update(current_streak: iterate_logs(logs))
-  #     compare(@user_habits.last)
-  #     totals << @user_habits.last.current_streak
-  #   end
-  # end
+  def streak
+    totals = []
+    @user_habits = current_user.habits
+    if @user_habits.count > 1
+      @user_habits.each do |habit|
+        logs = habit.logs.order!(date_time: :asc)
+        habit.update(current_streak: iterate_logs(logs))
+        habit.update(best_streak: best_streak(logs))
+        totals << habit.current_streak
+      end
+    else
+      logs = @user_habits.last.logs.order!(date_time: :asc)
+      @user_habits.last.update(current_streak: iterate_logs(logs))
+      @user_habits.last.update(best_streak: best_streak(logs))
+      totals << @user_habits.last.current_streak
+    end
+    totals.sum unless totals.include?(0)
+  end
 
-  # def iterate_logs(logs)
-  #   increment = 0
-  #   logs.each do |log|
-  #     increment += 1 if log[:completed]
-  #   end
-  #   increment
-  # end
+  def iterate_logs(logs)
+    logs_array = logs.slice_before do |log|
+      log.completed == false # Splits the array when a log is completed: false
+    end
+    segmenter(logs_array.to_a) # Sends the segmenter the arrays of 'completed: true' in an array
+  end
 
-  # def iterate_logs(logs)
-  #   logs_array = logs.slice_before do |log|
-  #     log.completed == false # Splits the array when a log is completed: false
-  #   end
-  #   segmenter(logs_array.to_a) # Sends the segmenter the arrays of 'completed: true' in an array
-  # end
+  def segmenter(logs_array)
+    past_dates = logs_array.select do |array|
+      array.last.date_time.to_date <= Date.today # Selects all arrays with days on or before today
+    end
+    unless past_dates == []
+      past_dates.sort_by! { |array| array.last.date_time } # Sorts arrays into order based on last items date_time
+      closeness = past_dates.map { |array| Date.today - array.last.date_time.to_date } # Determines distance from today
+      closest = closeness.each_with_index.min_by { |array, _| (array <=> 0).abs }[1] # finds index of the closest to today
+      past_dates[closest].count # counts the current streak of completed true in that array
+    end
+  end
 
-  # def segmenter(logs_array)
-  #   past_dates = logs_array.select do |array|
-  #     array.last.date_time.to_date <= Date.today # Selects all arrays with days on or before today
-  #   end
-  #   unless past_dates = []
-  #     past_dates.sort_by! { |array| array.last.date_time } # Sorts arrays into order based on last items date_time
-  #     closeness = past_dates.map { |array| Date.today - array.last.date_time.to_date } # Determines distance from today
-  #     closest = closeness.each_with_index.min_by { |array, _| (array <=> 0).abs }[1] # finds index of the closest to today
-  #     past_dates[closest].count # counts the current streak of completed true in that array
-  #   end
-  # end
-
-  # # If the current streak doesn't align with the datetimes of the other streaks it resets the global streak ("breaks" the chain)
-  # def global_streak
-  # end
+  def best_streak(logs)
+    logs_array = logs.slice_before do |log|
+      log.completed == false
+    end
+    past_dates = logs_array.to_a.select do |array|
+      array.last.date_time.to_date <= Date.today
+    end
+    unless past_dates == []
+      largest = past_dates.each.max_by(&:length)
+      best_streak = largest.flatten.count
+    end
+    best_streak
+  end
 
   # def compare(habit)
-  #   unless habit.current_streak.nil? || habit.current_streak == "0"
+  #   unless habit.current_streak.nil?
   #     habit.update(best_streak: habit.current_streak) if habit.best_streak.to_s.empty? || habit.current_streak > habit.best_streak
   #   end
   # end
