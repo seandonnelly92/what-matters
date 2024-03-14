@@ -11,6 +11,12 @@
 @import "components/index";
 @import "pages/index";
 
+/* TO FIX THE BLUE HIGHLIGHT ISSUE */
+.button-no-focus {
+  -webkit-tap-highlight-color: transparent; /* For iOS */
+  outline: none; /* Remove outline */
+}
+
 // GLOBAL STYLING
 
 // REPLACEMENT COLOURS FROM BRANDING
