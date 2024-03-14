@@ -630,7 +630,7 @@ tom.save
 
 reading = Habit.create(
   user: tom,
-  title: "Read 30 pages of a book every day",
+  title: "Read 5 pages of a book every day",
   category: "Learning",
   identity_goal: "a book worm",
   trigger: "before I go to bed",
@@ -920,7 +920,17 @@ wife_date_future_dates.each do |date|
   )
 end
 
+##seeding images
 
+p "seeding images"
+
+wife_image = File.open('app/assets/images/wife_habit_image.jpg')
+wife_date = Habit.find_by(title: "Date night with wife")
+
+wife_date.photo.attach(io: wife_image, filename: "wife_habit_image.jpg", content_type: "image/jpg")
+wife_date.save
+
+p "images seeded successfully"
 
 # Adding reviews
 Review.create(
