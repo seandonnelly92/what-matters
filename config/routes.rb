@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
 
   root to: "pages#home"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/application/fetch_user_name', to: 'application#fetch_user_name', as: :fetch_user_name
   get '/encouragements/sample_encouragement', to: 'encouragements#sample_encouragement', as: :sample_encouragement
