@@ -978,7 +978,7 @@ Review.create(
 
 Review.create(
   user: rowan,
-  content: "I have become a grade 9 pianist since using What Matters! Much better than the Atoms app released last month...",
+  content: "I have become a grade 9 pianist since using What Matters!",
   rating: 5,
   created_at: DateTime.new(2024, 3, 5),
   updated_at: DateTime.new(2024, 3, 5)

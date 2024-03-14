@@ -1,4 +1,6 @@
 class HabitsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @habits = Habit.where(user: current_user).order(created_at: :desc)
     if @habits.blank?
@@ -123,7 +125,7 @@ class HabitsController < ApplicationController
       @user_habits.last.update(best_streak: best_streak(logs))
       totals << @user_habits.last.current_streak
     end
-    totals.sum unless totals.include?(0)
+    # totals.sum unless totals.include?(0)
   end
 
   def iterate_logs(logs)
