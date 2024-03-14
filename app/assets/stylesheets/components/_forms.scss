@@ -88,7 +88,7 @@
 }
 
 // Inputs - focussed
-.form-control:focus, .form-select:focus, {
+.form-control:focus, .form-select:focus {
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   color: $blue;
   box-shadow: none;
