@@ -36,7 +36,7 @@
       <%= render partial: 'shared/habit_days', locals: { habit: habit } %>
 
       <%# Identity Goal quote %>
-      <p class="mt-4 mb-3"><i class="fa-solid fa-quote-left"></i> I will do this because I want to be <%= habit.identity_goal %>. <i class="fa-solid fa-quote-right"></i></p>
+      <p class="mt-4 mb-3"><i class="fa-solid fa-quote-left"></i> I will do this because I want to be <%= habit.identity_goal.downcase %>. <i class="fa-solid fa-quote-right"></i></p>
       <div class="d-flex justify-content-around">
         <div class="row">
           <div class="col-6 text-nowrap p-3 text-center">
