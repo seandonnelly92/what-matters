@@ -68,7 +68,9 @@
       </div>
 
       <%# Streak Container inside completion message %>
-      <%= render 'habits/streak_container'%>
+      <div id="message-streak-container">
+        <%= render 'habits/streak_container'%>
+      </div>
 
       <%# Close Completion Message Cross %>
       <h4 class="mb-2 mt-4"><i class="fa-solid fa-xmark ms-2" role="button" data-action="click->tracker-menu#closeCompletionMessage"></i></h4>

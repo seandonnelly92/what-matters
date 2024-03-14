@@ -16,7 +16,6 @@ export default class extends Controller {
     "sideMenuSelector",
     "habitsList",
     "habitsButton",
-    "streak"
   ]
 
   connect() {
@@ -61,7 +60,7 @@ export default class extends Controller {
       prevLog = log; // Set previous log equal to current for next loop iteration
       logCount += 1;
     }
-    this.setCurrentStreak();
+    this.setGlobalStreak();
   }
 
   setLogLine(log, prevLog) {
@@ -723,7 +722,7 @@ export default class extends Controller {
   }
 
   // Set streak
-  setCurrentStreak() {
+  setGlobalStreak() {
     console.log("Updating the current streak!!!");
     const logs = this.logTargets;
 
@@ -747,7 +746,6 @@ export default class extends Controller {
         break;
       }
     }
-    // this.streakTarget.innerText = streak;
 
     const fixedStreak = document.getElementById('fixed-streak-container');
     const streakText = fixedStreak.querySelector('p');

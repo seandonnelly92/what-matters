@@ -121,7 +121,6 @@ export default class extends Controller {
     .then((data) => {
       this.habitTitle = data.habit;
       this.messageTarget.innerHTML = `${data.message}`;
-      // this.dateTarget.innerText - data.date;
 
       this.circleTarget.classList.remove('completing');
       this.circleTarget.classList.add("completed");
@@ -210,6 +209,7 @@ export default class extends Controller {
 
     this.displayLogo();
     this.displayText();
+    this.updateStreak();
   }
 
   displayLogo () {
@@ -239,6 +239,53 @@ export default class extends Controller {
         this.setEncouragement(text);
       })
       .catch(error => console.error("Error fetching session data:", error));
+  }
+
+  updateStreak() {
+    const currentStreak = this.currentStreak();
+
+    this.setGlobalStreak();
+
+    const updatedStreak = this.currentStreak();
+
+    const messageStreak = document.getElementById('message-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    streakText.innerText = updatedStreak;
+  }
+
+  currentStreak() {
+    const fixedStreak = document.getElementById('fixed-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    return parseInt(streakText.innerText, 10);
+  }
+
+  // Set streak
+  setGlobalStreak() {
+    const logs = document.querySelectorAll('.habit-card');
+
+    let streak = 0;
+    for (const log of logs) {
+      if (log.classList.contains('hide-log')) continue;
+
+      const dot = log.querySelector('.dot');
+
+      const currentDate = new Date(log.dataset.date);
+      const currentIsToday = this.dateToString(currentDate) === this.dateToString(this.todayDate);
+
+      if (currentIsToday || currentDate < this.todayDate) {
+        if (dot.classList.contains('completed')) {
+          streak += 1;
+        } else {
+          streak = 0;
+        }
+        console.log(`Current streak is: ${streak}`);
+      } else {
+        break;
+      }
+    }
+    const fixedStreak = document.getElementById('fixed-streak-container');
+    const streakText = fixedStreak.querySelector('p');
+    streakText.innerText = streak;
   }
 
   setEncouragement(container) {
