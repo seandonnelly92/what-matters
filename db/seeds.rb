@@ -590,22 +590,7 @@ sean = User.new(
 )
 sean.save
 
-# Adding Tom as user
-tom = User.new(
-  email: "tom@lewagon.com",
-  password: "password",
-  first_name: "Tom",
-  last_name: "Ellwod",
-  nickname: "T",
-  date_of_birth: DateTime.new(1995, 1, 1),
-  work_days_per_week: 5,
-  work_hours_per_day: 10,
-  sleep_hours_per_day: 7,
-  terms_agreed: true
-)
-tom.save
-
-# Adding Tom as user
+# Adding Rowan as user
 rowan = User.new(
   email: "rowan@lewagon.com",
   password: "password",
@@ -619,6 +604,323 @@ rowan = User.new(
   terms_agreed: true
 )
 rowan.save
+
+
+
+## Pitch Seed (for Tom User)
+
+# Adding Tom as user
+tom = User.new(
+  email: "tom@lewagon.com",
+  password: "pass",
+  first_name: "Tom",
+  last_name: "Ellwood",
+  nickname: "T",
+  date_of_birth: DateTime.new(1991, 3, 19),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+tom.save
+
+
+
+#tom reading habit
+
+reading = Habit.create(
+  user: tom,
+  title: "Read 30 pages of a book every day",
+  category: "Learning",
+  identity_goal: "a book worm",
+  trigger: "before I go to bed",
+  reward: "hot chocolate",
+  duration_in_minutes: 60,
+  week_recurrence: 1,
+  current_streak: 0,
+  best_streak: 0,
+  days_of_week: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+  start_time: "2024-01-01 21:00:00.000000000 +0000"
+)
+
+reading_past_dates = [
+  '2024-02-23',
+  '2024-02-22',
+  '2024-02-21',
+  '2024-02-20',
+  '2024-02-19',
+  '2024-02-16',
+  '2024-02-15',
+  '2024-02-14',
+  '2024-02-13',
+  '2024-02-12',
+  '2024-02-09',
+  '2024-02-08',
+  '2024-02-07',
+  '2024-02-06',
+  '2024-02-05'
+]
+
+reading_past_dates.each do |date|
+  datetime = "#{date} 21:00:00"
+  Log.create(
+    habit: reading,
+    date_time: datetime,
+    completed: rand <= 0.9
+  )
+end
+
+reading_future_dates = [
+    '2024-03-14',
+    '2024-03-15',
+    '2024-03-16',
+    '2024-03-17',
+    '2024-03-18',
+    '2024-03-21',
+    '2024-03-22',
+    '2024-03-25',
+    '2024-03-28',
+    '2024-03-29',
+    '2024-04-01',
+    '2024-04-02',
+    '2024-04-03',
+    '2024-04-04',
+    '2024-04-05',
+    '2024-04-08',
+    '2024-04-09',
+    '2024-04-10',
+    '2024-04-11',
+    '2024-04-12',
+    '2024-04-15',
+    '2024-04-16',
+    '2024-04-17',
+    '2024-04-18',
+    '2024-04-19',
+    '2024-04-22',
+    '2024-04-23',
+    '2024-04-24',
+    '2024-04-25',
+    '2024-04-26',
+    '2024-04-29',
+    '2024-04-30',
+    '2024-05-01',
+    '2024-05-02',
+    '2024-05-03',
+    '2024-05-06',
+    '2024-05-07',
+    '2024-05-08',
+    '2024-05-09',
+    '2024-05-10',
+    '2024-05-13',
+    '2024-05-14',
+    '2024-05-15',
+    '2024-05-16',
+    '2024-05-17',
+    '2024-05-20',
+    '2024-05-21',
+    '2024-05-22',
+    '2024-05-23',
+    '2024-05-24',
+    '2024-05-27',
+    '2024-05-28',
+    '2024-05-29',
+    '2024-05-30',
+    '2024-05-31',
+    '2024-06-03',
+    '2024-06-04',
+    '2024-06-05',
+    '2024-06-06',
+    '2024-06-07',
+    '2024-06-10',
+    '2024-06-11',
+    '2024-06-12',
+    '2024-06-13',
+    '2024-06-14',
+    '2024-06-17',
+    '2024-06-18',
+    '2024-06-19',
+    '2024-06-20',
+    '2024-06-21',
+    '2024-06-24',
+    '2024-06-25',
+    '2024-06-26',
+    '2024-06-27',
+    '2024-06-28'
+]
+
+reading_future_dates.each do |date|
+  datetime = "#{date} 21:00:00"
+  Log.create(
+    habit: reading,
+    date_time: datetime,
+    completed: false
+  )
+end
+
+#tom gym habit
+
+gym = Habit.create(
+  user: tom,
+  title: "Go to the gym",
+  category: "Wellbeing",
+  identity_goal: "a healthy guy",
+  trigger: "before I get into work",
+  reward: "my favourite podcast",
+  duration_in_minutes: 45,
+  week_recurrence: 1,
+  current_streak: 0,
+  best_streak: 0,
+  days_of_week: ["monday", "wednesday", "friday"],
+  start_time: "2024-01-01 08:00:00.000000000 +0000"
+)
+
+gym_past_dates = [
+    '2024-01-01',
+    '2024-01-02',
+    '2024-01-08',
+    '2024-01-09',
+    '2024-01-15',
+    '2024-01-16',
+    '2024-01-22',
+    '2024-01-23',
+    '2024-01-29',
+    '2024-01-30',
+    '2024-02-05',
+    '2024-02-06',
+    '2024-02-12',
+    '2024-02-13',
+    '2024-02-19',
+    '2024-02-20',
+    '2024-02-26',
+    '2024-02-27',
+    '2024-03-04',
+    '2024-03-05',
+    '2024-03-11',
+    '2024-03-12'
+]
+
+
+gym_past_dates.each do |date|
+  datetime = "#{date} 08:00:00"
+  Log.create(
+    habit: gym,
+    date_time: datetime,
+    completed: rand <= 0.9
+  )
+end
+
+gym_future_dates = [
+  '2024-03-15',
+  '2024-03-18',
+  '2024-03-19',
+  '2024-03-20',
+  '2024-03-25',
+  '2024-03-26',
+  '2024-03-27',
+  '2024-04-01',
+  '2024-04-02',
+  '2024-04-03',
+  '2024-04-08',
+  '2024-04-09',
+  '2024-04-10',
+  '2024-04-15',
+  '2024-04-16',
+  '2024-04-17',
+  '2024-04-22',
+  '2024-04-23',
+  '2024-04-24',
+  '2024-04-29',
+  '2024-04-30',
+  '2024-05-01',
+  '2024-05-06',
+  '2024-05-07',
+  '2024-05-08',
+  '2024-05-13',
+  '2024-05-14',
+  '2024-05-15',
+  '2024-05-20',
+  '2024-05-21',
+  '2024-05-22',
+  '2024-05-27',
+  '2024-05-28',
+  '2024-05-29',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05',
+  '2024-06-10',
+  '2024-06-11',
+  '2024-06-12',
+  '2024-06-17',
+  '2024-06-18',
+  '2024-06-19',
+  '2024-06-24',
+  '2024-06-25',
+  '2024-06-26',
+]
+
+gym_future_dates.each do |date|
+  datetime = "#{date} 08:00:00"
+  Log.create(
+    habit: gym,
+    date_time: datetime,
+    completed: false
+  )
+end
+
+
+#tom wife habbit
+wife_date = Habit.create(
+  user: tom,
+  title: "Date night with wife",
+  category: "Relationship",
+  identity_goal: "a good husband",
+  trigger: "when we are both in the office",
+  reward: "a nice meal",
+  duration_in_minutes: 120,
+  week_recurrence: 2,
+  current_streak: 0,
+  best_streak: 0,
+  days_of_week: ["wednesday"],
+  start_time: "2024-01-04 18:00:00.000000000 +0000"
+)
+wife_date_past_dates = [
+  '2024-01-17',
+  '2024-01-31',
+  '2024-02-14',
+  '2024-02-28',
+  '2024-03-13'
+]
+
+
+wife_date_past_dates.each do |date|
+  datetime = "#{date} 18:00:00"
+  Log.create(
+    habit: wife_date,
+    date_time: datetime,
+    completed: rand <= 0.9
+  )
+end
+
+wife_date_future_dates = [
+  '2024-03-27',
+  '2024-04-10',
+  '2024-04-24',
+  '2024-05-08',
+  '2024-05-22',
+  '2024-06-05',
+  '2024-06-19'
+]
+
+wife_date_future_dates.each do |date|
+  datetime = "#{date} 18:00:00"
+  Log.create(
+    habit: fam_visit,
+    date_time: datetime,
+    completed: false
+  )
+end
+
+
 
 # Adding reviews
 Review.create(

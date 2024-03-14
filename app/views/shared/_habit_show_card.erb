@@ -24,11 +24,11 @@
       <%# Time and duration %>
       <p><i class="fa-regular fa-clock me-1 mt-2"></i><%= habit.start_time.strftime("%H:%M") %> for <%= habit.duration_in_minutes %> minutes
       <% if habit.week_recurrence == 1 %>
-        every week.
+        every week on:
       <% elsif habit.week_recurrence == nil || habit.week_recurrence < 1 %>
 
       <% else %>
-        every <%= habit.week_recurrence %> weeks.
+        every <%= habit.week_recurrence %> weeks on:
       <% end %>
       </p>
 

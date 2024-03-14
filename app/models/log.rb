@@ -42,7 +42,7 @@ class Log < ApplicationRecord
       end
     end
 
-    trigger_message = !habit.trigger.empty? ? " #{habit.id} Remember your trigger is '#{habit.trigger}'" : ""
+    trigger_message = !habit.trigger.empty? ? "Remember your trigger is '#{habit.trigger}'" : ""
     day = date_time.strftime("%d").to_i
     formatted_date = "#{day}#{ordinal_suffix(day)} #{date_time.strftime("%B")}"
 
