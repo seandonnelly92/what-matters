@@ -52,19 +52,19 @@
 
 #side-menu-habits {
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   right: 16px;
 
   background-color: whitesmoke;
   border: 1px solid $green;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 
   width: fit-content;
   padding: 8px 12px;
 
   transform: scale(0);
-  transform-origin: bottom;
+  transform-origin: top;
   height: 0;
 
   // transition: transform 0.3s ease-out, height 0.3s ease-out;

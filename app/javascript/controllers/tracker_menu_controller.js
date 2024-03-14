@@ -665,14 +665,14 @@ export default class extends Controller {
   activateHabitsFilter(action) {
     if (action === 'open') {
       this.habitsListTarget.classList.add('show');
-      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-down"></i>';
+      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-up"></i>';
 
       this.changeHabitsFilter('add');
     } else if (action === 'close') {
       this.changeHabitsFilter('remove');
 
       this.habitsListTarget.classList.remove('show');
-      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-up"></i>';
+      this.habitsButtonTarget.innerHTML = 'Select habits <i class="fa-solid fa-caret-down"></i>';
     }
   }
 
