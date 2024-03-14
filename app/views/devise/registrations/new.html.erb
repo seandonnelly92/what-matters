@@ -36,9 +36,9 @@
               <p>See previous answers</p> <i class="fa-solid fa-caret-right"></i>
       </button>
       <%= f.input :date_of_birth,
-                    label: "What is your date of birth?",
-                    as: :string,
-                    input_html: { data: { controller: "datepicker", "signup-form-target": "dateOfBirth" } } %>
+                  label: "What is your date of birth?",
+                  as: :string,
+                  input_html: { data: { controller: "datepicker", "signup-form-target": "dateOfBirth" } } %>
       <%= f.input :work_days_per_week,
                   collection: 0..7,
                   label: "How many days on average do you work per week?",
