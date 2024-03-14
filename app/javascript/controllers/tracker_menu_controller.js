@@ -463,6 +463,10 @@ export default class extends Controller {
     let prevLog = this.logTarget; // Sets initial log
     let selectLog = null;
     for (const log of this.logTargets) {
+
+      // Probably just need to add a continue if the log has the 'hide-log' class included (and then call this when filtering habits);
+      // Also think about blocking the click on a future habit with a ::before pseudo card
+
       const logDate = new Date(log.dataset.date)
       const logDateStr = this.dateToString(logDate);
       if (selectedDateStr === logDateStr) {
