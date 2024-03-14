@@ -138,7 +138,7 @@ export default class extends Controller {
     const nickname = this.sessionData.step2.nickname;
 
     // Update title and legend
-    const title = `Ready to grow into new habits and refocus your freetime on what matters?`;
+    const title = `Ready to grow into new habits and refocus your free time on what matters?`;
     this.setTitle(title);
     this.legendTarget.innerHTML = `<span class="third">Time w/ ${nickname}</span> and <span class="second">other free time</span>`;
 
