@@ -68,6 +68,8 @@ export default class extends Controller {
     const lineStart = prevLog.querySelector('.line.bottom');
     const lineEnd = log.querySelector('.line.top');
 
+    this.clearLogLineClasses([lineStart, lineEnd]);
+
     let lineClass;
     if (prevDot.classList.contains('completed') && currentDot.classList.contains('completed')) {
       lineClass = 'completed';
@@ -88,11 +90,19 @@ export default class extends Controller {
         // This means they are future (pending) logs
         lineClass = 'pending';
       } else {
-        lineClass = 'missed'
+        lineClass = 'missed';
       }
     }
     lineStart.classList.add(lineClass);
     lineEnd.classList.add(lineClass);
+  }
+
+  clearLogLineClasses(logLines) {
+    logLines.forEach((logLine) => {
+      logLine.classList.remove('missed');
+      logLine.classList.remove('pending');
+      logLine.classList.remove('completed');
+    });
   }
 
   createMenu() {
@@ -436,7 +446,7 @@ export default class extends Controller {
     }
   }
 
-  scrollToSelected() {
+  scrollToSelected(scrollMenu = false) {
     // const selectedDate = this.dateToString(this.selectedTarget.dataset.date);
     const selectedDate = new Date(this.selectedTarget.dataset.date);
     const selectedDateStr = this.dateToString(selectedDate);
@@ -453,6 +463,11 @@ export default class extends Controller {
     let prevLog = this.logTarget; // Sets initial log
     let selectLog = null;
     for (const log of this.logTargets) {
+
+      // Probably just need to add a continue if the log has the 'hide-log' class included (and then call this when filtering habits);
+      // Also think about blocking the click on a future habit with a ::before pseudo card
+      if (log.classList.contains('hide-log')) continue;
+
       const logDate = new Date(log.dataset.date)
       const logDateStr = this.dateToString(logDate);
       if (selectedDateStr === logDateStr) {
@@ -468,8 +483,11 @@ export default class extends Controller {
       }
     }
     if (!selectLog) selectLog = this.logTargets[this.logTargets.length - 1]; // Set equal to last log
+    // Maybe add a psuedo element to indicate when the above happens (i.e. taking the last log)
 
     console.log("Entering select log");
+    console.log(selectLog);
+
     selectLog.classList.add('date-start');
     if (today) {
       console.log("It is today");
@@ -485,9 +503,12 @@ export default class extends Controller {
     });
     console.log("Select log at end is:");
     console.log(selectLog);
+
+    if (scrollMenu) this.matchMenuScroll(selectLog);
   }
 
   pageScroll(e) {
+    // Here you may want to have a boolean which states whether the previous scroll is being executed to avoid it calling again (if method takes long than scrollWait)
     this.resetTimer();
 
     this.timer = setTimeout(() => {
@@ -499,7 +520,9 @@ export default class extends Controller {
     console.log("Checking for center log");
 
     const centerLog = this.findCenterElement(this.logTargets);
-    this.matchMenuScroll(centerLog);
+    if (centerLog) {
+      this.matchMenuScroll(centerLog);
+    }
   }
 
   findCenterElement(elements) {
@@ -510,6 +533,8 @@ export default class extends Controller {
     let closestDistance = Infinity;
 
     for (const element of elements ) {
+      if (element.classList.contains('hide-log')) continue;
+
       const rect = element.getBoundingClientRect();
       const elementCenter = rect.top + (rect.height / 2);
 
@@ -668,19 +693,31 @@ export default class extends Controller {
     const innerHTML = e.currentTarget.innerHTML;
     const habitTitle = innerHTML.split('</i> ')[1];
 
+    this.updateHabitLabel(e.currentTarget, habitTitle);
+
     this.updateLogsDisplay(habitTitle);
+  }
+
+  updateHabitLabel(habit, habitTitle) {
+    if (habit.classList.contains('included')) {
+      habit.classList.remove('included');
+      habit.innerHTML = `<i class="fa-regular fa-square"></i> ${habitTitle}`;
+    } else {
+      habit.classList.add('included');
+      habit.innerHTML = `<i class="fa-regular fa-square-check"></i> ${habitTitle}`;
+    }
   }
 
   updateLogsDisplay(habitTitle) {
     const logs = this.logTargets;
-    console.log(logs);
     logs.forEach((log) => {
-      const logHabit = log.querySelector('h2');
+      const logHabit = log.querySelector('.log-habit-title');
       if (habitTitle === logHabit.innerText) {
         log.classList.toggle('hide-log');
       }
     });
     this.setAllLogLines();
+    this.scrollToSelected(true);
   }
 
   // Method related to completion message
