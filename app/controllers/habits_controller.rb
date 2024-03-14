@@ -107,6 +107,12 @@ class HabitsController < ApplicationController
 
   private
 
+  def demo_global_streak
+      global_streak = 24
+      # When a user checks off a log.completed = true
+      global_streak += 1
+  end
+
   def streak
     totals = []
     @user_habits = current_user.habits
