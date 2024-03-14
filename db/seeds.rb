@@ -765,7 +765,7 @@ gym = Habit.create(
   category: "Wellbeing",
   identity_goal: "a healthy guy",
   trigger: "before I get into work",
-  reward: "listen to my favourite podcast",
+  reward: "my favourite podcast",
   duration_in_minutes: 45,
   week_recurrence: 1,
   current_streak: 0,
