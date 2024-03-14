@@ -751,8 +751,14 @@ export default class extends Controller {
     }
     this.globalStreak = streak;
 
-    this.streakTarget.innerText = streak;
-    console.log(this.streakTarget);
+    const elements = this.streakTargets;
+    console.log(elements);
+    elements.forEach((element) => {
+      console.log(element);
+      console.log(`Updating for streak: ${streak}`);
+      element.innerText = streak;
+    });
+    console.log(document.getElementById('fixed-streak-container'));
   }
 
 
