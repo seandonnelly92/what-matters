@@ -99,7 +99,6 @@ class HabitsController < ApplicationController
     unless @logs.empty?
       @global_streak = streak
     end
-    raise
   end
 
   def show
