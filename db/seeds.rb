@@ -624,6 +624,20 @@ tom = User.new(
 )
 tom.save
 
+mike = User.new(
+  email: "mike@lewagon.com",
+  password: "pass",
+  first_name: "M",
+  last_name: "S",
+  nickname: "M",
+  date_of_birth: DateTime.new(1991, 3, 19),
+  work_days_per_week: 5,
+  work_hours_per_day: 10,
+  sleep_hours_per_day: 7,
+  terms_agreed: true
+)
+tom.save
+
 
 
 #tom reading habit
@@ -955,7 +969,7 @@ p "seeding testimonials"
 Review.create(
   user: sean,
   content: "What Matters has helped me dedicate quality time with my nephews! Thanks!",
-  rating: 4,
+  rating: 5,
   created_at: DateTime.new(2024, 3, 12),
   updated_at: DateTime.new(2024, 3, 12)
 )
@@ -987,6 +1001,22 @@ Review.create(
 Review.create(
   user: jasper,
   content: "This app has really helped me prioritise my free time. I'm healthier and happier!",
+  rating: 5,
+  created_at: DateTime.new(2024, 2, 11),
+  updated_at: DateTime.new(2024, 2, 11)
+)
+
+Review.create(
+  user: mike,
+  content: "I now cook with for my friends at Le Wagon every week thanks to What Matters!",
+  rating: 5,
+  created_at: DateTime.new(2024, 2, 11),
+  updated_at: DateTime.new(2024, 2, 11)
+)
+
+Review.create(
+  user: tom,
+  content: "I have become much better at achieving my goals! Thank you",
   rating: 5,
   created_at: DateTime.new(2024, 2, 11),
   updated_at: DateTime.new(2024, 2, 11)
