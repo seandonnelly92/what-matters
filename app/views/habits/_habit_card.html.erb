@@ -1,6 +1,6 @@
 
 <% habit.logs.each do  |log|%>
-  <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log">
+  <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" >
     <div class="row">
       <div class="col-6 left">
         <p>Habit is to <%= habit.title %></p>
@@ -14,8 +14,12 @@
       </div>
       <div class="col-6 right">
         <div class="line"></div>
-        <span class="dot" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
 
+        <%if log.completed  %>
+          <span class="dot-green" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
+        <%else  %>
+          <span class="dot-blank" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
+        <%end  %>
       </div>
     </div>
   </div>
