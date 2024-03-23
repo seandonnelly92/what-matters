@@ -3,7 +3,7 @@
   <div class="habit-card d-flex" data-controller="log-click" data-log-click-date-value="<%=log.date_time.strftime("%Y-%m-%d %H:%M") %>" data-log-scroll-target="log" >
     <div class="row">
       <div class="col-6 left">
-        <p>Habit is to <%= habit.title %></p>
+        <h6>Habit is to <%= habit.title %></h3>
         <%# <p data-loader-log-date-value= #{log.date}></p> %>
         <%if log.completed  %>
         <p>Well done! You completed on <%= log_date = log.date_time.strftime("%Y-%m-%d %H:%M") %></p>
@@ -14,7 +14,6 @@
       </div>
       <div class="col-6 right">
         <div class="line"></div>
-
         <%if log.completed  %>
           <span class="dot-green" data-log-click-target = "circle" data-action="click->log-click#handleDotClick"></span>
         <%else  %>
